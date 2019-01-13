@@ -1,0 +1,294 @@
+@import '../abstracts/mixins';
+
+$primary: #666699;
+$on-primary: #ffffff;
+
+$secondary: #0099cc;
+$on-secondary: $on-primary;
+
+$background: #ffffff;
+$on-background: #000000;
+
+$warn: #ff0000;
+$on-warn: $on-primary;
+
+$nav-height: 2.5rem;
+$content-width: 65%;
+$content-margin: (100% - $content-width) / 2;
+$code-padding: 0.125rem;
+$line-height: 1rem + $code-padding * 2;
+$li-padding: 0.125rem;
+
+%primary {
+    @include theme-color($primary, $on-primary);
+}
+
+%secondary {
+    @include theme-color($secondary, $on-secondary);
+}
+
+%background {
+    @include theme-color($background, $on-background);
+}
+
+%warn {
+    @include theme-color($warn, $on-warn);
+}
+
+html, body {
+    height: 100%;
+}
+
+.app--default {
+
+    font-family: 'Helvetica';
+    @extend %background;
+
+    // Layout
+    * {
+        box-sizing: border-box;
+    }
+
+    .container {
+        min-height: 100%;
+        min-height: 100vh;
+        @extend %background;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .column {
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        @extend %background;
+        flex-shrink: 0;
+        flex-grow: 0;
+    }
+
+    header.main__header {
+        @extend %primary;
+        width: 100%;
+        height: 7rem;
+        text-align: left;
+        padding: 1rem $content-margin;
+
+        h1 {
+            font-size: 4rem;
+            margin-left: 0.5rem;
+        }
+    }
+
+    nav {
+        background-color: $primary;
+        position: sticky;
+        top: 0;
+        width: 100%;
+        padding: 0 $content-margin;
+        height: $nav-height;
+        margin-top: -1 * $nav-height;
+        flex-grow: 0;
+        flex-shrink: 0;
+        z-index: 1;
+
+        a {
+            padding: 0.5rem 0.75rem;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.25rem;
+        }
+
+        a:link, a:visited {
+            color: $on-primary;
+        }
+
+        a:hover, a:active {
+            color: darken($on-primary, 10%);
+        }
+    }
+
+    main {
+        margin: 0 $content-margin;
+        width: $content-width;
+        height: 100%;
+        flex-grow: 1;
+        flex-shrink: 0;
+    }
+
+    hr.main__footer-separator {
+        margin: 0rem;
+        width: $content-width;
+        margin: 0rem $content-margin;
+    }
+
+    footer {
+        &.main__footer {
+            @extend %background;
+            padding: 3rem $content-margin;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        &.blog__footer {
+            margin: 2rem 0rem;
+        }
+    }
+
+    article {
+        header {
+            margin: 1.5rem 0rem;
+        }
+    }
+
+    article.feed-item {
+        margin: 1rem 0rem;
+        padding: 1rem 0rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    h4 {
+        font-size: 1.25rem;
+    }
+
+    h5 {
+        font-size: 1.125rem;
+    }
+
+    h6 {
+        font-size: 1.0625rem;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        margin-bottom: 0.5rem;
+    }
+    
+    // Atoms
+    button {
+        padding: 0.5rem 1rem;
+        background-color: none;
+        border-width: 0;
+        border-style: none;
+        color: $on-background;
+    }
+
+    button:hover, button:focus {
+        color: $primary;
+        cursor: pointer;
+        outline: 0rem;
+    }
+
+    a {
+        color: $secondary;
+
+        &.tag {
+            @extend %secondary;
+            border-radius: 1rem;
+            font-size: 0.95rem;
+            padding: 0.0625rem 0.25rem;
+            margin-right: 0.125rem;
+            margin-top: 0.125rem;
+            text-decoration: none;
+            display: inline-block;
+
+            &:hover, &:active {
+                color: darken($on-secondary, 10%);
+            }
+        }
+    }
+
+    blockquote {
+        margin-left: 0rem;
+        border-style: solid;
+        border-left-width: 0.5rem;
+        border-color: darken($background, 50%);
+        color: $on-background;
+        background-color: darken($background, 10%);
+        overflow: hidden;
+
+        blockquote {
+            margin-left: 0.5rem;
+        }
+    }
+
+    code {
+        line-height: $line-height;
+        color: $secondary;
+        border-radius: 0.25rem;
+        background-color: darken($background, 10%);
+        display: inline;
+        padding: $code-padding 0rem;
+
+        &.codeBlock {
+            color: $on-background;
+            padding: 1rem;
+            margin: 1rem 0rem;
+            border-radius: 1rem;
+            display: block;
+            overflow: hidden;
+        }
+    }
+
+    p {
+        line-height: $line-height;
+    }
+
+    img {
+        max-width: 100%;
+
+        &.pin {
+            height: 2.25rem;
+            float: right;
+            opacity: 0.25;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    .anchor {
+        display: block;
+        margin-top: -1 * $nav-height;
+        height: $nav-height;
+        visibility: hidden;
+    }
+
+    // Lists
+    ul {
+        padding: $li-padding * 2;
+    }
+
+    ol {
+        padding: $li-padding * 2;
+    }
+
+    ul > li {
+        margin-left: 1rem; 
+        padding: $li-padding * 2;
+        list-style-type: circle;
+        list-style-position: outside;
+    }
+
+    ol > li {
+        margin-left: 1rem; 
+        padding: $li-padding * 2;
+        list-style-type: decimal;
+        list-style-position: outside;
+    }
+}
