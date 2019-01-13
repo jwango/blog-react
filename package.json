@@ -4,7 +4,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "serve": "concurrently --kill-others \"webpack -w\" \"nodemon server.js\"",
+    "serve": "concurrently --kill-others \"webpack -w\" \"nodemon build/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Josh Wang",
