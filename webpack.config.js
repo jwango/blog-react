@@ -5,7 +5,7 @@ var nodeExternals = require('webpack-node-externals')
 var clientConfig = {
   entry: './src/client/index.js',
   output: {
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
     publicPath: '/'
   },
@@ -26,7 +26,7 @@ var serverConfig = {
   target: 'node',
   externals: [nodeExternals()],
   output: {
-    path: __dirname,
+    path: path.resolve(__dirname, 'build'),
     filename: 'server.js',
     publicPath: '/'
   },
