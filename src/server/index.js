@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 
-var app = require('./app');
+import app from './app';
 var debug = require('debug')('second-ave:server');
 var http = require('http');
 

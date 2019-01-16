@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build:client": "node scripts/build.js",
-    "start": "concurrently --kill-others \"webpack -w\" \"nodemon build/server.js\"",
     "start:client": "node scripts/start.js",
+    "start:server": "concurrently --kill-others \"webpack -w\" \"nodemon \"build/server.js\"\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Josh Wang",
@@ -56,6 +56,7 @@
     "terser-webpack-plugin": "1.1.0",
     "url-loader": "1.1.1",
     "webpack": "4.19.1",
+    "webpack-cli": "^3.2.1",
     "webpack-dev-server": "3.1.9",
     "webpack-manifest-plugin": "2.0.4",
     "webpack-node-externals": "^1.6.0",

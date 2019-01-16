@@ -24,6 +24,7 @@ export class Feed extends Component {
             page: 1
         };
         this.parser = new Parser();
+        // TODO: handle not fetching this data in SSR
         this.getRSSData();
     }
 

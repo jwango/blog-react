@@ -32,7 +32,11 @@ var serverConfig = {
   },
   module: {
     rules: [
-      { test: /\.(js)$/, use: 'babel-loader' }
+      { test: /\.(js)$/, use: 'babel-loader' },
+      {
+        test: /\.scss$/,
+        loaders: ["css-loader", "sass-loader"]
+      },
     ]
   },
   plugins: [
