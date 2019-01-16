@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Link } from 'react-router-dom';
+import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Home } from './home';
 import { About } from './about';
 import { Blog, Post } from './blog';
@@ -39,31 +39,32 @@ export class App extends Component {
 
     render() {
         return (
-            <Router>
-                <span className={this.state.theme}>
-                    <div className='container column'>
-                        <header className="main__header">
-                            <h1>Meshi</h1>
-                        </header>
-                        <nav>
-                            <Link to={'/home'}>Home</Link>
-                            <Link to={'/about'}>About</Link>
-                            <Link to={'/blog'}>Blog</Link>
-                        </nav>
-                        <main>
-                            <Route exact={true} path="/" render={() => <Redirect to={'/home'}/>}/>
+            <span className={this.state.theme}>
+                <div className='container column'>
+                    <header className="main__header">
+                        <h1>Meshi</h1>
+                    </header>
+                    <nav>
+                        <Link to={'/home'}>Home</Link>
+                        <Link to={'/about'}>About</Link>
+                        <Link to={'/blog'}>Blog</Link>
+                    </nav>
+                    <main>
+                        <Switch>
+                            <Route exact={true} path="/" render={() => <Redirect to={'./home'}/>}/>
                             <Route exact={true} path="/home" component={Home}/>
                             <Route exact={true} path="/about" component={About}/>
                             <Route exact={true} path="/blog" component={Blog}/>
                             <Route path='/blog/posts/:postId' component={Post}/>
-                        </main>
-                        <hr className="main__footer-separator"/>
-                        <footer className="main__footer">
-                            Footer
-                        </footer>
-                    </div>
-                </span>
-            </Router>
+                            <Route render={(props) => <div>no match: {props.location.pathname}</div>} />
+                        </Switch>
+                    </main>
+                    <hr className="main__footer-separator"/>
+                    <footer className="main__footer">
+                        Footer
+                    </footer>
+                </div>
+            </span>
         );
     }
 }
