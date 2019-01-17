@@ -33,6 +33,13 @@ app.use(function(req, res, next) {
   next();
 });
 
+let depKey;
+for (let key in assetsMap) {
+  if (key.startsWith('static/js/') && key.endsWith('.js')) {
+    depKey = key;
+  }
+}
+
 //app.use('/', indexRouter);
 //app.use('/posts', postsRouter);
 app.get('*', (req, res, next) => {
@@ -42,6 +49,7 @@ app.get('*', (req, res, next) => {
     </StaticRouter>
   )
 
+  const depScript = depKey ? `<script src="./${assetsMap[depKey]}" defer></script>` : '';
   // TODO: might be missing another script (the hashed one)
   res.send(`
   <!doctype html>
@@ -59,7 +67,9 @@ app.get('*', (req, res, next) => {
     <body id="root">
       <noscript>You need to enable JavaScript to run this app.</noscript>
       ${markup}
-      <script src="./${assetsMap["main.js"]}></script>
+      ${depScript}
+      <script src="./${assetsMap["runtime~main.js"]}" defer></script>
+      <script src="./${assetsMap["main.js"]}" defer></script>
     </body>
   </html>
   `);
