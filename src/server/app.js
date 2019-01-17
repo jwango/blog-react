@@ -5,13 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var assetsMap = require('../../build/public/asset-manifest.json');
 
-import indexRouter from './routes/index';
 import postsRouter from './routes/posts';
 
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from 'react-router-dom';
 import { App } from '../client/scenes/app/app.scene';
 import React from 'react';
+import fetch from 'isomorphic-fetch';
+import serialize from 'serialize-javascript';
 
 var app = express();
 
@@ -41,38 +42,54 @@ for (let key in assetsMap) {
 }
 
 //app.use('/', indexRouter);
-//app.use('/posts', postsRouter);
+app.use('/posts', postsRouter);
 app.get('*', (req, res, next) => {
-  const markup = renderToString(
-    <StaticRouter location={req.url} context={{}}>
-      <App />
-    </StaticRouter>
-  )
+  let contextPromise = Promise.resolve({});
+  // TODO: better parse this url for specific match
+  // TODO: add shared urls
+  // TODO: remove hard-coded fetch
+  if (req.url.startsWith('/blog/posts')) {
+    contextPromise = fetch(`http://localhost:3001/posts/${'1'}`)
+      .then((res) => res.json())
+      .then((postData) => Promise.resolve({ postData: postData }));
+  }
+  contextPromise
+    .then((context) => {
+      const markup = renderToString(
+        <StaticRouter location={req.url} context={context}>
+          <App />
+        </StaticRouter>
+      )
 
-  const depScript = depKey ? `<script src="./${assetsMap[depKey]}" defer></script>` : '';
-  // TODO: might be missing another script (the hashed one)
-  res.send(`
-  <!doctype html>
-  <html lang="en">
-    <head>
-      <base href=".">
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-      <meta name="theme-color" content="#000000">
-      <link rel="manifest" href="./manifest.json">
-      <link rel="shortcut icon" href="./favicon.ico">
-      <title>Meshi</title>
-      <link href="./${assetsMap["main.css"]}" rel="stylesheet">
-    </head>
-    <body id="root">
-      <noscript>You need to enable JavaScript to run this app.</noscript>
-      ${markup}
-      ${depScript}
-      <script src="./${assetsMap["runtime~main.js"]}" defer></script>
-      <script src="./${assetsMap["main.js"]}" defer></script>
-    </body>
-  </html>
-  `);
+      const depScript = depKey ? `<script src="/${assetsMap[depKey]}" defer></script>` : '';
+      res.send(`
+      <!doctype html>
+      <html lang="en">
+        <head>
+          <base href=".">
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+          <meta name="theme-color" content="#000000">
+          <link rel="manifest" href="/manifest.json">
+          <link rel="shortcut icon" href="/favicon.ico">
+          <title>Meshi</title>
+          <link href="/${assetsMap["main.css"]}" rel="stylesheet">
+          <script>window.__INITIAL_DATA__ = ${serialize(context)}</script>
+        </head>
+        <body id="root">
+          <noscript>You need to enable JavaScript to run this app.</noscript>
+          ${markup}
+          ${depScript}
+          <script src="/${assetsMap["runtime~main.js"]}" defer></script>
+          <script src="/${assetsMap["main.js"]}" defer></script>
+        </body>
+      </html>
+      `);
+    })
+    .catch((error) => {
+      console.log(error);
+      next(createError(500))
+    });
 });
 
 // catch 404 and forward to error handler

@@ -29,7 +29,7 @@ RSS feed uses include:&lt;br&gt;
 &lt;i&gt;&lt;font color=&quot;#FF0000&quot;&gt;Daily Specials &lt;br&gt;
 Entertainment &lt;br&gt;
 Calendar of Events &lt;/i&gt;&lt;/font&gt;</description>
-      <link>./blog/posts/1</link>
+      <link>/blog/posts/1</link>
       <category domain="www.dmoz.com">Computers/Software/Internet/Site Management/Content Management</category>
       <comments>http://www.feedforall.com/forum</comments>
       <pubDate>Tue, 19 Oct 2004 11:09:11 -0400</pubDate>
