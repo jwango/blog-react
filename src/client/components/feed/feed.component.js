@@ -25,7 +25,9 @@ export class Feed extends Component {
         };
         this.parser = new Parser();
         // TODO: handle not fetching this data in SSR
-        this.getRSSData();
+        if (!props.staticContext) {
+            this.getRSSData();
+        }
     }
 
     sortItems(itemsArr) {

@@ -5,7 +5,7 @@ import './index.scss';
 import { App } from './scenes/app/app.scene';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render((
+ReactDOM.hydrate((
     <BrowserRouter>
         <App/>
     </BrowserRouter>
