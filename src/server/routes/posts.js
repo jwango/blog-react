@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-import { MOCK_BLOG_POSTS } from '../mock/data';
+var MOCK_BLOG_POSTS = require('../mock/data');
 
 /* GET post. */
 router.get('/:postId', function(req, res, next) {

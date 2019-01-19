@@ -15,7 +15,20 @@ var serverConfig = (env, argv) => {
     },
     module: {
       rules: [
-        { test: /\.(js)$/, use: 'babel-loader' },
+        { 
+          test: /\.(js)$/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                "react-app"
+              ],
+              plugins: [
+                "@babel/plugin-proposal-object-rest-spread"
+              ]
+            }
+          }
+        },
         {
           test: /\.scss$/,
           loaders: ["css-loader", "sass-loader"]
