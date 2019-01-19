@@ -5,22 +5,24 @@
   "main": "index.js",
   "scripts": {
     "build:client": "node scripts/build.js",
+    "build:posts": "node mock/scripts/build-posts.js ./mock/post.config.json",
+    "build:scripts": "webpack --config mock/webpack.config.js",
     "start:client": "node scripts/start.js",
     "start:server": "concurrently --kill-others \"webpack -w --env.NODE_ENV=development\" \"nodemon \"build/server.js\"\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "upload:posts": "node mock/scripts/upload-posts.js"
   },
   "author": "Josh Wang",
   "license": "MIT",
   "description": "an open source blog implemented in React",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
     "@babel/core": "7.1.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
-    "babel-cli": "^6.26.0",
+    "@babel/preset-env": "^7.2.3",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-loader": "8.0.4",
     "babel-plugin-named-asset-import": "^0.2.2",
-    "babel-preset-env": "^1.7.0",
     "babel-preset-react-app": "^5.0.3",
     "bfj": "^6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
@@ -72,11 +74,11 @@
     "morgan": "~1.9.0",
     "node-sass": "^4.9.3",
     "prompt": "^1.0.0",
-    "serialize-javascript": "^1.4.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-router-dom": "^4.3.1",
-    "rss-parser": "^3.4.3"
+    "rss-parser": "^3.4.3",
+    "serialize-javascript": "^1.4.0"
   },
   "browserslist": [
     ">0.2%",
@@ -84,14 +86,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "babel": {
-    "presets": [
-      "react-app"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-object-rest-spread"
-    ]
-  },
   "eslintConfig": {
     "extends": "react-app"
   }

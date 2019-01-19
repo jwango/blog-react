@@ -49,7 +49,7 @@ app.get('*', (req, res, next) => {
   // TODO: add shared urls
   // TODO: remove hard-coded fetch
   if (req.url.startsWith('/blog/posts')) {
-    contextPromise = fetch(`http://localhost:3001/posts/${'1'}`)
+    contextPromise = fetch(`http://localhost:3001/posts/${'e075ffd2240d'}`)
       .then((res) => res.json())
       .then((postData) => Promise.resolve({ postData: postData }));
   }
@@ -62,11 +62,11 @@ app.get('*', (req, res, next) => {
       )
 
       const depScript = depKey ? `<script src="/${assetsMap[depKey]}" defer></script>` : '';
+      console.log('new')
       res.send(`
       <!doctype html>
       <html lang="en">
         <head>
-          <base href=".">
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
           <meta name="theme-color" content="#000000">

@@ -1,0 +1,11 @@
+{
+  "outputFile":"./mock/data.js",
+  "posts": [
+    {
+      "guid": "e075ffd2240d",
+      "title": "Dreams",
+      "tags": ["tag 1", "tag 2"],
+      "filePath": "./mock/posts/dreams.md"
+    }
+  ]
+}
