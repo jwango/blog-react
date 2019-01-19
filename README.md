@@ -4,4 +4,5 @@
 [ ] Sync webpack configs between server and client for compiling React code  
 [x] Refactor server to use controller and service model  
 [x] Add service injection modelling for DI lookup  
-[ ] Hook up /posts endpoint to use DB data  
+[x] Hook up /posts endpoint to use DB data  
+[ ] Add env switch to change which post service is used

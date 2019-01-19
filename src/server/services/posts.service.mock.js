@@ -1,9 +1,8 @@
 var MOCK_BLOG_POSTS = require('../mock/data');
-var BaseConsumer = require('../consumer');
+import BaseConsumer from '../consumer';
 var PostsService = Object.create(BaseConsumer);
-PostsService.getPost = function(postId) {
+PostsService.getPost = async function(postId) {
   if (postId) {
-      // TODO: lookup with mongoDB
       if (MOCK_BLOG_POSTS[postId]) {
           return MOCK_BLOG_POSTS[postId];
       } else {
@@ -13,4 +12,4 @@ PostsService.getPost = function(postId) {
       return { error: 400 };
   }
 }
-module.exports = PostsService;
+export default PostsService;

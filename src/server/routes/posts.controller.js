@@ -1,4 +1,4 @@
-var BaseConsumer = require('../consumer');
+import BaseConsumer from '../consumer';
 var express = require('express');
 var createError = require('http-errors');
 var PostsController = Object.create(BaseConsumer);
@@ -10,12 +10,15 @@ PostsController.getRouter = function() {
   var postIdHandler = function(req, res, next) {
     let postId = req.params.postId;
     if (this.postsService) {
-      var result = this.postsService.getPost(postId);
-      if (!result.error) {
-        res.send(result);
-      } else {
-        next(createError(result.error));
-      }
+      this.postsService.getPost(postId)
+        .then((result) => {
+          if (!result.error) {
+            res.send(result);
+          } else {
+            next(createError(result.error));
+          }
+        })
+        .catch((err) => next(createError(err)));
     } else {
       next(createError(500));
     }
@@ -23,4 +26,4 @@ PostsController.getRouter = function() {
   router.get('/:postId', postIdHandler.bind(this));
   return router;
 }
-module.exports = PostsController;
+export default PostsController;

@@ -1,14 +1,15 @@
 var BaseConsumer = {
   container: undefined,
   dependencyKeys: [],
-  init: function(container) {
+  init: async function(container) {
     this.container = container;
-    this.rebind();
+    await this.rebind();
   },
-  rebind: function() {
-    this.dependencyKeys.forEach((dependencyKey) => {
-      this[dependencyKey] = this.container.lookup(dependencyKey);
+  rebind: async function() {
+    this.dependencyKeys.forEach(async (dependencyKey) => {
+      this[dependencyKey] = await this.container.lookup(dependencyKey);
     });
+    console.log('completed binding');
   }
 };
-module.exports = BaseConsumer;
+export default BaseConsumer;
