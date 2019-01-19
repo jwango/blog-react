@@ -12,7 +12,7 @@ export class Tag extends Component {
         super(props);
         this.state = {
             name: props.name ? props.name : '',
-            link: props.link ? props.link : './#'
+            link: props.link ? props.link : '#'
         };
     }
 

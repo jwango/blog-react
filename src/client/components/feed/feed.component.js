@@ -56,18 +56,11 @@ export class Feed extends Component {
         (async () => {
             let feed = await this.parser.parseURL('/sample.xml');
             let items = feed.items.map((item, index) => {
-                let splitCategories = [];
-                if (item.categories) {
-                    item.categories.forEach((category) => {
-                        splitCategories = splitCategories.concat(category['_'].split('/'));
-                    });
-                }
                 return {
                     title: item.title,
                     link: item.link,
                     description: item.content,
                     pubDate: item.pubDate,
-                    categories: splitCategories,
                     guid: index.toString(),
                 }
             });
@@ -111,7 +104,6 @@ export class Feed extends Component {
                         pubDate={story.pubDate}
                         guid={story.guid}
                         key={story.guid}
-                        categories={story.categories}
                     />
                 );
             });

@@ -20,10 +20,10 @@ export class Post extends Component {
 
     constructor(props) {
         super(props);
-        let postData;
+        let postData = {};
         if (this.props.staticContext) {
             postData = this.props.staticContext.postData;
-        } else {
+        } else if (window.__INITIAL_DATA__) {
             postData = Object.assign({}, window.__INITIAL_DATA__.postData);
         }
         this.state = {

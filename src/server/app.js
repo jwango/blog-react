@@ -72,7 +72,7 @@ app.get('*', (req, res, next) => {
           <meta name="theme-color" content="#000000">
           <link rel="manifest" href="/manifest.json">
           <link rel="shortcut icon" href="/favicon.ico">
-          <title>Meshi</title>
+          <title>Second Ave</title>
           <link href="/${assetsMap["main.css"]}" rel="stylesheet">
           <script>window.__INITIAL_DATA__ = ${serialize(context)}</script>
         </head>
