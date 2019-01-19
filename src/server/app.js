@@ -3,9 +3,11 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var assetsMap = require('../../build/public/asset-manifest.json');
-var Container = require('./container');
-var PostsServiceMock = require('./services/posts.service.mock');
-var PostsController = require('./routes/posts.controller');
+import Container from './container';
+import MongoService from './services/mongo.service';
+import PostsServiceMock from './services/posts.service.mock';
+import PostsService from './services/posts.service';
+import PostsController from './routes/posts.controller';
 
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from 'react-router-dom';
@@ -33,8 +35,23 @@ app.use(function(req, res, next) {
 
 // Initialize Container
 var container = Object.create(Container);
-container.register('postsService', function () {
-  return Object.create(PostsServiceMock);
+container.register('serviceConfig', true, async function(container) {
+  return {
+    url: "mongodb://localhost:27017"
+  };
+});
+container.register('mongoService', true, async function(container) {
+  var instance = Object.create(MongoService);
+  await instance.init(container);
+  console.log("Connecting to MongoDB...");
+  instance.connectedClient = await instance.client.connect(instance.serviceConfig.url,  { useNewUrlParser: true });
+  console.log("Connected!");
+  return instance;
+});
+container.register('postsService', true, async function(container) {
+  var instance = Object.create(PostsService);
+  await instance.init(container);
+  return instance;
 });
 
 // Connect handlers
