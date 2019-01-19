@@ -42,7 +42,7 @@ export class App extends Component {
             <span className={this.state.theme}>
                 <div className='container column'>
                     <header className="main__header">
-                        <h1>Meshi</h1>
+                        <h1>Second Ave</h1>
                     </header>
                     <nav>
                         <Link to={'/home'}>Home</Link>

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Tag } from '../../tag/tag.component';
 import { getDefault } from '../../../utils/ops.util';
 
 export class FeedItem extends PureComponent {
@@ -9,8 +8,7 @@ export class FeedItem extends PureComponent {
         title: PropTypes.string,
         description: PropTypes.string,
         pubDate: PropTypes.string,
-        link: PropTypes.string,
-        categories: PropTypes.arrayOf(PropTypes.string)
+        link: PropTypes.string
     }
 
     stripHTML(html){
@@ -18,24 +16,12 @@ export class FeedItem extends PureComponent {
         return doc.body.textContent || "";
     }
 
-    renderTags(categories) {
-        if (categories) {
-            return categories.map((category) => {
-                return (
-                    <Tag name={category } key={category}/>
-                );
-            });
-        }
-        return <span></span>;
-    }
-
     render() {
         const item = {
             title: getDefault(this.props.title, 'N/A'),
             description: getDefault(this.props.description, ''),
             pubDate: getDefault(this.props.pubDate, 'N/A'),
-            link: getDefault(this.props.link, '#'),
-            categories: getDefault(this.props.categories, [])
+            link: getDefault(this.props.link, '#')
         };
         return (
             <article className='feed-item'>
@@ -43,7 +29,6 @@ export class FeedItem extends PureComponent {
                 <summary>{this.stripHTML(item.description)}</summary>
                 <time>-{item.pubDate}</time>
                 <br/>
-                {this.renderTags(item.categories)}
             </article>
         );
     }
