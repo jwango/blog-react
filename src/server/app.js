@@ -1,11 +1,11 @@
 var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var assetsMap = require('../../build/public/asset-manifest.json');
-
-import postsRouter from './routes/posts';
+var Container = require('./container');
+var PostsServiceMock = require('./services/posts.service.mock');
+var PostsController = require('./routes/posts.controller');
 
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from 'react-router-dom';
@@ -17,9 +17,6 @@ import serialize from 'serialize-javascript';
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,6 +31,13 @@ app.use(function(req, res, next) {
   next();
 });
 
+// Initialize Container
+var container = Object.create(Container);
+container.register('postsService', function () {
+  return Object.create(PostsServiceMock);
+});
+
+// Connect handlers
 let depKey;
 for (let key in assetsMap) {
   if (key.startsWith('static/js/') && key.endsWith('.js')) {
@@ -80,14 +84,18 @@ function renderPageHandler(contextPromise, req, res, next) {
     });
 }
 
-//app.use('/', indexRouter);
-app.use('/posts', postsRouter);
+var postsController = Object.create(PostsController);
+postsController.init(container);
+app.use('/posts', postsController.getRouter());
 app.get('/blog/posts/:postName', (req, res, next) => {
   const postId = req.params.postName.split('-').slice(-1);
   const contextPromise = fetch(`http://localhost:3001/posts/${postId}`)
     .then((res) => res.json())
     .then((postData) => Promise.resolve({ postData: postData }))
-    .catch((err) => Promise.resolve({ postData: {} }));
+    .catch((err) => {
+      console.log(err);
+      return Promise.resolve({ postData: {} })
+    });
   renderPageHandler(contextPromise, req, res, next);
 });
 app.get('*', (req, res, next) => {
@@ -105,7 +113,7 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  // TODO: render the error page
   res.status(err.status || 500);
   res.send(err.message);
 });

@@ -7,6 +7,7 @@
     "build:client": "node scripts/build.js",
     "build:posts": "node mock/scripts/build-posts.js ./mock/post.config.json",
     "build:scripts": "webpack --config mock/webpack.config.js",
+    "build:server": "webpack --env.NODE_ENV=production",
     "start:client": "node scripts/start.js",
     "start:server": "concurrently --kill-others \"webpack -w --env.NODE_ENV=development\" \"nodemon \"build/server.js\"\"",
     "upload:posts": "node mock/scripts/upload-posts.js"

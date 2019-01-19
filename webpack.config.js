@@ -2,11 +2,13 @@ var path = require('path')
 var webpack = require('webpack')
 var nodeExternals = require('webpack-node-externals')
 
+// TODO: sync up client-side config with this config
 var serverConfig = (env, argv) => {
   process.env.NODE_ENV = env.NODE_ENV;
   return {
     entry: './src/server/index.js',
     target: 'node',
+    mode: env.NODE_ENV,
     externals: [nodeExternals()],
     output: {
       path: path.resolve(__dirname, 'build'),
