@@ -41,18 +41,7 @@ for (let key in assetsMap) {
   }
 }
 
-//app.use('/', indexRouter);
-app.use('/posts', postsRouter);
-app.get('*', (req, res, next) => {
-  let contextPromise = Promise.resolve({});
-  // TODO: better parse this url for specific match
-  // TODO: add shared urls
-  // TODO: remove hard-coded fetch
-  if (req.url.startsWith('/blog/posts')) {
-    contextPromise = fetch(`http://localhost:3001/posts/${'e075ffd2240d'}`)
-      .then((res) => res.json())
-      .then((postData) => Promise.resolve({ postData: postData }));
-  }
+function renderPageHandler(contextPromise, req, res, next) {
   contextPromise
     .then((context) => {
       const markup = renderToString(
@@ -62,34 +51,47 @@ app.get('*', (req, res, next) => {
       )
 
       const depScript = depKey ? `<script src="/${assetsMap[depKey]}" defer></script>` : '';
-      console.log('new')
       res.send(`
-      <!doctype html>
-      <html lang="en">
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-          <meta name="theme-color" content="#000000">
-          <link rel="manifest" href="/manifest.json">
-          <link rel="shortcut icon" href="/favicon.ico">
-          <title>Second Ave</title>
-          <link href="/${assetsMap["main.css"]}" rel="stylesheet">
-          <script>window.__INITIAL_DATA__ = ${serialize(context)}</script>
-        </head>
-        <body id="root">
-          <noscript>You need to enable JavaScript to run this app.</noscript>
-          ${markup}
-          ${depScript}
-          <script src="/${assetsMap["runtime~main.js"]}" defer></script>
-          <script src="/${assetsMap["main.js"]}" defer></script>
-        </body>
-      </html>
-      `);
+        <!doctype html>
+        <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+            <meta name="theme-color" content="#000000">
+            <link rel="manifest" href="/manifest.json">
+            <link rel="shortcut icon" href="/favicon.ico">
+            <title>Second Ave</title>
+            <link href="/${assetsMap["main.css"]}" rel="stylesheet">
+            <script>window.__INITIAL_DATA__ = ${serialize(context)}</script>
+          </head>
+          <body id="root">
+            <noscript>You need to enable JavaScript to run this app.</noscript>
+            ${markup}
+            ${depScript}
+            <script src="/${assetsMap["runtime~main.js"]}" defer></script>
+            <script src="/${assetsMap["main.js"]}" defer></script>
+          </body>
+        </html>
+        `);
     })
     .catch((error) => {
       console.log(error);
       next(createError(500))
     });
+}
+
+//app.use('/', indexRouter);
+app.use('/posts', postsRouter);
+app.get('/blog/posts/:postName', (req, res, next) => {
+  const postId = req.params.postName.split('-').slice(-1);
+  const contextPromise = fetch(`http://localhost:3001/posts/${postId}`)
+    .then((res) => res.json())
+    .then((postData) => Promise.resolve({ postData: postData }))
+    .catch((err) => Promise.resolve({ postData: {} }));
+  renderPageHandler(contextPromise, req, res, next);
+});
+app.get('*', (req, res, next) => {
+  renderPageHandler(Promise.resolve({}), req, res, next);
 });
 
 // catch 404 and forward to error handler
