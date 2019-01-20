@@ -4,8 +4,30 @@
     {
       "guid": "e075ffd2240d",
       "title": "Dreams",
+      "author": { "_id": "1", "name": "Josh Wang" },
       "tags": ["tag 1", "tag 2"],
       "filePath": "./mock/posts/dreams.md"
+    },
+    {
+      "guid": "1",
+      "title": "Test inline",
+      "author": { "_id": "1", "name": "Josh Wang" },
+      "tags": ["test", "inline"],
+      "filePath": "./mock/posts/post-inline.md"
+    },
+    {
+      "guid": "2",
+      "title": "Test all",
+      "author": { "_id": "1", "name": "Josh Wang" },
+      "tags": ["test", "thisdoesntcount"],
+      "filePath": "./mock/posts/post-test.md"
+    },
+    {
+      "guid": "3",
+      "title": "Test sandbox",
+      "author": { "_id": "1", "name": "Josh Wang" },
+      "tags": ["test", "sandbox"],
+      "filePath": "./mock/posts/post-sandbox.md"
     }
   ]
 }

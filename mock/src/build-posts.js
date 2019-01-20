@@ -15,11 +15,9 @@ for (let i = 0; i < postsIn.length; i++) {
         if (err) {
             return console.log(err);
         }
-        posts[postsIn[i].guid] = {
-            title: postsIn[i].title,
-            body: parseMarkdown(data.split('\r\n')),
-            tags: postsIn[i].tags
-        };
+        posts[postsIn[i].guid] = Object.assign({
+            body: parseMarkdown(data.split('\r\n'))
+        }, postsIn[i]);
         if (callsRemaining === 0) {
             fs.writeFile(
                 outputFile, 

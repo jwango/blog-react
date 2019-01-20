@@ -3,6 +3,8 @@ import PropTypes  from 'prop-types';
 import { getDefault } from '../../../../utils/ops.util';
 import { MdFragment } from '../../../../components/md-fragment';
 import { Tag } from '../../../../components/tag/tag.component';
+import format from 'date-fns/format';
+import parse from 'date-fns/parse';
 
 export class Post extends Component {
 
@@ -29,11 +31,25 @@ export class Post extends Component {
         this.state = {
             title: getDefault(postData.title, Post.defaultState.title),
             chunks: getDefault(postData.body, Post.defaultState.chunks),
-            author: getDefault(postData.author, Post.defaultState.author),
-            pubDate: getDefault(postData.pubDate, Post.defaultState.pubDate),
+            author: getDefault(this.getAuthorName(postData.author), Post.defaultState.author),
+            pubDate: getDefault(this.getPublishDate(postData.publishDate), Post.defaultState.pubDate),
             tags: getDefault(postData.tags, Post.defaultState.tags),
             guid: props.match.params.postId
         };
+    }
+
+    getAuthorName(author) {
+        if (author) {
+            return author.name;
+        }
+        return author;
+    }
+
+    getPublishDate(dateStr) {
+        if (dateStr) {
+            return format(parse(dateStr), 'MMM D, YYYY');
+        }
+        return dateStr;
     }
 
     renderTags(categories) {
