@@ -21,9 +21,9 @@ Alt-H1
 Alt-H2
 ------
 
-[Foo*bar\]]: my_(url) 'title (with parens)'
+[Foo\*bar\]]: my_(url) 'title (with parens)'
 
-[Foo*bar\]]
+[Foo*bar]]
 
    ````` plaintext
 # test
