@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes  from 'prop-types';
 import { getDefault } from '../../../../utils/ops.util';
 import { MdFragment } from '../../../../components/md-fragment';
 import { Tag } from '../../../../components/tag/tag.component';
+import { Time } from '../../../../components/time/time.component';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 
@@ -15,8 +16,8 @@ export class Post extends Component {
     static defaultState = {
         title: 'Untitled',
         chunks: [],
-        author: 'Unknown author',
-        pubDate: '',
+        lastUpdateDate: '?',
+        pubDate: '?',
         tags: []
     }
 
@@ -31,25 +32,25 @@ export class Post extends Component {
         this.state = {
             title: getDefault(postData.title, Post.defaultState.title),
             chunks: getDefault(postData.body, Post.defaultState.chunks),
-            author: getDefault(this.getAuthorName(postData.author), Post.defaultState.author),
-            pubDate: getDefault(this.getPublishDate(postData.publishDate), Post.defaultState.pubDate),
+            lastUpdateDate: getDefault(this.getFormattedDate(postData.lastUpdateDate), Post.defaultState.lastUpdateDate),
+            pubDate: getDefault(this.getFormattedDate(postData.publishDate), Post.defaultState.pubDate),
             tags: getDefault(postData.tags, Post.defaultState.tags),
             guid: props.match.params.postId
         };
     }
 
-    getAuthorName(author) {
-        if (author) {
-            return author.name;
-        }
-        return author;
-    }
-
-    getPublishDate(dateStr) {
+    getFormattedDate(dateStr) {
         if (dateStr) {
             return format(parse(dateStr), 'MMM D, YYYY');
         }
         return dateStr;
+    }
+
+    renderLastUpdateDate(publishDate, lastUpdateDate) {
+        if (publishDate === lastUpdateDate || !lastUpdateDate) {
+            return <Fragment></Fragment>;
+        }
+        return <Fragment><span class="color-background-faded"> • </span><Time dateTime={lastUpdateDate}></Time></Fragment>;
     }
 
     renderTags(categories) {
@@ -63,14 +64,18 @@ export class Post extends Component {
         return <span></span>;
     }
 
+    // TODO: fix pubdate and last update to use time components
     render() {
         return (
-            <article>
+            <article class="post">
                 <header>
                     <h1>{this.state.title}</h1>
-                    <h2>By: {this.state.author}, written {this.state.pubDate}</h2>
+                    <Time dateTime={this.state.pubDate}></Time>
+                    {this.renderLastUpdateDate(this.state.pubDate, this.state.lastUpdateDate)}
                 </header>
-                <MdFragment chunks={this.state.chunks} showOutline={true}/>
+                <section class="post__content">
+                    <MdFragment chunks={this.state.chunks} showOutline={true}/>
+                </section>
                 <footer className="blog__footer">
                     {this.renderTags(this.state.tags)}
                 </footer>

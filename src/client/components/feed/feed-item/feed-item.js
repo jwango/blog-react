@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { getDefault } from '../../../utils/ops.util';
+import { Time } from '../../time/time.component';
 
 export class FeedItem extends PureComponent {
     
@@ -20,14 +21,14 @@ export class FeedItem extends PureComponent {
         const item = {
             title: getDefault(this.props.title, 'N/A'),
             description: getDefault(this.props.description, ''),
-            pubDate: getDefault(this.props.pubDate, 'N/A'),
+            pubDate: getDefault(this.props.pubDate, ''),
             link: getDefault(this.props.link, '#')
         };
         return (
             <article className='feed-item'>
                 <h3><a href={item.link ? item.link : '#'}>{item.title}</a></h3>
-                <summary>{this.stripHTML(item.description)}</summary>
-                <time>-{item.pubDate}</time>
+                <summary><a href={item.link ? item.link : '#'}>{this.stripHTML(item.description)}</a></summary>
+                <Time dateTime={item.pubDate}></Time>
                 <br/>
             </article>
         );

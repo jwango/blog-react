@@ -41,7 +41,7 @@ export class MdFragment extends Component {
             <h1>
                 {content}
                 <a href={`#${id}`}>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Five-pointed_star.svg/2000px-Five-pointed_star.svg.png" alt={id} className="pin"/>
+                    <img src="/link-1.svg" alt={id} className="pin"/>
                 </a>
             </h1>
             </Fragment>

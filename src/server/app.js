@@ -43,9 +43,7 @@ container.register('serviceConfig', true, async function(container) {
 container.register('mongoService', true, async function(container) {
   var instance = Object.create(MongoService);
   await instance.init(container);
-  console.log("Connecting to MongoDB...");
-  instance.connectedClient = await instance.client.connect(instance.serviceConfig.url,  { useNewUrlParser: true });
-  console.log("Connected!");
+  await instance.getConnectedClient();
   return instance;
 });
 container.register('postsService', true, async function(container) {

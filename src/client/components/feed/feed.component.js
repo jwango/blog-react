@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Parser from 'rss-parser';
 import { FeedItem } from './feed-item/feed-item';
@@ -117,10 +117,12 @@ export class Feed extends Component {
     
     render() {
         return (
-            <section>
-                {this.renderItemComponents()}
+            <Fragment>
+                <section class="feed">
+                    {this.renderItemComponents()}
+                </section>
                 {this.renderMoreButton()}
-            </section>
+            </Fragment>
         );
     }
 }
