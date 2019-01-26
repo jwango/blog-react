@@ -434,7 +434,7 @@ function parseBlock(block, linkDefinitions, imageDefinitions) {
     return currNode;
 }
 
-function parseLines(lines) {
+function parseLines(lines, defaultSymbol) {
     let blocks = [];
     let prevBlock = undefined;
     let linkDefinitions = [];
@@ -581,11 +581,11 @@ function parseLines(lines) {
             codeFenceMeta.n = codeFence.n;
             blocks.push(codeFenceMeta.block);
         } else {
-            if (prevBlock && prevBlock.kind === NODE_KIND.PARAGRAPH) {
+            if (prevBlock && prevBlock.kind === defaultSymbol) {
                 prevBlock.inline = `${prevBlock.inline}\n${line}`;
             } else {
                 blocks.push({
-                    kind: NODE_KIND.PARAGRAPH,
+                    kind: defaultSymbol,
                     inline: line
                 })
             }
@@ -599,7 +599,7 @@ function parseLines(lines) {
     }
 
     for (let containerBlock of containerBlocks) {
-        let blockData = parseLines(containerBlock.innerLines);
+        let blockData = parseLines(containerBlock.innerLines, NODE_KIND.STRING);
         linkDefinitions.concat(blockData.linkDefinitions);
         imageDefinitions.concat(blockData.imageDefinitions);
         containerBlock.children = blockData.blocks;
@@ -613,7 +613,7 @@ function parseLines(lines) {
 
 let parseMarkdown = function(lines) {
     let chunks = [];
-    let blockData = parseLines(lines);
+    let blockData = parseLines(lines, NODE_KIND.PARAGRAPH);
     for (let i = 0; i < blockData.blocks.length; i++) {
         if (blockData.blocks[i].kind !== NODE_KIND.BLANK) {
             chunks.push(parseBlock(blockData.blocks[i], blockData.linkDefinitions, blockData.imageDefinitions));

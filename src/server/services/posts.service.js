@@ -9,13 +9,19 @@ async function read(client, postId) {
 PostsService.dependencyKeys = PostsService.dependencyKeys.concat(['mongoService']);
 PostsService.getPost = async function(postId) {
   if (postId) {
-      if (this.mongoService && this.mongoService.connectedClient) {
-        return await read(this.mongoService.connectedClient, postId);
-      } else {
-        return { error: 500 };
+    if (this.mongoService) {
+      const client = await this.mongoService.getConnectedClient();
+      if (client) {
+        try {
+          return await read(client, postId);
+        } catch (error) {
+          return { error: 500, src: error };
+        }
       }
+    }
+    return { error: 500 };
   } else {
-      return { error: 400 };
+    return { error: 400 };
   }
 }
 export default PostsService;

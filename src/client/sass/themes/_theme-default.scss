@@ -8,6 +8,7 @@ $on-secondary: $on-primary;
 
 $background: #ffffff;
 $on-background: #000000;
+$on-background-faded: #777777;
 
 $warn: #ff0000;
 $on-warn: $on-primary;
@@ -35,6 +36,10 @@ $li-padding: 0.125rem;
     @include theme-color($warn, $on-warn);
 }
 
+.color-background-faded {
+    color: $on-background-faded;
+}
+
 html, body {
     height: 100%;
 }
@@ -42,6 +47,7 @@ html, body {
 .app--default {
 
     font-family: 'Helvetica';
+    line-height: $line-height;
     @extend %background;
 
     // Layout
@@ -80,7 +86,6 @@ html, body {
 
         h1 {
             font-size: 3rem;
-            margin-left: 0.5rem;
         }
     }
 
@@ -97,7 +102,8 @@ html, body {
         z-index: 1;
 
         a {
-            padding: 0.5rem 0.75rem;
+            padding: 0.5rem 0rem;
+            margin-right: 1.75rem;
             text-decoration: none;
             display: inline-block;
             font-size: 1.25rem;
@@ -139,15 +145,40 @@ html, body {
         }
     }
 
-    article {
+    section.feed {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    article.post {
         header {
-            margin: 1.5rem 0rem;
+            margin-bottom: 1.5rem;
+            p {
+                font-size: 1rem;
+                line-height: 1rem;
+                color: $on-background-faded; // Revisit this
+            }
         }
+
+        p + p {
+            padding-top: 1.5rem;
+        }
+
+        .post__content {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+        
     }
 
     article.feed-item {
-        margin: 1rem 0rem;
-        padding: 1rem 0rem;
+        margin-bottom: 1rem;
+        width: 27.5rem;
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
     }
 
     h1 {
@@ -159,22 +190,23 @@ html, body {
     }
 
     h3 {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
     }
 
     h4 {
-        font-size: 1.25rem;
+        font-size: 1.6rem;
     }
 
     h5 {
-        font-size: 1.125rem;
+        font-size: 1.5rem;
     }
 
     h6 {
-        font-size: 1.0625rem;
+        font-size: $line-height + 0.1rem;
     }
 
     h1, h2, h3, h4, h5, h6 {
+        margin-top: $line-height;
         margin-bottom: 0.5rem;
     }
     
@@ -199,8 +231,8 @@ html, body {
         &.tag {
             @extend %secondary;
             border-radius: 1rem;
-            font-size: 0.95rem;
-            padding: 0.0625rem 0.25rem;
+            font-size: 1rem;
+            padding: 0.1rem 0.4rem;
             margin-right: 0.125rem;
             margin-top: 0.125rem;
             text-decoration: none;
@@ -244,22 +276,22 @@ html, body {
         }
     }
 
-    p {
-        line-height: $line-height;
-    }
-
     img {
         max-width: 100%;
 
         &.pin {
             height: 2.25rem;
             float: right;
-            opacity: 0.25;
+            opacity: 0.1;
 
             &:hover {
                 opacity: 1;
             }
         }
+    }
+
+    time {
+        color: $on-background-faded;
     }
 
     .anchor {
