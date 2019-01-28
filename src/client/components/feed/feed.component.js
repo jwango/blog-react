@@ -54,7 +54,7 @@ export class Feed extends Component {
 
     getRSSData() {
         (async () => {
-            let feed = await this.parser.parseURL('/sample.xml');
+            let feed = await this.parser.parseURL('/rss.xml');
             let items = feed.items.map((item, index) => {
                 return {
                     title: item.title,

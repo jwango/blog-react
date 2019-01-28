@@ -1,0 +1,58 @@
+<rss version="2.0">
+  <channel>
+    <title>Second Ave</title>
+    <link>localhost:3001</link>
+    <description>
+      Test
+    </description>
+    <pubDate>Invalid Date</pubDate>
+    <item>
+      <title>Dreams</title>
+      <link>http://localhost:3001/blog/posts/e075ffd2240d</link>
+      <description>
+        undefined
+      </description>
+      <category>tag 1</category>
+      <category>tag 2</category>
+      <pubDate>Sat, 19 Jan 2019 22:34:13 -0500</pubDate>
+    </item>
+    <item>
+      <title>Test sandbox</title>
+      <link>http://localhost:3001/blog/posts/3</link>
+      <description>
+        undefined
+      </description>
+      <category>test</category>
+      <category>sandbox</category>
+      <pubDate>Sat, 19 Jan 2019 22:45:01 -0500</pubDate>
+    </item>
+    <item>
+      <title>Test all</title>
+      <link>http://localhost:3001/blog/posts/2</link>
+      <description>
+        undefined
+      </description>
+      <category>test</category>
+      <category>thisdoesntcount</category>
+      <pubDate>Sat, 19 Jan 2019 22:37:21 -0500</pubDate>
+    </item>
+    <item>
+      <title>Test inline</title>
+      <link>http://localhost:3001/blog/posts/1</link>
+      <description>
+        undefined
+      </description>
+      <category>test</category>
+      <category>inline</category>
+      <pubDate>Sat, 19 Jan 2019 22:44:58 -0500</pubDate>
+    </item>
+    <item>
+      <title>undefined</title>
+      <link>http://localhost:3001/blog/posts/1</link>
+      <description>
+        undefined
+      </description>
+      <pubDate>Invalid Date</pubDate>
+    </item>
+  </channel>
+</rss>

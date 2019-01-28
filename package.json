@@ -10,6 +10,7 @@
     "build:server": "webpack --env.NODE_ENV=production",
     "start:client": "node scripts/start.js",
     "start:server": "concurrently --kill-others \"webpack -w --env.NODE_ENV=development\" \"nodemon \"build/server.js\"\"",
+    "syndicate:posts": "node mock/scripts/syndicate-posts.js ./mock/syndicate.config.json",
     "upload:posts": "node mock/scripts/upload-posts.js"
   },
   "author": "Josh Wang",
