@@ -4,12 +4,12 @@
 [x] Re-theme header sizes  
 [x] Re-theme blog metadata  
 [x] Re-theme feed item  
+[ ] Re-theme feed loading state  
 [x] Re-theme pins  
 [ ] Build About scene  
 [ ] Build footer  
-[ ] Add author model to DB  
 [ ] Build comments section  
-[ ] Add RSS generator  
+[x] Add RSS generator  
 [ ] Escape REGEX string for link definitions  
 [ ] Revisit link definitions and labels  
 [ ] Sync webpack configs between server and client for compiling React code  
