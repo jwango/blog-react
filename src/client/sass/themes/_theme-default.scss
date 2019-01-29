@@ -13,6 +13,8 @@ $on-background-faded: #777777;
 $warn: #ff0000;
 $on-warn: $on-primary;
 
+$error: #ffbf3d;
+
 $nav-height: 2.5rem;
 $content-width: 65%;
 $content-margin: (100% - $content-width) / 2;
@@ -322,5 +324,10 @@ html, body {
         padding: $li-padding * 2;
         list-style-type: decimal;
         list-style-position: outside;
+    }
+
+    // Specifics
+    .fa-exclamation-triangle {
+        color: $error;
     }
 }
