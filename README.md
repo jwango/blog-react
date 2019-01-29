@@ -1,6 +1,6 @@
 ## To do:
-[ ] Add error component  
-[ ] Render error component for missing pages or data  
+[x] Add error component  
+[x] Render error component for missing pages or data  
 [x] Re-theme header sizes  
 [x] Re-theme blog metadata  
 [x] Re-theme feed item  
