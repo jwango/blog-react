@@ -9,6 +9,7 @@ var serverConfig = (env, argv) => {
     entry: './src/server/index.js',
     target: 'node',
     mode: env.NODE_ENV,
+    devtool: env.NODE_ENV === 'development' ? 'source-map' : undefined,
     externals: [nodeExternals()],
     output: {
       path: path.resolve(__dirname, 'build'),

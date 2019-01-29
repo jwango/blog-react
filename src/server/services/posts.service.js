@@ -15,13 +15,13 @@ PostsService.getPost = async function(postId) {
         try {
           return await read(client, postId);
         } catch (error) {
-          return { error: 500, src: error };
+          return { error: error, status: 500 };
         }
       }
     }
-    return { error: 500 };
+    return { status: 500, error: new Error('Could not bind to service and fetch the post.') };
   } else {
-    return { error: 400 };
+    return { status: 400, error: new Error('Invalid post.') };
   }
 }
 export default PostsService;

@@ -12,15 +12,20 @@ PostsController.getRouter = function() {
     if (this.postsService) {
       this.postsService.getPost(postId)
         .then((result) => {
-          if (!result.error) {
-            res.send(result);
+          if (result) {
+            if (!result.error) {
+              res.send(result);
+            } else {
+              next(createError(result.error));
+            }
           } else {
-            next(createError(result.error));
+            next(createError(400, new Error('Could not find the post.')))
           }
         })
-        .catch((err) => next(createError(err)));
+        .catch((err) => next(createError(err.status || 500, err)));
     } else {
-      next(createError(500));
+      console.log('No service');
+      next(createError(500, 'Could not retrieve the post.'));
     }
   };
   router.get('/:postId', postIdHandler.bind(this));

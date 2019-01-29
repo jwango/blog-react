@@ -82,6 +82,8 @@ function renderPageHandler(contextPromise, req, res, next) {
             <title>Second Ave</title>
             <link href="/${assetsMap["main.css"]}" rel="stylesheet">
             <script>window.__INITIAL_DATA__ = ${serialize(context)}</script>
+            <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/solid.js" integrity="sha384-6FXzJ8R8IC4v/SKPI8oOcRrUkJU8uvFK6YJ4eDY11bJQz4lRw5/wGthflEOX8hjL" crossorigin="anonymous"></script>
+            <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/fontawesome.js" integrity="sha384-av0fZBtv517ppGAYKqqaiTvWEK6WXW7W0N1ocPSPI/wi+h8qlgWck2Hikm5cxH0E" crossorigin="anonymous"></script>
           </head>
           <body id="root">
             <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -99,17 +101,36 @@ function renderPageHandler(contextPromise, req, res, next) {
     });
 }
 
+function readStringStream(rs) {
+  return new Promise((resolve, reject) => {
+    let data = '';
+    rs.on('data', (chunk) => data += chunk);
+    rs.on('end', () => resolve(data));
+    rs.on('error', (error) => reject(error.message));
+  });
+}
+
 var postsController = Object.create(PostsController);
 postsController.init(container);
 app.use('/posts', postsController.getRouter());
 app.get('/blog/posts/:postName', (req, res, next) => {
   const postId = req.params.postName.split('-').slice(-1);
   const contextPromise = fetch(`http://localhost:3001/posts/${postId}`)
-    .then((res) => res.json())
-    .then((postData) => Promise.resolve({ postData: postData }))
+    .then((res) => {
+      if (res.status >= 200 && res.status < 300) {
+        return res.json().then((postData) => Promise.resolve({ postData: postData }));
+      } else {
+        return readStringStream(res.body)
+          .then((msg) => {
+            return Promise.resolve({ postData: {}, error: { message: msg || res.statusText } });
+          }, (err) => {
+            return Promise.resolve({ postData: {}, error: { message: res.statusText } });
+          });
+      }
+    })
     .catch((err) => {
       console.log(err);
-      return Promise.resolve({ postData: {} })
+      return Promise.resolve({ postData: {}, error: { message: err.message } })
     });
   renderPageHandler(contextPromise, req, res, next);
 });
