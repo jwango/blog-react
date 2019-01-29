@@ -3,6 +3,7 @@ import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Home } from './home';
 import { About } from './about';
 import { Blog, Post } from './blog';
+import { ErrorView } from '../../components/error-view/error-view.component';
 import './app.scene.scss';
 
 const SCENE_TYPES = {
@@ -56,7 +57,7 @@ export class App extends Component {
                             <Route exact={true} path="/about" component={About}/>
                             <Route exact={true} path="/blog" component={Blog}/>
                             <Route path='/blog/posts/:postId' component={Post}/>
-                            <Route render={(props) => <div>no match: {props.location.pathname}</div>} />
+                            <Route render={(props) => <ErrorView error={{ message: `Oops! Could not find ${props.location.pathname}.` }}></ErrorView>} />
                         </Switch>
                     </main>
                     <hr className="main__footer-separator"/>
