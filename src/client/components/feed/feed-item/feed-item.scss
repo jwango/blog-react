@@ -1,0 +1,19 @@
+h3.feed-item--loading {
+  width: 60%;
+}
+.feed-item summary.feed-item--loading {
+  background-color: inherit;
+  width: 80%;
+  p {
+    width: 100%;
+  }
+}
+p.feed-item--loading {
+  width: 4rem;
+  margin-top: 0.1rem;
+  height: 0.9rem;
+}
+
+.feed-item--loading {
+  color: transparent;
+}

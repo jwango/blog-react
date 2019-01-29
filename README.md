@@ -3,8 +3,9 @@
 [x] Render error component for missing pages or data  
 [x] Re-theme header sizes  
 [x] Re-theme blog metadata  
+[ ] Add blog loading state
 [x] Re-theme feed item  
-[ ] Re-theme feed loading state  
+[x] Re-theme feed loading state  
 [x] Re-theme pins  
 [ ] Build About scene  
 [ ] Build footer  

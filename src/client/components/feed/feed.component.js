@@ -21,7 +21,8 @@ export class Feed extends Component {
         this.state = {
             items: undefined,
             batchSize: getDefault(props.batchSize, -1),
-            page: 1
+            page: 1,
+            canShow: false
         };
         this.parser = new Parser();
         if (!props.staticContext) {
@@ -53,6 +54,10 @@ export class Feed extends Component {
     }
 
     getRSSData() {
+        this.state.canShow = false;
+        setTimeout((context) => {
+            context.setState({ canShow: true });
+        }, 500, this);
         (async () => {
             let feed = await this.parser.parseURL('/rss.xml');
             let items = feed.items.map((item, index) => {
@@ -89,24 +94,26 @@ export class Feed extends Component {
     }
 
     renderItemComponents() {
-        if (!this.state.items) {
-            return <p>Your items are loading...</p>;
+        let loading = true;
+        let items = [{}, {}];
+        if (this.state.items && this.state.canShow) {
+            let maxItems = this.getMaxItems();
+            items = this.state.items.slice(0, maxItems);
+            loading = false;
         }
-        let maxItems = this.getMaxItems();
-        return this.state.items
-            .slice(0, maxItems)
-            .map((story) => {
-                return (
-                    <FeedItem
-                        title={story.title}
-                        link={story.link}
-                        description={story.description}
-                        pubDate={story.pubDate}
-                        guid={story.guid}
-                        key={story.guid}
-                    />
-                );
-            });
+        return items.map((story) => {
+            return (
+                <FeedItem
+                    loading={loading}
+                    title={story.title}
+                    link={story.link}
+                    description={story.description}
+                    pubDate={story.pubDate}
+                    guid={story.guid}
+                    key={story.guid}
+                />
+            );
+        });
     }
 
     renderMoreButton() {
@@ -118,7 +125,7 @@ export class Feed extends Component {
     render() {
         return (
             <Fragment>
-                <section class="feed">
+                <section className="feed">
                     {this.renderItemComponents()}
                 </section>
                 {this.renderMoreButton()}
