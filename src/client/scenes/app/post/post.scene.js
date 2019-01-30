@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes  from 'prop-types';
-import { getDefault } from '../../../../utils/ops.util';
-import { MdFragment } from '../../../../components/md-fragment';
-import { Tag } from '../../../../components/tag/tag.component';
-import { Time } from '../../../../components/time/time.component';
-import { ErrorView } from '../../../../components/error-view/error-view.component';
+import { getDefault } from '../../../utils/ops.util';
+import { MdFragment } from '../../../components/md-fragment';
+import { Tag } from '../../../components/tag/tag.component';
+import { Time } from '../../../components/time/time.component';
+import { ErrorView } from '../../../components/error-view/error-view.component';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 
@@ -29,6 +29,7 @@ export class Post extends Component {
         let error = undefined;
         if (this.props.staticContext) {
             postData = this.props.staticContext.postData;
+            error = this.props.staticContext.error;
         } else if (window.__INITIAL_DATA__) {
             postData = Object.assign({}, window.__INITIAL_DATA__.postData);
             error = window.__INITIAL_DATA__.error;
@@ -69,7 +70,6 @@ export class Post extends Component {
         return <span></span>;
     }
 
-    // TODO: fix pubdate and last update to use time components
     render() {
         if (this.state.error) {
             return <ErrorView error={this.state.error}></ErrorView>

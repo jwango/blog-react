@@ -12,4 +12,20 @@ PostsService.getPost = async function(postId) {
       return { error: 400 };
   }
 }
+PostsService.getPostsMeta = async function(page, pageSize) {
+    var _pageSize = parseInt(pageSize, 10) || 15;
+    var _page = parseInt(page, 10) || 0;
+    var _start = _pageSize * _page;
+    var _keys = Object.keys(MOCK_BLOG_POSTS).slice(_start, _start + pageSize);
+    return _keys.map((_key) => {
+        var post = MOCK_BLOG_POSTS[_key];
+        return {
+            id: post.guid,
+            title: post.title,
+            description: post.description,
+            pubDate: '',
+            link: `/posts/${post.guid}`
+        };
+    });
+}
 export default PostsService;

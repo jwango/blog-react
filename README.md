@@ -3,11 +3,14 @@
 [x] Render error component for missing pages or data  
 [x] Re-theme header sizes  
 [x] Re-theme blog metadata  
-[ ] Add blog loading state
+[ ] Add blog loading state  
 [x] Re-theme feed item  
 [x] Re-theme feed loading state  
 [x] Re-theme pins  
 [ ] Build About scene  
+[~] Build Archive scene  
+[x] Add /posts/meta endpoint for Archive  
+[ ] Generalize data fetching for feed component  
 [ ] Build footer  
 [ ] Build comments section  
 [x] Add RSS generator  
@@ -18,3 +21,4 @@
 [x] Add service injection modelling for DI lookup  
 [x] Hook up /posts endpoint to use DB data  
 [ ] Add env switch to change which post service is used  
+[ ] Fix service workers  
