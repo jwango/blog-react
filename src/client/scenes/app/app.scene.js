@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import { Home } from './home';
 import { About } from './about';
-import { Blog, Post } from './blog';
+import { Post } from './post';
+import { Archive } from './archive';
 import { ErrorView } from '../../components/error-view/error-view.component';
 import './app.scene.scss';
 
@@ -48,14 +49,14 @@ export class App extends Component {
                     <nav>
                         <Link to={'/home'}>Home</Link>
                         <Link to={'/about'}>About</Link>
-                        <Link to={'/blog'}>Blog</Link>
+                        <Link to={'/archive'}>Archive</Link>
                     </nav>
                     <main>
                         <Switch>
                             <Route exact={true} path="/" render={() => <Redirect to={'./home'}/>}/>
                             <Route exact={true} path="/home" component={Home}/>
                             <Route exact={true} path="/about" component={About}/>
-                            <Route exact={true} path="/blog" component={Blog}/>
+                            <Route exact={true} path="/archive" component={Archive}/>
                             <Route path='/blog/posts/:postId' component={Post}/>
                             <Route render={(props) => <ErrorView error={{ message: `Oops! Could not find ${props.location.pathname}.` }}></ErrorView>} />
                         </Switch>
