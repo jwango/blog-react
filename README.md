@@ -8,9 +8,9 @@
 [x] Re-theme feed loading state  
 [x] Re-theme pins  
 [ ] Build About scene  
-[~] Build Archive scene  
+[x] Build Archive scene  
 [x] Add /posts/meta endpoint for Archive  
-[ ] Generalize data fetching for feed component  
+[x] Generalize data fetching for feed component  
 [ ] Build footer  
 [ ] Build comments section  
 [x] Add RSS generator  
