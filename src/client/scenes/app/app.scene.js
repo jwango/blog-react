@@ -57,7 +57,7 @@ export class App extends Component {
                             <Route exact={true} path="/home" component={Home}/>
                             <Route exact={true} path="/about" component={About}/>
                             <Route exact={true} path="/archive" component={Archive}/>
-                            <Route path='/blog/posts/:postId' component={Post}/>
+                            <Route exact={true} path='/blog/posts/:postId' component={Post}/>
                             <Route render={(props) => <ErrorView error={{ message: `Oops! Could not find ${props.location.pathname}.` }}></ErrorView>} />
                         </Switch>
                     </main>

@@ -4,6 +4,7 @@ import { getDefault } from '../../../utils/ops.util';
 import { MdFragment } from '../../../components/md-fragment';
 import { Tag } from '../../../components/tag/tag.component';
 import { Time } from '../../../components/time/time.component';
+import { Comment } from '../../../components/comment/comment.component';
 import { ErrorView } from '../../../components/error-view/error-view.component';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
@@ -22,6 +23,8 @@ export class Post extends Component {
         tags: [],
         error: undefined
     }
+
+    count = 2;
 
     constructor(props) {
         super(props);
@@ -52,6 +55,19 @@ export class Post extends Component {
         return dateStr;
     }
 
+    getComment(id) {
+        return Promise.resolve({
+            id: id,
+            user: `User ${id}`,
+            body: 'body',
+            pubDate: undefined,
+            children: [
+                this.count++,
+                this.count++
+            ]
+        });
+    }
+
     renderLastUpdateDate(publishDate, lastUpdateDate) {
         if (publishDate === lastUpdateDate || !lastUpdateDate) {
             return <Fragment></Fragment>;
@@ -70,6 +86,16 @@ export class Post extends Component {
         return <span></span>;
     }
 
+    renderComments(comments) {
+        return (
+            <ul className="comments">{
+                comments.map((comment) => {
+                    return <Comment guid={comment} getDataFunc={this.getComment.bind(this)} renderDepth={3}></Comment>
+                })
+            }</ul>
+        );
+    }
+
     render() {
         if (this.state.error) {
             return <ErrorView error={this.state.error}></ErrorView>
@@ -86,6 +112,13 @@ export class Post extends Component {
                 </section>
                 <footer className="blog__footer">
                     {this.renderTags(this.state.tags)}
+                    <section id="comments">
+                        <form className="comment__form">
+                            <textarea rows="4"></textarea>
+                            <button type="submit">Leave a comment</button>
+                        </form>
+                        {this.renderComments([0, 1])}
+                    </section>
                 </footer>
             </article>
         );

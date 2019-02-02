@@ -12,7 +12,8 @@
 [x] Add /posts/meta endpoint for Archive  
 [x] Generalize data fetching for feed component  
 [ ] Build footer  
-[ ] Build comments section  
+[~] Build comments section  
+[ ] Add comments CRUD endpoints  
 [x] Add RSS generator  
 [ ] Escape REGEX string for link definitions  
 [ ] Revisit link definitions and labels  
