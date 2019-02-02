@@ -147,11 +147,6 @@ html, body {
         }
     }
 
-    section.feed {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
     article.post {
         header {
             margin-bottom: 1.5rem;
@@ -171,16 +166,6 @@ html, body {
             line-height: 1.75rem;
         }
         
-    }
-
-    article.feed-item {
-        margin-bottom: 1rem;
-        width: 27.5rem;
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
     }
 
     h1 {
@@ -333,5 +318,69 @@ html, body {
 
     .feed-item--loading {
         background-color: $on-background-faded;
+    }
+
+    ul.feed {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+        padding: 0;
+    }
+
+    li.feed-item {
+        margin: 0 0 1rem 0;
+        padding: 0;
+        width: 27.5rem;
+        list-style-type: none;
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    }
+
+    .comment__form {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+
+        textarea {
+            width: 100%;
+        }
+    }
+
+    li.comment {
+        list-style-type: none;
+        padding: 0;
+
+        ul {
+            padding: 0;
+        }
+    }
+
+    ul.comments {
+        margin: 1rem 0 0 0;
+        padding: 0;
+
+        > li {
+            margin-left: 0;
+        }
+    }
+
+    .comment__content {
+        border: 0.25rem solid $on-background-faded;
+        padding: 0.5rem;
+
+        h4 {
+            margin-top: 0;
+        }
+    }
+
+    .comment__reactions {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-end;
     }
 }

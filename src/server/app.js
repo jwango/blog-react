@@ -69,7 +69,7 @@ function renderPageHandler(contextPromise, req, res, next) {
         </StaticRouter>
       )
 
-      const depScript = depKey ? `<script src="/${assetsMap[depKey]}" defer></script>` : '';
+      const depScript = depKey ? `<script src="${assetsMap[depKey].slice(1)}" defer></script>` : '';
       res.send(`
         <!doctype html>
         <html lang="en">
@@ -80,7 +80,7 @@ function renderPageHandler(contextPromise, req, res, next) {
             <link rel="manifest" href="/manifest.json">
             <link rel="shortcut icon" href="/favicon.ico">
             <title>Second Ave</title>
-            <link href="/${assetsMap["main.css"]}" rel="stylesheet">
+            <link href="${assetsMap["main.css"].slice(1)}" rel="stylesheet">
             <script>window.__INITIAL_DATA__ = ${serialize(context)}</script>
             <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/solid.js" integrity="sha384-6FXzJ8R8IC4v/SKPI8oOcRrUkJU8uvFK6YJ4eDY11bJQz4lRw5/wGthflEOX8hjL" crossorigin="anonymous"></script>
             <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/fontawesome.js" integrity="sha384-av0fZBtv517ppGAYKqqaiTvWEK6WXW7W0N1ocPSPI/wi+h8qlgWck2Hikm5cxH0E" crossorigin="anonymous"></script>
@@ -89,8 +89,8 @@ function renderPageHandler(contextPromise, req, res, next) {
             <noscript>You need to enable JavaScript to run this app.</noscript>
             ${markup}
             ${depScript}
-            <script src="/${assetsMap["runtime~main.js"]}" defer></script>
-            <script src="/${assetsMap["main.js"]}" defer></script>
+            <script src="${assetsMap["runtime~main.js"].slice(1)}" defer></script>
+            <script src="${assetsMap["main.js"].slice(1)}" defer></script>
           </body>
         </html>
         `);
@@ -118,19 +118,19 @@ app.get('/blog/posts/:postName', (req, res, next) => {
   const contextPromise = fetch(`http://localhost:3001/posts/${postId}`)
     .then((res) => {
       if (res.status >= 200 && res.status < 300) {
-        return res.json().then((postData) => Promise.resolve({ postData: postData }));
+        return res.json().then((postData) => Promise.resolve({ postData: postData || {} }));
       } else {
         return readStringStream(res.body)
           .then((msg) => {
-            return Promise.resolve({ postData: {}, error: { message: msg || res.statusText } });
+            return { postData: {}, error: { message: msg || res.statusText } };
           }, (err) => {
-            return Promise.resolve({ postData: {}, error: { message: res.statusText } });
+            return { postData: {}, error: { message: res.statusText } };
           });
       }
     })
     .catch((err) => {
       console.log(err);
-      return Promise.resolve({ postData: {}, error: { message: err.message } })
+      return { postData: {}, error: { message: err.message } };
     });
   renderPageHandler(contextPromise, req, res, next);
 });

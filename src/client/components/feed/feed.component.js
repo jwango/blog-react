@@ -91,8 +91,10 @@ export class Feed extends Component {
     render() {
         return (
             <Fragment>
-                <section className="feed">
-                    {this.renderItemComponents()}
+                <section>
+                    <ul className="feed">
+                        {this.renderItemComponents()}
+                    </ul>
                 </section>
                 {this.renderMoreButton()}
             </Fragment>

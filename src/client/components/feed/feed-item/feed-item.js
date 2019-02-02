@@ -22,11 +22,11 @@ export class FeedItem extends PureComponent {
         return (
             <Fragment>
                 <h3 className="feed-item--loading">Title</h3>
-                <summary className="feed-item--loading">
+                <div className="feed-item--loading">
                     <p className="feed-item--loading">content</p>
                     <p className="feed-item--loading">is</p>
                     <p className="feed-item--loading">loading</p>
-                </summary>
+                </div>
                 <p className="feed-item--loading">time</p>
                 <br/>
             </Fragment>
@@ -37,7 +37,7 @@ export class FeedItem extends PureComponent {
         return (
             <Fragment>
                 <h3><a href={item.link ? item.link : '#'}>{item.title}</a></h3>
-                <summary><a href={item.link ? item.link : '#'}>{this.stripHTML(item.description)}</a></summary>
+                <p><a href={item.link ? item.link : '#'}>{this.stripHTML(item.description)}</a></p>
                 <Time dateTime={item.pubDate}></Time>
                 <br/>
             </Fragment>
@@ -52,9 +52,9 @@ export class FeedItem extends PureComponent {
             link: getDefault(this.props.link, '#')
         };
         return (
-            <article className='feed-item'>
+            <li className='feed-item'>
                 { this.props.loading ? this.renderLoading() : this.renderItem(item) }
-            </article>
+            </li>
         );
     }
 }
