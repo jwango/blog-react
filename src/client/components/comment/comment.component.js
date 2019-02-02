@@ -1,12 +1,13 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { CommentContent } from './comment-content/comment-content.component';
 
 export class Comment extends PureComponent {
 
   static propTypes = {
     guid: PropTypes.string,
     renderDepth: PropTypes.number,
-    getDataFunc: PropTypes.func
+    getDataFunc: PropTypes.func,
   };
 
   intialExpanded;
@@ -34,7 +35,7 @@ export class Comment extends PureComponent {
   getData() {
     this.setState({ error: undefined, loading: true });
     var minTimePromise = new Promise((resolve, reject) => {
-        setTimeout((callback) => { callback(); }, 500, resolve);
+        setTimeout((callback) => { callback(); }, 250, resolve);
     });
     Promise.all([this.props.getDataFunc(this.props.guid), minTimePromise])
       .then((res) => res[0])
@@ -64,12 +65,16 @@ export class Comment extends PureComponent {
   renderChildren(children) {
     var self = this;
     return children.map((child) => {
-      return <Comment guid={child} getDataFunc={self.props.getDataFunc} renderDepth={Math.max(this.props.renderDepth - 1, 0)}></Comment>
+      return (<Comment 
+        guid={child}
+        getDataFunc={self.props.getDataFunc}
+        renderDepth={Math.max(this.props.renderDepth - 1, 0)}>
+      </Comment>);
     });
   }
 
   renderDetails(children) {
-    if (children) {
+    if (children && children.length > 0) {
       return (
         <details open={this.initialExpanded}>
           <summary onClick={() => this.handleExpand()}>{children.length} response(s)</summary>
@@ -79,7 +84,7 @@ export class Comment extends PureComponent {
         </details>
       );
     }
-    return <Fragment></Fragment>;
+    return <br/>;
   }
 
   renderError(error) {
@@ -87,26 +92,25 @@ export class Comment extends PureComponent {
   }
 
   renderLoading() {
-    return <Fragment>Loading</Fragment>;
+    return <Fragment>Loading...</Fragment>;
   }
 
   render() {
     var innerContent = <Fragment></Fragment>;
-    var outerContent = <Fragment></Fragment>;
     if (this.state.error) { innerContent = this.renderError(this.state.error); }
     else if (this.state.loading) { innerContent = this.renderLoading(); }
     else {
       innerContent = (
-        <Fragment>
-          <h4>{this.state.user}</h4>
-          <p>{this.state.body}</p>
-          <div className="comment__reactions"><button>REPLY</button></div>
-        </Fragment>
+        <CommentContent user={this.state.user} body={this.state.body}>
+          <button>Reply</button>
+        </CommentContent>
       );
-      outerContent = this.renderDetails(this.state.children);
     }
     return (
-      <li className="comment" id={`comment-${this.props.guid}`}><div class="comment__content">{ innerContent }</div>{ outerContent }</li>
+      <li className="comment" id={`comment-${this.props.guid}`}>
+        <div class="comment__inner">{ innerContent }</div>
+        { this.renderDetails(this.state.children) }
+      </li>
     );
   }
 

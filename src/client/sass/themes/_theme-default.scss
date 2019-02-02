@@ -233,16 +233,13 @@ html, body {
 
     blockquote {
         margin-left: 0rem;
+        padding-left: 0.5rem;
         border-style: solid;
         border-left-width: 0.5rem;
         border-color: darken($background, 50%);
         color: $on-background;
         background-color: darken($background, 10%);
         overflow: hidden;
-
-        blockquote {
-            margin-left: 0.5rem;
-        }
     }
 
     code {
@@ -339,15 +336,8 @@ html, body {
         }
     }
 
-    .comment__form {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-
-        textarea {
-            width: 100%;
-        }
+    #comments {
+        margin-top: 3rem;
     }
 
     li.comment {
@@ -368,19 +358,50 @@ html, body {
         }
     }
 
-    .comment__content {
+    .comment__inner {
         border: 0.25rem solid $on-background-faded;
         padding: 0.5rem;
-
-        h4 {
-            margin-top: 0;
-        }
     }
 
-    .comment__reactions {
+    .comment__content h4 {
+        margin-top: 0;
+    }
+
+    .comment__actions {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-end;
+        margin-top: 0.5rem;
+
+        button {
+            margin-left: 0.5rem;
+        }
+    }
+
+    .multi-view {
+        border: 0.25rem solid $on-background-faded;
+        padding: 0.5rem;
+    }
+
+    .multi-view__view {
+        display: none;
+
+        &.multi-view--active {
+            display: block;
+        }
+    }
+
+    .comment__form {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+
+        textarea {
+            resize: none;
+            width: 100%;
+            height: 10rem;
+        }
     }
 }
