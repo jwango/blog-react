@@ -2,17 +2,17 @@ import BaseConsumer from '../consumer';
 var PostsService = Object.create(BaseConsumer);
 
 function getCollection(client) {
-  return client.db("test").collection("foo");
+  return client.db("andful").collection("posts");
 }
 
 async function read(client, postId) {
-  var foo = getCollection(client);
-  return await foo.findOne({ "_id": postId });
+  var postsCollection = getCollection(client);
+  return await postsCollection.findOne({ "_id": postId });
 }
 
 function readPostsMeta(client, page, pageSize) {
-  var foo = getCollection(client);
-  var cursor = foo.find()
+  var postsCollection = getCollection(client);
+  var cursor = postsCollection.find()
     .sort({ lastUpdateDate: -1 })
     .skip(pageSize * page)
     .limit(pageSize)

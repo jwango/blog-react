@@ -81,7 +81,7 @@ export class Post extends Component {
     }
 
     handleSubmit(event) {
-        alert('Submitted the comment!');
+        alert('This feature is in progress.');
         event.preventDefault();
     }
 
@@ -134,7 +134,6 @@ export class Post extends Component {
                         <form onSubmit={this.handleSubmit.bind(this)}>
                             <MultiView views={this.getCommentViews.apply(this)}></MultiView>
                         </form>
-                        {this.renderComments([0, 1])}
                     </section>
                 </footer>
             </article>

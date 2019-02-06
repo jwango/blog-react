@@ -27,6 +27,11 @@ const NODE_KIND = {
     THEMATIC_BREAK: 'hr'
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
 function hasSetext(line) {
     let has = false;
     let i = 0;
@@ -327,7 +332,7 @@ function parseInline(line, linkDefinitions, imageDefinitions) {
                         alt: imageDef.alt
                     }
                 },
-                new RegExp(`!\\[${imageDef.key}\\]`)
+                new RegExp(`!\\[${escapeRegExp(imageDef.key)}\\]`)
             );
         });
     }
@@ -345,7 +350,7 @@ function parseInline(line, linkDefinitions, imageDefinitions) {
                         title: linkDef.title
                     }
                 },
-                new RegExp(`\\[${linkDef.key}\\]`)
+                new RegExp(`\\[${escapeRegExp(linkDef.key)}\\]`)
             );
         });
     }
@@ -370,7 +375,7 @@ function parseInline(line, linkDefinitions, imageDefinitions) {
                             url: autoLink
                         }
                     },
-                    new RegExp(`\\<${autoLink}\\>`)
+                    new RegExp(`\\<${escapeRegExp(autoLink)}\\>`)
                 );
             });
         }
