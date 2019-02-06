@@ -2,9 +2,11 @@ var BLOG_POSTS = require('../data');
 var format = require('date-fns/format');
 var prompt = require('prompt');
 var MongoClient = require('mongodb').MongoClient;
-var URL = "mongodb://localhost:27017";
+var URL = process.env.MONGODB_URI || 'mongodb://localhost:27017';
 var CMD_PROMPT = 'Next command';
 var POST_PROMPT = 'Which post? (id)';
+var COLLECTION_PROMPT = 'Which collection?';
+var DB = "andful";
 
 function askCommand(ask) {
     return new Promise((resolve, reject) => {
@@ -19,13 +21,13 @@ function askCommand(ask) {
 }
 
 function getBlogCollection(client) {
-    return client.db("test").collection("foo");
+    return client.db(DB).collection("posts");
 }
 
 async function readPost(client) {
     var postId = (await askCommand(POST_PROMPT))[POST_PROMPT];
-    var foo = getBlogCollection(client);
-    var cursor = foo.find({ _id: postId });
+    var postsCollection = getBlogCollection(client);
+    var cursor = postsCollection.find({ _id: postId });
     var completed = 0;
     var count = 0;
     while (!cursor.isClosed()) {
@@ -52,22 +54,33 @@ async function uploadPost(client) {
     var postId = (await askCommand(POST_PROMPT))[POST_PROMPT];
     if (BLOG_POSTS[postId]) {
         console.log(`Uploading post ${postId}...`);
-        var foo = getBlogCollection(client);
+        var postsCollection = getBlogCollection(client);
         var docToWrite = Object.assign({ _id: postId, lastUpdateDate: currentTime }, BLOG_POSTS[postId]);
-        foo.updateOne(
+        postsCollection.updateOne(
             { _id: postId },
             { $set: docToWrite, $setOnInsert: { publishDate: currentTime} },
             { upsert: true }
-        ).then((val) => console.log(val), (err) => console.log(err));
+        ).then(console.log, console.log);
     }
 }
 
 async function deletePost(client) {
     var postId = (await askCommand(POST_PROMPT))[POST_PROMPT];
-    var foo = getBlogCollection(client);
-    foo.deleteOne(
+    var postsCollection = getBlogCollection(client);
+    postsCollection.deleteOne(
         { _id: postId }
-    ).then((val) => console.log(val), (err) => console.log(err));
+    ).then(console.log, console.log);
+}
+
+async function dropCollection(client) {
+    var collectionName = (await askCommand(COLLECTION_PROMPT))[COLLECTION_PROMPT];
+    var collection = client.db(DB).collection(collectionName);
+    collection.drop().then(console.log, console.log);
+}
+
+async function createCollection(client) {
+    var collectionName = (await askCommand(COLLECTION_PROMPT))[COLLECTION_PROMPT];
+    client.db(DB).createCollection(collectionName).then(console.log, console.log);
 }
 
 prompt.start();
@@ -85,6 +98,10 @@ MongoClient.connect(URL,  { useNewUrlParser: true })
                     await uploadPost(client);
                 } else if (cmd === 'delete') {
                     await deletePost(client);
+                } else if (cmd === 'drop') {
+                    await dropCollection(client);
+                } else if (cmd === 'create') {
+                    await createCollection(client);
                 } else if (cmd === 'exit') {
                     console.log("closing...");
                     closing = true;

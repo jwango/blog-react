@@ -9,12 +9,20 @@ import PostsServiceMock from './services/posts.service.mock';
 import PostsService from './services/posts.service';
 import PostsController from './routes/posts.controller';
 
+import CommentsServiceMock from './services/comments.service.mock';
+import CommentsController from './routes/comments.controller';
+
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from 'react-router-dom';
 import { App } from '../client/scenes/app/app.scene';
 import React from 'react';
 import fetch from 'isomorphic-fetch';
 import serialize from 'serialize-javascript';
+
+process.env.HOST = process.env.HOST || "http://localhost:3001";
+process.env.MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
+process.env.PUBLIC_URL = process.env.PUBLIC_URL || "http://localhost:3001";
+process.env.POSTS_SERVICE_MOCKED = !!process.env.POSTS_SERVICE_MOCKED || false;
 
 var app = express();
 
@@ -27,7 +35,7 @@ app.use(express.static('build/public'));
 
 // enable CORS for my app
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", process.env.HOST);
   res.header('Access-Control-Allow-Methods', 'GET');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
@@ -37,7 +45,7 @@ app.use(function(req, res, next) {
 var container = Object.create(Container);
 container.register('serviceConfig', true, async function(container) {
   return {
-    url: "mongodb://localhost:27017"
+    url: process.env.MONGODB_URI
   };
 });
 container.register('mongoService', true, async function(container) {
@@ -47,7 +55,17 @@ container.register('mongoService', true, async function(container) {
   return instance;
 });
 container.register('postsService', true, async function(container) {
-  var instance = Object.create(PostsService);
+  var instance;
+  if (process.env.POSTS_SERVICE_MOCKED) {
+    instance = Object.create(PostsServiceMock);
+  } else {
+    instance = Object.create(PostsService);
+  }
+  await instance.init(container);
+  return instance;
+});
+container.register('commentsService', true, async function(container) {
+  var instance = Object.create(CommentsServiceMock);
   await instance.init(container);
   return instance;
 });
@@ -69,7 +87,7 @@ function renderPageHandler(contextPromise, req, res, next) {
         </StaticRouter>
       )
 
-      const depScript = depKey ? `<script src="${assetsMap[depKey].slice(1)}" defer></script>` : '';
+      const depScript = depKey ? `<script src="${assetsMap[depKey]}" defer></script>` : '';
       res.send(`
         <!doctype html>
         <html lang="en">
@@ -80,7 +98,7 @@ function renderPageHandler(contextPromise, req, res, next) {
             <link rel="manifest" href="/manifest.json">
             <link rel="shortcut icon" href="/favicon.ico">
             <title>Second Ave</title>
-            <link href="${assetsMap["main.css"].slice(1)}" rel="stylesheet">
+            <link href="${assetsMap["main.css"]}" rel="stylesheet">
             <script>window.__INITIAL_DATA__ = ${serialize(context)}</script>
             <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/solid.js" integrity="sha384-6FXzJ8R8IC4v/SKPI8oOcRrUkJU8uvFK6YJ4eDY11bJQz4lRw5/wGthflEOX8hjL" crossorigin="anonymous"></script>
             <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/fontawesome.js" integrity="sha384-av0fZBtv517ppGAYKqqaiTvWEK6WXW7W0N1ocPSPI/wi+h8qlgWck2Hikm5cxH0E" crossorigin="anonymous"></script>
@@ -89,8 +107,8 @@ function renderPageHandler(contextPromise, req, res, next) {
             <noscript>You need to enable JavaScript to run this app.</noscript>
             ${markup}
             ${depScript}
-            <script src="${assetsMap["runtime~main.js"].slice(1)}" defer></script>
-            <script src="${assetsMap["main.js"].slice(1)}" defer></script>
+            <script src="${assetsMap["runtime~main.js"]}" defer></script>
+            <script src="${assetsMap["main.js"]}" defer></script>
           </body>
         </html>
         `);
@@ -112,10 +130,15 @@ function readStringStream(rs) {
 
 var postsController = Object.create(PostsController);
 postsController.init(container);
+
+var commentsController = Object.create(CommentsController);
+commentsController.init(container);
+
+app.use('/comments', commentsController.getRouter());
 app.use('/posts', postsController.getRouter());
 app.get('/blog/posts/:postName', (req, res, next) => {
   const postId = req.params.postName.split('-').slice(-1);
-  const contextPromise = fetch(`http://localhost:3001/posts/${postId}`)
+  const contextPromise = fetch(`${process.env.PUBLIC_URL}/posts/${postId}`)
     .then((res) => {
       if (res.status >= 200 && res.status < 300) {
         return res.json().then((postData) => Promise.resolve({ postData: postData || {} }));

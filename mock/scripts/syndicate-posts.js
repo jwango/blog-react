@@ -8,8 +8,8 @@ var RFC822_FORMAT = 'ddd, DD MMM YYYY HH:mm:ss ZZ';
 var config = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 
 async function readLatest(client, limit) {
-  var foo = client.db("test").collection("foo");
-  var cursor = foo.find().sort({ lastUpdateDate: -1 }).limit(limit);
+  var postsCollection = client.db("test").collection("posts");
+  var cursor = postsCollection.find().sort({ lastUpdateDate: -1 }).limit(limit);
   var completed = 0;
   var count = 0;
   var docs = [];

@@ -15,11 +15,11 @@
 [~] Build comments section  
 [ ] Add comments CRUD endpoints  
 [x] Add RSS generator  
-[ ] Escape REGEX string for link definitions  
+[x] Escape REGEX string for link definitions  
 [ ] Revisit link definitions and labels  
 [ ] Sync webpack configs between server and client for compiling React code  
 [x] Refactor server to use controller and service model  
 [x] Add service injection modelling for DI lookup  
 [x] Hook up /posts endpoint to use DB data  
-[ ] Add env switch to change which post service is used  
+[x] Add env switch to configure services  
 [ ] Fix service workers  
