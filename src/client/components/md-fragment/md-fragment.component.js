@@ -37,8 +37,8 @@ export class MdFragment extends Component {
         const id = content.toLowerCase().split(' ').join('-');
         return (
             <Fragment>
-            <span id={id} className="anchor"></span>
             <h1>
+                <span id={id} className="anchor"></span>
                 {content}
                 <a href={`#${id}`}>
                     <img src="/link-1.svg" alt={id} className="pin"/>
