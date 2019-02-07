@@ -93,7 +93,7 @@ function renderPageHandler(contextPromise, req, res, next) {
             <link href="${assetsMap["main.css"]}" rel="stylesheet">
             <script>
               window.__INITIAL_DATA__ = ${serialize(context)}
-              window.__GATEWAY_URL__ = ${process.env.HOST}
+              window.__GATEWAY_URL__ = ${serialize(process.env.HOST)}
             </script>
             <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/solid.js" integrity="sha384-6FXzJ8R8IC4v/SKPI8oOcRrUkJU8uvFK6YJ4eDY11bJQz4lRw5/wGthflEOX8hjL" crossorigin="anonymous"></script>
             <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/fontawesome.js" integrity="sha384-av0fZBtv517ppGAYKqqaiTvWEK6WXW7W0N1ocPSPI/wi+h8qlgWck2Hikm5cxH0E" crossorigin="anonymous"></script>
