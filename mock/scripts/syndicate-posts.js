@@ -1,11 +1,13 @@
 var MongoClient = require('mongodb').MongoClient;
-var URL = process.env.MONGODB_URI || "mongodb://localhost:27017";
 var fs = require('fs');
 var parse = require('date-fns/parse');
 var format = require('date-fns/format');
 var RFC822_FORMAT = 'ddd, DD MMM YYYY HH:mm:ss ZZ';
 
 var config = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+
+process.env.MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
+process.env.PUBLIC_URL = process.env.PUBLIC_URL || "http://localhost:3001";
 
 async function readLatest(client, limit) {
   var postsCollection = client.db("andful").collection("posts");
@@ -37,7 +39,7 @@ async function readLatest(client, limit) {
 function* genItem(config, item, levels) {
   yield addIndent('<item>\n', levels);
   yield addIndent(`<title>${item.title}</title>\n`, levels + 1);
-  yield addIndent(`<link>${config.items.baseURL}${item._id}</link>\n`, levels + 1);
+  yield addIndent(`<link>${process.env.PUBLIC_URL}${config.items.baseURL}${item._id}</link>\n`, levels + 1);
   yield addIndent('<description>\n', levels + 1);
   yield addIndent(`${item.description}\n`, levels + 2);
   yield addIndent('</description>\n', levels + 1);
@@ -52,7 +54,7 @@ function* genItems(config, items) {
   yield '<rss version="2.0">\n';
   yield addIndent('<channel>\n', 1);
   yield addIndent(`<title>${config.channel.title}</title>\n`, 2);
-  yield addIndent(`<link>${config.channel.link}</link>\n`, 2);
+  yield addIndent(`<link>${process.env.PUBLIC_URL}</link>\n`, 2);
   yield addIndent('<description>\n', 2);
   yield addIndent(`${config.channel.description}\n`, 3);
   yield addIndent('</description>\n', 2);
@@ -100,7 +102,7 @@ function addIndent(line, levels) {
   return indent + line;
 }
 
-MongoClient.connect(URL, { useNewUrlParser: true })
+MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then(async (client) => {
     var items = await readLatest(client, 15);
     if (items) {
