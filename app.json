@@ -1,0 +1,31 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ],
+  "env": {
+    "MONGODB_URI": {
+      "required": true
+    },
+    "NODE_ENV": {
+      "required": true
+    },
+    "POSTS_SERVICE_MOCKED": {
+      "required": true
+    },
+    "HOST": {
+      "required": true
+    },
+    "PUBLIC_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "name": "andful",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
