@@ -19,7 +19,6 @@ import serialize from 'serialize-javascript';
 process.env.HOST = process.env.HOST || "http://localhost:3001";
 process.env.MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
 process.env.PUBLIC_URL = process.env.PUBLIC_URL || "http://localhost:3001";
-process.env.POSTS_SERVICE_MOCKED = !!process.env.POSTS_SERVICE_MOCKED || false;
 
 var app = express();
 
@@ -52,12 +51,7 @@ container.register('mongoService', true, async function(container) {
   return instance;
 });
 container.register('postsService', true, async function(container) {
-  var instance;
-  if (process.env.POSTS_SERVICE_MOCKED === "true") {
-    instance = Object.create(PostsServiceMock);
-  } else {
-    instance = Object.create(PostsService);
-  }
+  var instance = Object.create(PostsService);
   await instance.init(container);
   return instance;
 });
