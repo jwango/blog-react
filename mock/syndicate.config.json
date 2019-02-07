@@ -1,7 +1,7 @@
 {
   "outputFile":"./src/public/rss.xml",
   "channel": {
-    "title": "Second Ave",
+    "title": "andful",
     "link": "localhost:3001",
     "description": "Test",
     "pubDate": "Sometime"

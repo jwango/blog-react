@@ -44,7 +44,7 @@ export class App extends Component {
             <span className={this.state.theme}>
                 <div className='container column'>
                     <header className="main__header">
-                        <h1>Second Ave</h1>
+                        <h1>andful</h1>
                     </header>
                     <nav>
                         <Link to={'/home'}>Home</Link>
@@ -63,7 +63,7 @@ export class App extends Component {
                     </main>
                     <hr className="main__footer-separator"/>
                     <footer className="main__footer">
-                        Footer
+                        Got any thoughts or questions? Contact the <Link to={'/about'}>author</Link>!
                     </footer>
                 </div>
             </span>
