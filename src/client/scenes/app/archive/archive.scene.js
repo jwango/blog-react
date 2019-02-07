@@ -16,7 +16,7 @@ export class Archive extends Component {
     }
 
     getMorePosts(page, limit) {
-        return fetch(`http://localhost:3001/posts/meta?page=${page}&limit=${limit}`)
+        return fetch(`${window.__GATEWAY_URL__}/posts/meta?page=${page}&limit=${limit}`)
             .then((res) => {
                 if (res.status >= 200 && res.status < 300) {
                     return res.json().then(
