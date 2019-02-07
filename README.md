@@ -11,7 +11,7 @@
 [x] Build Archive scene  
 [x] Add /posts/meta endpoint for Archive  
 [x] Generalize data fetching for feed component  
-[~] Build footer  
+[-] Build footer  
 [p] Build comments section  
 [p] Add comments CRUD endpoints  
 [x] Add RSS generator  
@@ -22,4 +22,4 @@
 [x] Add service injection modelling for DI lookup  
 [x] Hook up /posts endpoint to use DB data  
 [x] Add env switch to configure services  
-[~] Fix service workers  
+[-] Fix service workers  
