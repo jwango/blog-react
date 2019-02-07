@@ -2,11 +2,10 @@
   "outputFile":"./src/public/rss.xml",
   "channel": {
     "title": "andful",
-    "link": "localhost:3001",
     "description": "Test",
     "pubDate": "Sometime"
   },
   "items": {
-    "baseURL": "http://localhost:3001/blog/posts/"
+    "baseURL": "/blog/posts/"
   }
 }
