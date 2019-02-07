@@ -19,7 +19,6 @@ $nav-height: 2.5rem;
 $content-width: 65%;
 $content-margin: (100% - $content-width) / 2;
 $code-padding: 0.125rem;
-$line-height: 1rem + $code-padding * 2;
 $li-padding: 0.125rem;
 
 %primary {
@@ -49,7 +48,7 @@ html, body {
 .app--default {
 
     font-family: 'Helvetica';
-    line-height: $line-height;
+    line-height: 1.25;
     @extend %background;
 
     // Layout
@@ -88,6 +87,7 @@ html, body {
 
         h1 {
             font-size: 3rem;
+            margin: 0;
         }
     }
 
@@ -128,6 +128,10 @@ html, body {
         flex-shrink: 0;
     }
 
+    p {
+        margin-bottom: 1rem;
+    }
+
     hr.main__footer-separator {
         margin: 0rem;
         width: $content-width;
@@ -152,18 +156,22 @@ html, body {
             margin-bottom: 1.5rem;
             p {
                 font-size: 1rem;
-                line-height: 1rem;
+                line-height: 2;
                 color: $on-background-faded; // Revisit this
             }
         }
 
+        p {
+            margin-bottom: 0;
+        }
+
         p + p {
-            padding-top: 1.5rem;
+            margin-top: 1.5rem;
         }
 
         .post__content {
             font-size: 1.25rem;
-            line-height: 1.75rem;
+            line-height: 1.75;
         }
         
     }
@@ -189,11 +197,11 @@ html, body {
     }
 
     h6 {
-        font-size: $line-height + 0.1rem;
+        font-size: 1.1rem;
     }
 
     h1, h2, h3, h4, h5, h6 {
-        margin-top: $line-height;
+        margin-top: 1rem;
         margin-bottom: 0.5rem;
     }
     
@@ -243,7 +251,7 @@ html, body {
     }
 
     code {
-        line-height: $line-height;
+        line-height: 1.25;
         color: $secondary;
         border-radius: 0.25rem;
         background-color: darken($background, 10%);

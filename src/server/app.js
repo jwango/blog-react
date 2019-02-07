@@ -9,9 +9,6 @@ import PostsServiceMock from './services/posts.service.mock';
 import PostsService from './services/posts.service';
 import PostsController from './routes/posts.controller';
 
-import CommentsServiceMock from './services/comments.service.mock';
-import CommentsController from './routes/comments.controller';
-
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from 'react-router-dom';
 import { App } from '../client/scenes/app/app.scene';
@@ -56,16 +53,11 @@ container.register('mongoService', true, async function(container) {
 });
 container.register('postsService', true, async function(container) {
   var instance;
-  if (process.env.POSTS_SERVICE_MOCKED) {
+  if (process.env.POSTS_SERVICE_MOCKED === "true") {
     instance = Object.create(PostsServiceMock);
   } else {
     instance = Object.create(PostsService);
   }
-  await instance.init(container);
-  return instance;
-});
-container.register('commentsService', true, async function(container) {
-  var instance = Object.create(CommentsServiceMock);
   await instance.init(container);
   return instance;
 });
@@ -97,7 +89,7 @@ function renderPageHandler(contextPromise, req, res, next) {
             <meta name="theme-color" content="#000000">
             <link rel="manifest" href="/manifest.json">
             <link rel="shortcut icon" href="/favicon.ico">
-            <title>Second Ave</title>
+            <title>andful</title>
             <link href="${assetsMap["main.css"]}" rel="stylesheet">
             <script>window.__INITIAL_DATA__ = ${serialize(context)}</script>
             <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/solid.js" integrity="sha384-6FXzJ8R8IC4v/SKPI8oOcRrUkJU8uvFK6YJ4eDY11bJQz4lRw5/wGthflEOX8hjL" crossorigin="anonymous"></script>
@@ -131,10 +123,6 @@ function readStringStream(rs) {
 var postsController = Object.create(PostsController);
 postsController.init(container);
 
-var commentsController = Object.create(CommentsController);
-commentsController.init(container);
-
-app.use('/comments', commentsController.getRouter());
 app.use('/posts', postsController.getRouter());
 app.get('/blog/posts/:postName', (req, res, next) => {
   const postId = req.params.postName.split('-').slice(-1);

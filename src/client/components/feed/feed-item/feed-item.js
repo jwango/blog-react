@@ -22,12 +22,12 @@ export class FeedItem extends PureComponent {
         return (
             <Fragment>
                 <h3 className="feed-item--loading">Title</h3>
-                <div className="feed-item--loading">
-                    <p className="feed-item--loading">content</p>
-                    <p className="feed-item--loading">is</p>
-                    <p className="feed-item--loading">loading</p>
-                </div>
-                <p className="feed-item--loading">time</p>
+                <p className="feed-item--loading">
+                    <div className="feed-item--loading">content</div>
+                    <div className="feed-item--loading">is</div>
+                    <div className="feed-item--loading">loading</div>
+                </p>
+                <div className="feed-item--loading">time</div>
                 <br/>
             </Fragment>
         );

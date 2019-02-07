@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-var URL = "mongodb://localhost:27017";
+var URL = process.env.MONGODB_URI || "mongodb://localhost:27017";
 var fs = require('fs');
 var parse = require('date-fns/parse');
 var format = require('date-fns/format');
@@ -8,7 +8,7 @@ var RFC822_FORMAT = 'ddd, DD MMM YYYY HH:mm:ss ZZ';
 var config = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 
 async function readLatest(client, limit) {
-  var postsCollection = client.db("test").collection("posts");
+  var postsCollection = client.db("andful").collection("posts");
   var cursor = postsCollection.find().sort({ lastUpdateDate: -1 }).limit(limit);
   var completed = 0;
   var count = 0;
@@ -105,7 +105,7 @@ MongoClient.connect(URL, { useNewUrlParser: true })
     var items = await readLatest(client, 15);
     if (items) {
       items.forEach((item) => {
-        console.log(`${item._id}: ${item.lastUpdateDate} | ${item.mapped}`);
+        console.log(`${item._id}: ${item.lastUpdateDate}`);
       });
       writeToRSS(config, items, () => client.close());
     } else {
