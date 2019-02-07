@@ -9,7 +9,7 @@ MongoService.getConnectedClient = async function() {
     console.log("Connecting to MongoDB...");
     try {
       this._connectedClient = await this.client.connect(this.serviceConfig.url, { useNewUrlParser: true });
-      console.log("Connected!");
+      console.log(`Connected to ${this.serviceConfig.url}!`);
     } catch (error) {
       console.log("Failed to connect.")
       console.log(error);
