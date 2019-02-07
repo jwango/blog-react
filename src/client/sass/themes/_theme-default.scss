@@ -105,10 +105,13 @@ html, body {
 
         a {
             padding: 0.5rem 0rem;
-            margin-right: 1.75rem;
             text-decoration: none;
             display: inline-block;
             font-size: 1.25rem;
+        }
+
+        a + a {
+            margin-left: 1.75rem;
         }
 
         a:link, a:visited {
@@ -136,6 +139,11 @@ html, body {
         margin: 0rem;
         width: $content-width;
         margin: 0rem $content-margin;
+    }
+
+    .main__footer-icon {
+        height: 24px;
+        margin-bottom: -5px;
     }
 
     footer {
@@ -203,6 +211,7 @@ html, body {
     h1, h2, h3, h4, h5, h6 {
         margin-top: 1rem;
         margin-bottom: 0.5rem;
+        line-height: 1;
     }
     
     // Atoms
@@ -337,6 +346,10 @@ html, body {
         padding: 0;
         width: 27.5rem;
         list-style-type: none;
+
+        p:only-of-type {
+            margin-bottom: 0;
+        }
 
         a {
             text-decoration: none;
