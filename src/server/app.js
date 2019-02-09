@@ -85,19 +85,19 @@ function renderPageHandler(contextPromise, req, res, next) {
             <link rel="shortcut icon" href="/favicon.ico">
             <title>andful</title>
             <link href="${assetsMap["main.css"]}" rel="stylesheet">
-            <script>
+            <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/solid.js" integrity="sha384-6FXzJ8R8IC4v/SKPI8oOcRrUkJU8uvFK6YJ4eDY11bJQz4lRw5/wGthflEOX8hjL" crossorigin="anonymous"></script>
+            <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/fontawesome.js" integrity="sha384-av0fZBtv517ppGAYKqqaiTvWEK6WXW7W0N1ocPSPI/wi+h8qlgWck2Hikm5cxH0E" crossorigin="anonymous"></script>
+            ${depScript}
+            <script src="${assetsMap["runtime~main.js"]}" defer></script>
+            <script src="${assetsMap["main.js"]}" defer></script>
+            <script defer>
               window.__INITIAL_DATA__ = ${serialize(context)}
               window.__GATEWAY_URL__ = ${serialize(process.env.HOST)}
             </script>
-            <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/solid.js" integrity="sha384-6FXzJ8R8IC4v/SKPI8oOcRrUkJU8uvFK6YJ4eDY11bJQz4lRw5/wGthflEOX8hjL" crossorigin="anonymous"></script>
-            <script defer src="https://use.fontawesome.com/releases/v5.7.0/js/fontawesome.js" integrity="sha384-av0fZBtv517ppGAYKqqaiTvWEK6WXW7W0N1ocPSPI/wi+h8qlgWck2Hikm5cxH0E" crossorigin="anonymous"></script>
           </head>
           <body id="root">
             <noscript>You need to enable JavaScript to run this app.</noscript>
             ${markup}
-            ${depScript}
-            <script src="${assetsMap["runtime~main.js"]}" defer></script>
-            <script src="${assetsMap["main.js"]}" defer></script>
           </body>
         </html>
         `);
