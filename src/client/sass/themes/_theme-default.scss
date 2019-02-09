@@ -16,8 +16,10 @@ $on-warn: $on-primary;
 $error: #ffbf3d;
 
 $nav-height: 2.5rem;
-$content-width: 65%;
-$content-margin: (100% - $content-width) / 2;
+$content-width-l: 65%;
+$content-padding-l: (100% - $content-width-l) / 2;
+$content-width: 90%;
+$content-padding: (100% - $content-width) / 2;
 $code-padding: 0.125rem;
 $li-padding: 0.125rem;
 
@@ -83,7 +85,7 @@ html, body {
         width: 100%;
         height: 7rem;
         text-align: left;
-        padding: 1rem $content-margin;
+        padding: 1rem $content-padding;
 
         h1 {
             font-size: 3rem;
@@ -96,7 +98,7 @@ html, body {
         position: sticky;
         top: 0;
         width: 100%;
-        padding: 0 $content-margin;
+        padding: 0 $content-padding;
         height: $nav-height;
         margin-top: -1 * $nav-height;
         flex-grow: 0;
@@ -124,8 +126,9 @@ html, body {
     }
 
     main {
-        margin: 0 $content-margin;
-        width: $content-width;
+        width: 100%;
+        margin: 0;
+        padding: 0 $content-padding;
         height: 100%;
         flex-grow: 1;
         flex-shrink: 0;
@@ -136,9 +139,8 @@ html, body {
     }
 
     hr.main__footer-separator {
-        margin: 0rem;
+        margin: 0rem $content-padding;
         width: $content-width;
-        margin: 0rem $content-margin;
     }
 
     .main__footer-icon {
@@ -149,7 +151,7 @@ html, body {
     footer {
         &.main__footer {
             @extend %background;
-            padding: 3rem $content-margin;
+            padding: 3rem $content-padding;
             width: 100%;
             flex-shrink: 0;
         }
@@ -273,7 +275,7 @@ html, body {
             margin: 1rem 0rem;
             border-radius: 1rem;
             display: block;
-            overflow: hidden;
+            overflow-x: auto;
         }
     }
 
@@ -423,6 +425,34 @@ html, body {
             resize: none;
             width: 100%;
             height: 10rem;
+        }
+    }
+
+     @media only screen and (min-width: 768px) {
+        %side-padding {
+            padding-left: $content-padding-l;
+            padding-right: $content-padding-l;
+        }
+
+        main {
+            @extend %side-padding;
+        }
+
+        header.main__header {
+            @extend %side-padding;
+        }
+
+        nav {
+            @extend %side-padding;
+        }
+
+        footer.main__footer {
+            @extend %side-padding;
+        }
+
+        hr.main__footer-separator {
+            width: $content-width-l;
+            margin: 0 $content-padding-l;
         }
     }
 }
