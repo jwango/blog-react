@@ -136,6 +136,7 @@ html, body {
 
     p {
         margin-bottom: 1rem;
+        word-wrap: break-word;
     }
 
     hr.main__footer-separator {
@@ -180,8 +181,8 @@ html, body {
         }
 
         .post__content {
-            font-size: 1.25rem;
-            line-height: 1.75;
+            font-size: 1rem;
+            line-height: 1.25;
         }
         
     }
@@ -453,6 +454,13 @@ html, body {
         hr.main__footer-separator {
             width: $content-width-l;
             margin: 0 $content-padding-l;
+        }
+
+        article.post {
+            .post__content {
+                font-size: 1.25rem;
+                line-height: 1.75;
+            }
         }
     }
 }
