@@ -46,7 +46,7 @@ function* genItem(config, item, levels) {
   for (var tag of (item.tags || [])) {
     yield addIndent(`<category>${tag}</category>\n`, levels + 1);
   }
-  yield addIndent(`<pubDate>${format(parse(item.publishDate), RFC822_FORMAT)}</pubDate>\n`, levels + 1);
+  yield addIndent(`<pubDate>${format(parse(item.lastUpdateDate), RFC822_FORMAT)}</pubDate>\n`, levels + 1);
   yield addIndent('</item>\n', levels);
 }
 
@@ -58,7 +58,7 @@ function* genItems(config, items) {
   yield addIndent('<description>\n', 2);
   yield addIndent(`${config.channel.description}\n`, 3);
   yield addIndent('</description>\n', 2);
-  yield addIndent(`<pubDate>${format(parse(config.channel.pubDate), RFC822_FORMAT)}</pubDate>\n`, 2);
+  yield addIndent(`<pubDate>${format(parse(new Date()), RFC822_FORMAT)}</pubDate>\n`, 2);
   for (var item of items) {
     yield* genItem(config, item, 2);
   }
