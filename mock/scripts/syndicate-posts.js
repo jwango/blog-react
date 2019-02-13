@@ -38,6 +38,7 @@ async function readLatest(client, limit) {
 
 function* genItem(config, item, levels) {
   yield addIndent('<item>\n', levels);
+  yield addIndent(`<guid>${item.guid}</guid>\n`, levels + 1);
   yield addIndent(`<title>${item.title}</title>\n`, levels + 1);
   yield addIndent(`<link>${process.env.PUBLIC_URL}${config.items.baseURL}${item._id}</link>\n`, levels + 1);
   yield addIndent('<description>\n', levels + 1);
