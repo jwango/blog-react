@@ -55,7 +55,16 @@ async function uploadPost(client) {
     if (BLOG_POSTS[postId]) {
         console.log(`Uploading post ${postId}...`);
         var postsCollection = getBlogCollection(client);
-        var docToWrite = Object.assign({ _id: postId, lastUpdateDate: currentTime }, BLOG_POSTS[postId]);
+        var post = BLOG_POSTS[postId];
+        var docToWrite = {
+            _id: postId,
+            guid: post.guid,
+            title: post.title,
+            description: post.description,
+            body: post.body,
+            tags: post.tags,
+            lastUpdateDate: currentTime
+        };
         postsCollection.updateOne(
             { _id: postId },
             { $set: docToWrite, $setOnInsert: { publishDate: currentTime} },
