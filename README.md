@@ -16,7 +16,7 @@
 [p] Add comments CRUD endpoints  
 [x] Add RSS generator  
 [x] Escape REGEX string for link definitions  
-[ ] Revisit link definitions and labels  
+[x] Revisit link definitions and labels  
 [ ] Sync webpack configs between server and client for compiling React code  
 [x] Refactor server to use controller and service model  
 [x] Add service injection modelling for DI lookup  

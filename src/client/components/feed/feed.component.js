@@ -20,7 +20,8 @@ export class Feed extends Component {
         this.state = {
             items: [],
             batchSize: getDefault(props.batchSize, 0),
-            page: 0
+            page: 0,
+            loading: false
         };
     }
 
@@ -31,6 +32,9 @@ export class Feed extends Component {
     }
 
     getMoreItems(page, limit) {
+        if (this.state.loading) {
+            return Promise.resolve(null);
+        }
         let newItems = [];
         for (let i = 0; i < limit; i++) {
             newItems.push({
@@ -38,7 +42,8 @@ export class Feed extends Component {
             });
         }
         this.setState({
-            items: this.state.items.concat(newItems)
+            items: this.state.items.concat(newItems),
+            loading: true
         });
         var minTimePromise = new Promise((resolve, reject) => {
             setTimeout((callback) => { callback(); }, 500, resolve);
@@ -50,18 +55,21 @@ export class Feed extends Component {
                     if (res && res.length > 0) {
                         this.setState({
                             page: this.state.page + 1,
-                            items: this.state.items.slice(0, -1 * limit).concat(res)
+                            items: this.state.items.slice(0, -1 * limit).concat(res),
+                            loading: false
                         });
                     } else {
                         this.setState({
-                            items: this.state.items.slice(0, -1 * limit)
+                            items: this.state.items.slice(0, -1 * limit),
+                            loading: false
                         });
                     }
                     return res;
                 },
                 (err) => {
                     this.setState({
-                        items: this.state.items.slice(0, -1 * limit)
+                        items: this.state.items.slice(0, -1 * limit),
+                        loading: false
                     });
                     throw err;
                 }
@@ -85,6 +93,9 @@ export class Feed extends Component {
     }
 
     renderMoreButton() {
+        if (this.state.loading) {
+            return <Fragment></Fragment>;
+        }
         return <button onClick={() => this.getMoreItems(this.state.page, this.state.batchSize)}>More Content</button>
     }
     
