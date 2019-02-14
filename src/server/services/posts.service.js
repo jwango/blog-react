@@ -10,9 +10,10 @@ async function read(client, postId) {
   return await postsCollection.findOne({ "_id": postId });
 }
 
-function readPostsMeta(client, page, pageSize) {
+function readPostsMeta(client, page, pageSize, tags) {
   var postsCollection = getCollection(client);
-  var cursor = postsCollection.find()
+  var query = (tags && tags.length) ? { tags: { $in: tags } } : {};
+  var cursor = postsCollection.find(query)
     .sort({ lastUpdateDate: -1 })
     .skip(pageSize * page)
     .limit(pageSize)
@@ -58,9 +59,10 @@ PostsService.getPost = async function(postId) {
     return { status: 400, error: new Error('Invalid post.') };
   }
 };
-PostsService.getPostsMeta = async function(page, pageSize) {
+PostsService.getPostsMeta = async function(page, pageSize, tags) {
   var _pageSize = parseInt(pageSize, 10) || 15;
   var _page = parseInt(page, 10) || 0;
-  return useMongo(this.mongoService, readPostsMeta, _page, _pageSize);  
+  var _tags = tags || [];
+  return useMongo(this.mongoService, readPostsMeta, _page, _pageSize, _tags);  
 };
 export default PostsService;

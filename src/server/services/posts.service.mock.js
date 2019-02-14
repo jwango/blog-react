@@ -12,7 +12,7 @@ PostsService.getPost = async function(postId) {
       return { error: 400 };
   }
 }
-PostsService.getPostsMeta = async function(page, pageSize) {
+PostsService.getPostsMeta = async function(page, pageSize, tags) {
     var _pageSize = parseInt(pageSize, 10) || 15;
     var _page = parseInt(page, 10) || 0;
     var _start = _pageSize * _page;

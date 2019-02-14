@@ -62,7 +62,7 @@ async function uploadPost(client) {
             title: post.title,
             description: post.description,
             body: post.body,
-            tags: post.tags,
+            tags: post.tags.map((tag) => tag.replace(/ /g, '')),
             lastUpdateDate: currentTime
         };
         postsCollection.updateOne(

@@ -626,3 +626,14 @@ export default function parseMarkdown(lines) {
     }
     return chunks;
 }
+
+export function parseQueryString(string) {
+    return (string || '?').slice(1).split('&').reduce(
+        (acc, val) => {
+            const kvp = val.split('=');
+            if (kvp.length == 2) {
+                acc[kvp[0]] = kvp[1];
+            }
+            return acc;
+        }, {});
+}

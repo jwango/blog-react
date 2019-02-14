@@ -8,6 +8,8 @@ import MongoService from './services/mongo.service';
 import PostsServiceMock from './services/posts.service.mock';
 import PostsService from './services/posts.service';
 import PostsController from './routes/posts.controller';
+import TagsService from './services/tags.service';
+import TagsController from './routes/tags.controller';
 
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from 'react-router-dom';
@@ -52,6 +54,11 @@ container.register('mongoService', true, async function(container) {
 });
 container.register('postsService', true, async function(container) {
   var instance = Object.create(PostsService);
+  await instance.init(container);
+  return instance;
+});
+container.register('tagsService', true, async function(container) {
+  var instance = Object.create(TagsService);
   await instance.init(container);
   return instance;
 });
@@ -119,8 +126,12 @@ function readStringStream(rs) {
 
 var postsController = Object.create(PostsController);
 postsController.init(container);
-
 app.use('/posts', postsController.getRouter());
+
+var tagsController = Object.create(TagsController);
+tagsController.init(container);
+app.use('/tags', tagsController.getRouter());
+
 app.get('/blog/posts/:postName', (req, res, next) => {
   const postId = req.params.postName.split('-').slice(-1);
   const contextPromise = fetch(`${process.env.PUBLIC_URL}/posts/${postId}`)
