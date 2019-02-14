@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Feed } from '../../../components/feed/feed.component';
+import { parseQueryString } from '../../../utils/parse.util';
 import fetch from 'isomorphic-fetch';
 
 export class Archive extends Component {
@@ -16,7 +17,9 @@ export class Archive extends Component {
     }
 
     getMorePosts(page, limit) {
-        return fetch(`${window.__GATEWAY_URL__}/posts/meta?page=${page}&limit=${limit}`)
+        const queryParams = parseQueryString(this.props.location.search);
+        const tagsParam = queryParams.tags ? `&tags=${queryParams.tags}` : '';
+        return fetch(`${window.__GATEWAY_URL__}/posts/meta?page=${page}&limit=${limit}${tagsParam}`)
             .then((res) => {
                 if (res.status >= 200 && res.status < 300) {
                     return res.json().then(

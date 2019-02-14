@@ -24,7 +24,7 @@
 [x] Add env switch to configure services  
 [-] Fix service workers  
 [x] Remove filepath from upload script  
-[x] Add guid to syndication
-[ ] Add tags endpoints  
-[ ] Add tags scene  
+[x] Add guid to syndication  
+[x] Add tags endpoints  
+[x] Add tags scene  
 [ ] Change icon  

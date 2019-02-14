@@ -31,7 +31,10 @@ PostsController.getRouter = function() {
 
   var postMetaHandler = function(req, res, next) {
     if (this.postsService) {
-      this.postsService.getPostsMeta(req.query.page, req.query.limit)
+      var _pageSize = parseInt(req.query.limit, 10) || 15;
+      var _page = parseInt(req.query.page, 10) || 0;
+      var _tags = req.query.tags ? req.query.tags.split(' ') : [];
+      this.postsService.getPostsMeta(_page, _pageSize, _tags)
         .then((result) => {
           if (result) {
             if (!result.error) {
