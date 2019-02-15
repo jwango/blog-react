@@ -102,13 +102,13 @@ export class Comment extends PureComponent {
     else {
       innerContent = (
         <CommentContent user={this.state.user} body={this.state.body}>
-          <button>Reply</button>
+          <button className="btn--flat">Reply</button>
         </CommentContent>
       );
     }
     return (
       <li className="comment" id={`comment-${this.props.guid}`}>
-        <div class="comment__inner">{ innerContent }</div>
+        <div className="comment__inner">{ innerContent }</div>
         { this.renderDetails(this.state.children) }
       </li>
     );
