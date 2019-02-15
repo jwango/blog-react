@@ -34,8 +34,8 @@ export class CommentForm extends Component {
       <div className="comment__form">
         <textarea value={this.state.body} onChange={this.handleChange.bind(this)}></textarea>
         <div className="comment__actions">
-          <button className="btn--flat" type="submit">Submit</button>
           <button className="btn--flat" type="button" onClick={this.onPreview.bind(this)}>Preview</button>
+          <button className="btn--secondary btn--flat" type="submit">Submit</button>
         </div>
       </div>
     )

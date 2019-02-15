@@ -66,6 +66,7 @@ export class Comment extends PureComponent {
     var self = this;
     return children.map((child) => {
       return (<Comment 
+        key={child}
         guid={child}
         getDataFunc={self.props.getDataFunc}
         renderDepth={Math.max(this.props.renderDepth - 1, 0)}>
@@ -102,7 +103,7 @@ export class Comment extends PureComponent {
     else {
       innerContent = (
         <CommentContent user={this.state.user} body={this.state.body}>
-          <button className="btn--flat">Reply</button>
+          <button className="btn--secondary btn--flat">Reply</button>
         </CommentContent>
       );
     }

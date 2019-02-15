@@ -23,8 +23,8 @@ export class CommentPreview extends Component {
     return (
       <div className="comment__preview">
           <CommentContent user={"Preview User"} body={this.props.body}>
-            <button className="btn--flat" type="submit">Submit</button>
             <button className="btn--flat" type="button" onClick={this.onEdit.bind(this)}>Edit</button>
+            <button className="btn--secondary btn--flat" type="submit">Submit</button>
           </CommentContent>
       </div>
     );

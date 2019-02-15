@@ -5,6 +5,7 @@ $on-primary: #ffffff;
 
 $secondary: #0099cc;
 $on-secondary: $on-primary;
+$on-secondary-faded: #DDDDDD;
 
 $background: #ffffff;
 $background-faded: #DDDDDD;
@@ -231,9 +232,12 @@ html, body {
         padding: 0;
 
         &.btn--flat {
-            padding: 0.5rem 1rem;
             background-color: $background-faded;
-            color: $on-background;
+            padding: 0.5rem 1rem;
+
+            &.btn--secondary {
+                @extend %secondary;
+            }
         }
     }
 
@@ -242,7 +246,11 @@ html, body {
         outline: 0rem;
 
         &.btn--flat {
-            color: $primary;
+            color: $on-background-faded;
+
+            &.btn--secondary {
+                color: $on-secondary-faded;
+            }
         }
     }
 
@@ -251,13 +259,18 @@ html, body {
     }
 
     .tag {
-        @extend %secondary;
+        color: $on-background;
+        background-color: $background-faded;
         border-radius: 1rem;
         font-size: 1rem;
         padding: 0.1rem 0.4rem;
         margin-right: 0.125rem;
         margin-top: 0.125rem;
         display: inline-block;
+
+        &.tag--linkable {
+            @extend %secondary;
+        }
 
         & a {
             text-decoration: none;
