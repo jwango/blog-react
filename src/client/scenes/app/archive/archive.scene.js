@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Feed } from '../../../components/feed/feed.component';
+import { Tag } from '../../../components/tag/tag.component';
 import { parseQueryString } from '../../../utils/parse.util';
 import fetch from 'isomorphic-fetch';
 
 export class Archive extends Component {
 
     errorMessage = '';
+
+    constructor(props) {
+        super(props);
+    }
 
     readStringStream(rs) {
         return new Promise((resolve, reject) => {
@@ -16,10 +21,14 @@ export class Archive extends Component {
         });
     }
 
+    getTagsParam() {
+        return parseQueryString(this.props.location.search).tags;
+    }
+
     getMorePosts(page, limit) {
-        const queryParams = parseQueryString(this.props.location.search);
-        const tagsParam = queryParams.tags ? `&tags=${queryParams.tags}` : '';
-        return fetch(`${window.__GATEWAY_URL__}/posts/meta?page=${page}&limit=${limit}${tagsParam}`)
+        const tagsParam = this.getTagsParam();
+        const newTagsParam = tagsParam ? `&tags=${tagsParam}` : '';
+        return fetch(`${window.__GATEWAY_URL__}/posts/meta?page=${page}&limit=${limit}${newTagsParam}`)
             .then((res) => {
                 if (res.status >= 200 && res.status < 300) {
                     return res.json().then(
@@ -40,7 +49,40 @@ export class Archive extends Component {
             });
     }
 
+    removeTag(tag, tags) {
+        let tagsQuery = tags.reduce((acc, val, i) => {
+            if (val !== tag) {
+                if (!!acc) {
+                    acc += '+';
+                }
+                acc += val;
+            }
+            return acc;
+        }, '')
+        if (tagsQuery) {
+            tagsQuery = `?tags=${tagsQuery}`;
+        }
+        this.props.history.push(`/archive${tagsQuery}`);
+    }
+
+    renderTags() {
+        const tagsParam = this.getTagsParam();
+        const tags = tagsParam ? tagsParam.split(/\+/g) : [];
+        return tags.map((tag, index, arr) => {
+            return (
+                <Tag key={tag}>
+                    <button onClick={this.removeTag.bind(this, tag, arr)}><span className="fa fa-times"></span></button>{tag}
+                </Tag>
+            );
+        });
+    }
+
     render() {
-        return <Feed batchSize={2} getMoreFunc={this.getMorePosts.bind(this)}/>;
+        return (
+            <Fragment>
+                <header>{this.renderTags()}</header>
+                <Feed key={this.props.location.key} batchSize={2} getMoreFunc={this.getMorePosts.bind(this)}/>
+            </Fragment>
+        );
     }
 }

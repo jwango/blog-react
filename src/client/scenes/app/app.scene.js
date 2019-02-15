@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect, Link } from 'react-router-dom';
+import { Route, Switch, Redirect, NavLink, Link } from 'react-router-dom';
 import { Home } from './home';
 import { About } from './about';
 import { Post } from './post';
@@ -47,9 +47,9 @@ export class App extends Component {
                         <h1>andful</h1>
                     </header>
                     <nav>
-                        <Link to={'/home'}>Home</Link>
-                        <Link to={'/about'}>About</Link>
-                        <Link to={'/archive'}>Archive</Link>
+                        <NavLink to={'/home'} activeClassName={'nav-link--active'}>Home</NavLink>
+                        <NavLink to={'/about'} activeClassName={'nav-link--active'}>About</NavLink>
+                        <NavLink to={'/archive'} activeClassName={'nav-link--active'}>Archive</NavLink>
                     </nav>
                     <main>
                         <Switch>
@@ -63,7 +63,7 @@ export class App extends Component {
                     </main>
                     <hr className="main__footer-separator"/>
                     <footer className="main__footer">
-                        <p>Got any thoughts or questions? Contact the <Link to={'/about'}>author</Link>! | <a href="https://github.com/jwango/andful"><img src="/GitHub-Mark-120px-plus.png" class="main__footer-icon"></img> source code</a></p>
+                        <p>Got any thoughts or questions? Contact the <Link to={'/about'}>author</Link>! | <a href="https://github.com/jwango/andful"><img src="/GitHub-Mark-120px-plus.png" className="main__footer-icon"></img> source code</a></p>
                     </footer>
                 </div>
             </span>

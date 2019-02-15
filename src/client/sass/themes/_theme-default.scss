@@ -7,6 +7,7 @@ $secondary: #0099cc;
 $on-secondary: $on-primary;
 
 $background: #ffffff;
+$background-faded: #DDDDDD;
 $on-background: #000000;
 $on-background-faded: #777777;
 
@@ -104,6 +105,10 @@ html, body {
         flex-grow: 0;
         flex-shrink: 0;
         z-index: 1;
+
+        .nav-link--active {
+            text-decoration: underline;
+        }
 
         a {
             padding: 0.5rem 0rem;
@@ -219,32 +224,43 @@ html, body {
     
     // Atoms
     button {
-        padding: 0.5rem 1rem;
-        background-color: none;
+        background-color: transparent;
         border-width: 0;
         border-style: none;
-        color: $on-background;
+        color: inherit;
+
+        &.btn--flat {
+            padding: 0.5rem 1rem;
+            background-color: $background-faded;
+            color: $on-background;
+        }
     }
 
     button:hover, button:focus {
-        color: $primary;
         cursor: pointer;
         outline: 0rem;
+
+        &.btn--flat {
+            color: $primary;
+        }
     }
 
     a {
         color: $secondary;
+    }
 
-        &.tag {
-            @extend %secondary;
-            border-radius: 1rem;
-            font-size: 1rem;
-            padding: 0.1rem 0.4rem;
-            margin-right: 0.125rem;
-            margin-top: 0.125rem;
+    .tag {
+        @extend %secondary;
+        border-radius: 1rem;
+        font-size: 1rem;
+        padding: 0.1rem 0.4rem;
+        margin-right: 0.125rem;
+        margin-top: 0.125rem;
+        display: inline-block;
+
+        & a {
             text-decoration: none;
-            display: inline-block;
-
+            color: inherit;
             &:hover, &:active {
                 color: darken($on-secondary, 10%);
             }
@@ -334,7 +350,7 @@ html, body {
     }
 
     .feed-item--loading {
-        background-color: $on-background-faded;
+        background-color: $background-faded;
     }
 
     ul.feed {
