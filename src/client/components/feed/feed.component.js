@@ -96,7 +96,7 @@ export class Feed extends Component {
         if (this.state.loading) {
             return <Fragment></Fragment>;
         }
-        return <button className="btn--flat" onClick={() => this.getMoreItems(this.state.page, this.state.batchSize)}>More Content</button>
+        return <button className="btn--secondary btn--flat" onClick={() => this.getMoreItems(this.state.page, this.state.batchSize)}>More Content</button>
     }
     
     render() {

@@ -31,7 +31,7 @@ export class MultiView extends Component {
         classes += ' multi-view--active';
       }
       return (
-        <section className={classes}>
+        <section className={classes} key={i}>
           { React.cloneElement(view, { setActive: this.setActive.bind(this), viewIndex: i }) }
         </section>
       );
