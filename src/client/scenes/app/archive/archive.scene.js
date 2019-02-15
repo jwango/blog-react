@@ -71,7 +71,7 @@ export class Archive extends Component {
         return tags.map((tag, index, arr) => {
             return (
                 <Tag key={tag}>
-                    <button onClick={this.removeTag.bind(this, tag, arr)}><span className="fa fa-times"></span></button>{tag}
+                    <button onClick={this.removeTag.bind(this, tag, arr)}><span className="fa fa-times"></span></button>&nbsp;{tag}
                 </Tag>
             );
         });
