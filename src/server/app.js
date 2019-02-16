@@ -29,6 +29,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.get('/', function(req, res, next) {
+  res.redirect('/home');
+});
 app.use(express.static('build/public'));
 
 // enable CORS for my app
@@ -153,7 +157,8 @@ app.get('/blog/posts/:postName', (req, res, next) => {
     });
   renderPageHandler(contextPromise, req, res, next);
 });
-app.get('*', (req, res, next) => {
+
+app.get('*', (req, res, next) => { 
   renderPageHandler(Promise.resolve({}), req, res, next);
 });
 
