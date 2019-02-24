@@ -4,7 +4,7 @@ import { Tag } from '../../../components/tag/tag.component';
 import { parseQueryString } from '../../../utils/parse.util';
 import fetch from 'isomorphic-fetch';
 
-export class Archive extends Component {
+export class Blog extends Component {
 
     errorMessage = '';
 
@@ -62,7 +62,7 @@ export class Archive extends Component {
         if (tagsQuery) {
             tagsQuery = `?tags=${tagsQuery}`;
         }
-        this.props.history.push(`/archive${tagsQuery}`);
+        this.props.history.push(`/blog${tagsQuery}`);
     }
 
     renderTags() {
