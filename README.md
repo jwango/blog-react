@@ -3,7 +3,8 @@
 [x] Render error component for missing pages or data  
 [x] Re-theme header sizes  
 [x] Re-theme blog metadata  
-[ ] Add blog loading state  
+[ ] Add blog post loading state  
+[x] Change archive to blog scene  
 [x] Re-theme feed item  
 [x] Re-theme feed loading state  
 [x] Re-theme pins  
@@ -28,3 +29,4 @@
 [x] Add tags endpoints  
 [x] Add tags scene  
 [ ] Change icon  
+[ ] Address multi-instantiation of mongo singleton  

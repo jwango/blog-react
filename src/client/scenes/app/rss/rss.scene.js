@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Parser from 'rss-parser';
 import { Feed } from '../../../components/feed/feed.component';
 
-export class Home extends Component {
+export class Rss extends Component {
 
   rssDataPromise = undefined;
   loaded = false;

@@ -18,7 +18,7 @@ so lets use [foo] ok?
 
 [foo] oh ![foo] oh [[foo]]
 
-<http://localhost:3000/blog/posts/1> and then another <http://localhost:3000/home>
+<http://localhost:3000/blog/posts/1> and then another <http://localhost:3000/>
 
 [fooey]
 

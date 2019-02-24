@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.get('/', function(req, res, next) {
-  res.redirect('/home');
+  res.redirect('/blog');
 });
 app.use(express.static('build/public'));
 

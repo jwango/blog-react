@@ -96,7 +96,7 @@ export class Post extends Component {
         if (categories) {
             return categories.map((category) => {
                 return (
-                    <Tag key={category} link={`/archive?tags=${category}`}>{category}</Tag>
+                    <Tag key={category} link={`/blog?tags=${category}`}>{category}</Tag>
                 );
             });
         }
