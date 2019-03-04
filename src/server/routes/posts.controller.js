@@ -3,6 +3,7 @@ var express = require('express');
 var createError = require('http-errors');
 var PostsController = Object.create(BaseConsumer);
 
+PostsController.name = "PostsController";
 PostsController.dependencyKeys = PostsController.dependencyKeys.concat(['postsService']);
 PostsController.getRouter = function() {
   var router = express.Router();

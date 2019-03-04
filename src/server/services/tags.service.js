@@ -38,6 +38,7 @@ async function useMongo(service, asyncFunc, ...args) {
     return { status: 500, error: new Error('Could not bind to service and fetch the post.') };
 }
 
+TagsService.name = "TagsService";
 TagsService.dependencyKeys = TagsService.dependencyKeys.concat(['mongoService']);
 TagsService.getTags = async function() {
   return useMongo(this.mongoService, aggregateTags);

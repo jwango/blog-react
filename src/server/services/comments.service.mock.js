@@ -1,5 +1,6 @@
 import BaseConsumer from '../consumer';
 var CommentsService = Object.create(BaseConsumer);
+CommentsService.name = "CommentsServiceMock";
 CommentsService.commentMap = {};
 CommentsService.count = 0;
 CommentsService.getComment = async function(commentId) {
