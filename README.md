@@ -29,4 +29,4 @@
 [x] Add tags endpoints  
 [x] Add tags scene  
 [ ] Change icon  
-[ ] Address multi-instantiation of mongo singleton  
+[x] Address multi-instantiation of mongo singleton  

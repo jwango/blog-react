@@ -3,6 +3,7 @@ var express = require('express');
 var createError = require('http-errors');
 var TagsController = Object.create(BaseConsumer);
 
+TagsController.name = "TagsController";
 TagsController.dependencyKeys = TagsController.dependencyKeys.concat(['tagsService']);
 TagsController.getRouter = function() {
   var router = express.Router();

@@ -51,6 +51,7 @@ async function useMongo(service, asyncFunc, ...args) {
     return { status: 500, error: new Error('Could not bind to service and fetch the post.') };
 }
 
+PostsService.name = "PostsService";
 PostsService.dependencyKeys = PostsService.dependencyKeys.concat(['mongoService']);
 PostsService.getPost = async function(postId) {
   if (postId) {

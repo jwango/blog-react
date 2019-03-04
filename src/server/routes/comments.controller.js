@@ -3,6 +3,7 @@ var express = require('express');
 var createError = require('http-errors');
 var CommentsController = Object.create(BaseConsumer);
 
+CommentsController.name = "CommentsController";
 CommentsController.dependencyKeys = CommentsController.dependencyKeys.concat(['commentsService']);
 CommentsController.getRouter = function() {
   var router = express.Router();

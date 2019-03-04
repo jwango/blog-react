@@ -1,4 +1,5 @@
 var BaseConsumer = {
+  name: "BaseConsumer",
   container: undefined,
   dependencyKeys: [],
   init: async function(container) {
@@ -9,7 +10,7 @@ var BaseConsumer = {
     this.dependencyKeys.forEach(async (dependencyKey) => {
       this[dependencyKey] = await this.container.lookup(dependencyKey);
     });
-    console.log('completed binding');
+    console.log('completed binding for ' + this.name);
   }
 };
 export default BaseConsumer;

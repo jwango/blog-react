@@ -9,17 +9,17 @@ var Container = {
       }
     }
     if (this.factoryMap[key]) {
-      var consumer = await this.factoryMap[key](this);
       if (singletonMeta) {
-        singletonMeta.instance = consumer;
+        singletonMeta.instance = this.factoryMap[key](this);
         singletonMeta.init = true;
+        return singletonMeta.instance;
       }
-      return consumer;
+      return this.factoryMap[key](this);
     }
     return undefined;
   },
-  register: function(key, isSingleton, factory) {
-    this.factoryMap[key] = factory;
+  register: function(key, isSingleton, asyncFactory) {
+    this.factoryMap[key] = asyncFactory;
     if (isSingleton) {
       this.singletonMap[key] = {
         init: false,

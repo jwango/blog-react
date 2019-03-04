@@ -1,6 +1,7 @@
 import BaseConsumer from '../consumer';
 var MongoClient = require('mongodb').MongoClient;
 var MongoService = Object.create(BaseConsumer);
+MongoService.name = "MongoService";
 MongoService.dependencyKeys = MongoService.dependencyKeys.concat(['serviceConfig']);
 MongoService.client = MongoClient;
 MongoService._connectedClient = undefined;
