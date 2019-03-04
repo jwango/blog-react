@@ -3,7 +3,7 @@ const SETEXT_CHARS = ['=', '-'];
 const NODE_KIND = {
     STRING: '',
     BOLD: '**',
-    BLANK: '',
+    BLANK: 'blank',
     BLOCKQUOTE: '>',
     BREAK: 'br',
     CODE_INLINE: '`',
@@ -425,8 +425,23 @@ function parseBlock(block, linkDefinitions, imageDefinitions) {
     };
     if (block.children) {
         currNode.children = [];
+
+        // Check looseness
+        let isLoose = false;
+        if (block.kind === NODE_KIND.LIST_ITEM) {
+            for (let childBlock of block.children) {
+                if (childBlock.kind === NODE_KIND.BLANK) {
+                    isLoose = true;
+                }
+            }
+        }
         for (let childBlock of block.children) {
-            currNode.children.push(parseBlock(childBlock, linkDefinitions, imageDefinitions));
+            if (childBlock.kind !== NODE_KIND.BLANK) {
+                if (isLoose && childBlock.kind == NODE_KIND.STRING) {
+                    childBlock.kind = NODE_KIND.PARAGRAPH;
+                }
+                currNode.children.push(parseBlock(childBlock, linkDefinitions, imageDefinitions));
+            }
         }
     } else {
         let nodes = parseInline(block.inline, linkDefinitions, imageDefinitions);
