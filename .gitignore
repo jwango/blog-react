@@ -9,6 +9,8 @@
 # production
 /build
 
+/mock/posts
+
 # misc
 .DS_Store
 .env.local
