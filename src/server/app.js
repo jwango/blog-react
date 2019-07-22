@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var cors = require('cors');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var assetsMap = require('../../build/public/asset-manifest.json');
@@ -36,12 +37,7 @@ app.get('/', function(req, res, next) {
 app.use(express.static('build/public'));
 
 // enable CORS for my app
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", process.env.HOST);
-  res.header('Access-Control-Allow-Methods', 'GET');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(cors());
 
 // Initialize Container
 var container = Object.create(Container);

@@ -53,26 +53,19 @@ export class Feed extends Component {
             .then((res) => res[0])
             .then(
                 (res) => {
-                    if (res) {
-                        if (res.length > 0) {
-                            this.setState({
-                                page: this.state.page + 1,
-                                items: this.state.items.slice(0, -1 * limit).concat(res),
-                                loading: false,
-                                hasMore: true
-                            });
-                        } else {
-                            this.setState({
-                                items: this.state.items.slice(0, -1 * limit),
-                                loading: false,
-                                hasMore: false
-                            });
-                        }
+                    var hasMore = (res || []).length == limit;
+                    if (res && res.length > 0) {
+                        this.setState({
+                            page: this.state.page + 1,
+                            items: this.state.items.slice(0, -1 * limit).concat(res),
+                            loading: false,
+                            hasMore: hasMore
+                        });
                     } else {
                         this.setState({
                             items: this.state.items.slice(0, -1 * limit),
                             loading: false,
-                            hasMore: true
+                            hasMore: hasMore
                         });
                     }
                     return res;
