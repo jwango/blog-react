@@ -62,7 +62,11 @@ export class Feed extends Component {
                                 hasMore: true
                             });
                         } else {
-                            this.setState({ hasMore: false });
+                            this.setState({
+                                items: this.state.items.slice(0, -1 * limit),
+                                loading: false,
+                                hasMore: false
+                            });
                         }
                     } else {
                         this.setState({
