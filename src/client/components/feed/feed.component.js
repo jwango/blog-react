@@ -21,7 +21,8 @@ export class Feed extends Component {
             items: [],
             batchSize: getDefault(props.batchSize, 0),
             page: 0,
-            loading: false
+            loading: false,
+            hasMore: true
         };
     }
 
@@ -52,16 +53,22 @@ export class Feed extends Component {
             .then((res) => res[0])
             .then(
                 (res) => {
-                    if (res && res.length > 0) {
-                        this.setState({
-                            page: this.state.page + 1,
-                            items: this.state.items.slice(0, -1 * limit).concat(res),
-                            loading: false
-                        });
+                    if (res) {
+                        if (res.length > 0) {
+                            this.setState({
+                                page: this.state.page + 1,
+                                items: this.state.items.slice(0, -1 * limit).concat(res),
+                                loading: false,
+                                hasMore: true
+                            });
+                        } else {
+                            this.setState({ hasMore: false });
+                        }
                     } else {
                         this.setState({
                             items: this.state.items.slice(0, -1 * limit),
-                            loading: false
+                            loading: false,
+                            hasMore: true
                         });
                     }
                     return res;
@@ -69,7 +76,8 @@ export class Feed extends Component {
                 (err) => {
                     this.setState({
                         items: this.state.items.slice(0, -1 * limit),
-                        loading: false
+                        loading: false,
+                        hasMore: true
                     });
                     throw err;
                 }
@@ -93,7 +101,7 @@ export class Feed extends Component {
     }
 
     renderMoreButton() {
-        if (this.state.loading) {
+        if (this.state.loading || !this.state.hasMore) {
             return <Fragment></Fragment>;
         }
         return <button className="btn--secondary btn--flat" onClick={() => this.getMoreItems(this.state.page, this.state.batchSize)}>More Content</button>
