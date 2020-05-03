@@ -1,3 +1,55 @@
+# Usage
+
+## Compiling Posts
+To compile posts, edit the whitelist in post.config.json. It has the following structure:
+```json
+{
+  "outputFile":"./mock/data.js",
+  "posts": [
+    {
+      "guid": "string",
+      "title": "string",
+      "author": { "_id": "string", "name": "string" },
+      "tags": ["tag 1", "tag 2"],
+      "filePath": "./mock/posts/mypost.md"
+    },
+    ...
+  ]
+}
+```
+The `outputFile` field must align with the imported JSON file in `upload-posts.js`.
+
+If the build script has been updated, you must first run `npm run scripts:build`.
+Then run `npm run posts:build`.
+
+## Managing Posts
+Once your posts have been compiled, you can manage your posts:
+1. Set the environment variable `MONGODB_URI=mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]`
+2. Run `npm run posts:manage`
+
+
+The following commands are supported:
+
+command  | description
+-------- | -----------
+`exit`   | exit gracefully
+`read`   | read a specific post by id
+`upload` | upload a specific post by id (cross-referencing the compiled posts)
+`delete` | delete a specific post by id
+`drop`   | drop the specified collection
+`create` | create the specified collection
+
+## Syndicating Posts
+Anytime you update your posts, you may want to re-syndicate them for RSS feeds:
+1. Set the environment variable `MONGODB_URI=mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]`
+2. Double check the `syndicate.config.json`
+3. Run `npm run posts:syndicate`
+
+Take the generated output file (as specified in the config) and update the rss.xml on your site.
+
+
+# Development
+
 ## To do:
 - [x] Add error component  
 - [x] Render error component for missing pages or data  
