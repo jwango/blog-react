@@ -6,15 +6,15 @@ export class About extends Component {
         return (
             <article className="about">
                 <h2>Hey!</h2>
-                <p>My name is Josh Wang, and I am the author of the content of this website (and of the website itself). Though this started out as a pet project for learning React and Node tech, I am hoping for this to become an outlet of expression.</p>
+                <p>My name is Josh Wang, and I am the author of the content of this website (and of the website itself). Though this started out as a pet project for learning React and Node tech, I am hoping for this to become a small outlet of my life.</p>
                 
                 <section className="about__item">
                     <h3>Outward</h3>
                     <p>
                         <ul>
-                            <li>People</li>
                             <li>Frontend Frameworks</li>
                             <li>Computer Aided Design</li>
+                            <li>Woodworking</li>
                             <li>3D Printing</li>
                             <li>Sustainability</li>
                             <li>Basketball</li>
