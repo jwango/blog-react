@@ -13,7 +13,7 @@
     "posts:manage": "node mock/scripts/manage-posts.js",
     "posts:syndicate": "node mock/scripts/syndicate-posts.js ./mock/syndicate.config.json",
     "scripts:build": "webpack --config mock/webpack.config.js",
-    "heroku-postbuild": "npm run syndicate:posts && npm run build:client && npm run build:server",
+    "heroku-postbuild": "npm run posts:syndicate && npm run client:build && npm run server:build",
     "start": "node build/server.js"
   },
   "author": "Josh Wang",
