@@ -42,8 +42,9 @@ command  | description
 ## Syndicating Posts
 Anytime you update your posts, you may want to re-syndicate them for RSS feeds:
 1. Set the environment variable `MONGODB_URI=mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]`
-2. Double check the `syndicate.config.json`
-3. Run `npm run posts:syndicate`
+2. Set the environment variable `PUBLIC_URL=https://<your-app>.herokuapp.com`
+3. Double check the `syndicate.config.json`
+4. Run `npm run posts:syndicate`
 
 Take the generated output file (as specified in the config) and update the rss.xml on your site.
 
