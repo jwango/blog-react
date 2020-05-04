@@ -1,54 +1,20 @@
 <rss version="2.0">
   <channel>
-    <title>andful</title>
+    <title>jwango blog</title>
     <link>http://localhost:3001</link>
     <description>
       Test
     </description>
-    <pubDate>Tue, 05 Mar 2019 19:27:07 -0500</pubDate>
+    <pubDate>Mon, 04 May 2020 15:18:57 -0400</pubDate>
     <item>
-      <guid>e075ffd2240d</guid>
-      <title>Dreams</title>
-      <link>http://localhost:3001/blog/posts/e075ffd2240d</link>
+      <guid>b9b30382a4fd</guid>
+      <title>Calligraphy Drying Rack - Part 1</title>
+      <link>http://localhost:3001/blog/posts/b9b30382a4fd</link>
       <description>
         null
       </description>
-      <category>tag1</category>
-      <category>tag2</category>
-      <pubDate>Wed, 13 Feb 2019 23:24:32 -0500</pubDate>
-    </item>
-    <item>
-      <guid>3</guid>
-      <title>Test sandbox</title>
-      <link>http://localhost:3001/blog/posts/3</link>
-      <description>
-        This is a simple test for nested chunks and blocks.
-      </description>
-      <category>test</category>
-      <category>sandbox</category>
-      <pubDate>Wed, 13 Feb 2019 23:24:23 -0500</pubDate>
-    </item>
-    <item>
-      <guid>2</guid>
-      <title>Test all</title>
-      <link>http://localhost:3001/blog/posts/2</link>
-      <description>
-        This is a comprehensive test of more complicated markdown.
-      </description>
-      <category>test</category>
-      <category>thisdoesntcount</category>
-      <pubDate>Wed, 13 Feb 2019 23:24:21 -0500</pubDate>
-    </item>
-    <item>
-      <guid>1</guid>
-      <title>Test inline</title>
-      <link>http://localhost:3001/blog/posts/1</link>
-      <description>
-        This is a simple test for inline markdown rendering.
-      </description>
-      <category>test</category>
-      <category>inline</category>
-      <pubDate>Wed, 13 Feb 2019 23:24:20 -0500</pubDate>
+      <category>woodworking</category>
+      <pubDate>Sun, 03 May 2020 17:25:24 -0400</pubDate>
     </item>
   </channel>
 </rss>

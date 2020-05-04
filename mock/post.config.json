@@ -2,15 +2,16 @@
   "outputFile":"./mock/data.js",
   "posts": [
     {
-      "guid": "e075ffd2240d",
-      "title": "Dreams",
+      "guid": "b9b30382a4fd",
+      "title": "Calligraphy Drying Rack (Part 1)",
+      "description": "First commission",
       "author": { "_id": "1", "name": "Josh Wang" },
-      "tags": ["tag 1", "tag 2"],
-      "filePath": "./mock/posts/dreams.md"
+      "tags": ["woodworking"],
+      "filePath": "./mock/posts/woodworking/udry-1.md"
     },
     {
       "guid": "1",
-      "title": "Test inline",
+      "title": "Test Inline",
       "description": "This is a simple test for inline markdown rendering.",
       "author": { "_id": "1", "name": "Josh Wang" },
       "tags": ["test", "inline"],
@@ -18,7 +19,7 @@
     },
     {
       "guid": "2",
-      "title": "Test all",
+      "title": "Test All",
       "description": "This is a comprehensive test of more complicated markdown.",
       "author": { "_id": "1", "name": "Josh Wang" },
       "tags": ["test", "thisdoesntcount"],
@@ -26,7 +27,7 @@
     },
     {
       "guid": "3",
-      "title": "Test sandbox",
+      "title": "Test Sandbox",
       "description": "This is a simple test for nested chunks and blocks.",
       "author": { "_id": "1", "name": "Josh Wang" },
       "tags": ["test", "sandbox"],

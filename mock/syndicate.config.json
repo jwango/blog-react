@@ -1,7 +1,7 @@
 {
   "outputFile":"./src/public/rss.xml",
   "channel": {
-    "title": "andful",
+    "title": "jwango blog",
     "description": "Test",
     "pubDate": "Sometime"
   },
