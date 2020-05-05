@@ -5,13 +5,17 @@ import parse from 'date-fns/parse';
 
 export class Time extends Component {
 
+    today = new Date();
+
     static propTypes = {
         dateTime: PropTypes.string,
     };
 
     render() {
       if (this.props.dateTime) {
-        return <time dateTime={this.props.dateTime}>{format(parse(this.props.dateTime), 'MMM D')}</time>;
+        const date = parse(this.props.dateTime);
+        const dateFormat = date.getFullYear() === this.today.getFullYear() ? 'MMM D' : 'MMM D, YYYY';
+        return <time dateTime={this.props.dateTime}>{format(date, dateFormat)}</time>;
       }
       return <Fragment></Fragment>;
     }
