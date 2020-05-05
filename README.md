@@ -1,4 +1,17 @@
-# Usage
+# Getting Started
+
+## Database
+The app runs on mongo, which means that you will need to setup a mongo instance. I prefer to create both a local mongo instance with the cli, as well as host a *secure* public instance in something like mLab. To keep your databse secure, the server-side code pulls the connection string from the environment variables, never hardcoded.
+
+Once you have created a basic DB, go ahead and set the environment variable `MONGODB_DB=<db-name>`.
+Then run `posts:manage` with the `create` command to create the posts collection.
+
+## Running Locally
+Since the app is server-side rendered, the app build follows these steps:
+1. Build the client scripts with `npm run build:client`
+2. Start the server with `npm run local:start`
+
+# Maintenance
 
 ## Compiling Posts
 To compile posts, edit the whitelist in post.config.json. It has the following structure:
@@ -36,8 +49,8 @@ command  | description
 `read`   | read a specific post by id
 `upload` | upload a specific post by id (cross-referencing the compiled posts)
 `delete` | delete a specific post by id
-`drop`   | drop the specified collection
-`create` | create the specified collection
+`drop`   | drop the posts collection
+`create` | create the posts collection
 
 ## Syndicating Posts
 Anytime you update your posts, you may want to re-syndicate them for RSS feeds:
@@ -65,13 +78,14 @@ Take the generated output file (as specified in the config) and update the rss.x
 - [x] Build Archive scene  
 - [x] Add /posts/meta endpoint for Archive  
 - [x] Generalize data fetching for feed component  
-- [ ] Build footer  
-- [ ] Build comments section  
-- [ ] Add comments CRUD endpoints  
+- [x] Build footer  
+- [ ] Remove old comment component and logic  
+- [ ] Integrate Disqus for comments  
 - [x] Add RSS generator  
 - [x] Escape REGEX string for link definitions  
 - [x] Revisit link definitions and labels  
 - [ ] Sync webpack configs between server and client for compiling React code  
+- [ ] Migrate to new CRA / build system without ejecting
 - [x] Refactor server to use controller and service model  
 - [x] Add service injection modelling for DI lookup  
 - [x] Hook up /posts endpoint to use DB data  
@@ -81,5 +95,7 @@ Take the generated output file (as specified in the config) and update the rss.x
 - [x] Add guid to syndication  
 - [x] Add tags endpoints  
 - [x] Add tags scene  
-- [ ] Change icon  
+- [x] Change icon  
 - [x] Address multi-instantiation of mongo singleton  
+- [ ] Clean-up mocks and client side files
+- [ ] Clean-up console errors

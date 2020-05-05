@@ -5,34 +5,36 @@ export class About extends Component {
     render() {
         return (
             <article className="about">
-                <h2>Hey!</h2>
-                <p>My name is Josh Wang, and I am the author of the content of this website (and of the website itself). Though this started out as a pet project for learning React and Node tech, I am hoping for this to become a small outlet of my life.</p>
+                <header className="about--wide">
+                    <h2>Hey!</h2>
+                    <p>Welcome to the about section.</p>
+                </header>
                 
                 <section className="about__item">
-                    <h3>Outward</h3>
+                    <h3>Column 1</h3>
                     <p>
                         <ul>
-                            <li>Frontend Frameworks</li>
-                            <li>Computer Aided Design</li>
-                            <li>Woodworking</li>
-                            <li>3D Printing</li>
-                            <li>Sustainability</li>
-                            <li>Basketball</li>
-                            <li>Ultimate Frisbee and Disc Golf</li>
+                            <li>Item 1</li>
+                            <li>Item 2</li>
+                            <li>Item 3</li>
+                            <li>Item 4</li>
+                            <li>Item 5</li>
+                            <li>Item 6</li>
+                            <li>Item 7</li>
                         </ul>
                     </p>
                 </section>
 
                 <section className="about__item">
-                    <h3>Inward</h3>
+                    <h3>Column 2</h3>
                     <p>
-                        <details><summary>Click me?</summary>Don't know what you expected here, but try reading some of my blog posts!</details>
+                        <details><summary>Click me?</summary>Boo!</details>
                     </p>
                 </section>
 
                 <section className="about__item">
-                    <h3>Onward</h3>
-                    <p>Please email me at <a href="mailto:joshua.wang.h@gmail.com">joshua.wang.h@gmail.com</a> if you have any questions or thoughts about this site!</p>
+                    <h3>Column 3</h3>
+                    <p>Share some contact information.</p>
                 </section>
             </article>
         );

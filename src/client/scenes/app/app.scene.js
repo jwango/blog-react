@@ -24,7 +24,7 @@ export class App extends Component {
             <span className={this.state.theme}>
                 <div className='container column'>
                     <header className="main__header">
-                        <h1><img src="/brand_96.png" class="header__logo" alt="JW brand"/>ANGO</h1>
+                        <h1>blog-react</h1>
                     </header>
                     <nav>
                         <NavLink to={'/blog'} activeClassName={'nav-link--active'}>Blog</NavLink>

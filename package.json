@@ -6,7 +6,6 @@
   "scripts": {
     "client:build": "node scripts/build.js",
     "server:build": "webpack --env.NODE_ENV=production",
-    "local:debug": "concurrently --kill-others \"webpack -w --env.NODE_ENV=development\" \"nodemon \"build/server.js\"\"",
     "local:start": "concurrently --kill-others \"webpack -w --env.NODE_ENV=development\" \"nodemon \"build/server.js\"\"",
     "posts:build": "node mock/scripts/build-posts.js ./mock/post.config.json",
     "posts:manage": "node mock/scripts/manage-posts.js",

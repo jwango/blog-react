@@ -1,8 +1,10 @@
 import BaseConsumer from '../consumer';
 var TagsService = Object.create(BaseConsumer);
 
+process.env.MONGODB_DB = process.env.MONGODB_DB || 'blog-react';
+
 function getCollection(client) {
-  return client.db("andful").collection("posts");
+  return client.db(process.env.MONGODB_DB).collection("posts");
 }
 
 function aggregateTags(client) {

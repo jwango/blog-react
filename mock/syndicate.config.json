@@ -1,7 +1,7 @@
 {
   "outputFile":"./src/public/rss.xml",
   "channel": {
-    "title": "jwango blog",
+    "title": "blog-react",
     "description": "Test",
     "pubDate": "Sometime"
   },

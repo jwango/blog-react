@@ -2,11 +2,11 @@ var BLOG_POSTS = require('../data');
 var format = require('date-fns/format');
 var prompt = require('prompt');
 var MongoClient = require('mongodb').MongoClient;
+var DB = process.env.MONGODB_DB || 'blog-react';
 var URL = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+var COLLECTION = 'posts';
 var CMD_PROMPT = 'Next command';
 var POST_PROMPT = 'Which post? (id)';
-var COLLECTION_PROMPT = 'Which collection?';
-var DB = "andful";
 
 function askCommand(ask) {
     return new Promise((resolve, reject) => {
@@ -21,7 +21,7 @@ function askCommand(ask) {
 }
 
 function getBlogCollection(client) {
-    return client.db(DB).collection("posts");
+    return client.db(DB).collection(COLLECTION);
 }
 
 async function readPost(client) {
@@ -82,14 +82,12 @@ async function deletePost(client) {
 }
 
 async function dropCollection(client) {
-    var collectionName = (await askCommand(COLLECTION_PROMPT))[COLLECTION_PROMPT];
-    var collection = client.db(DB).collection(collectionName);
+    var collection = client.db(DB).collection(COLLECTION);
     collection.drop().then(console.log, console.log);
 }
 
 async function createCollection(client) {
-    var collectionName = (await askCommand(COLLECTION_PROMPT))[COLLECTION_PROMPT];
-    client.db(DB).createCollection(collectionName).then(console.log, console.log);
+    client.db(DB).createCollection(COLLECTION).then(console.log, console.log);
 }
 
 prompt.start();

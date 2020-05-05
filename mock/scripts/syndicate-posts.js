@@ -6,11 +6,12 @@ var RFC822_FORMAT = 'ddd, DD MMM YYYY HH:mm:ss ZZ';
 
 var config = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 
+process.env.MONGODB_DB = process.env.MONGODB_DB || 'blog-react';
 process.env.MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
 process.env.PUBLIC_URL = process.env.PUBLIC_URL || "http://localhost:3001";
 
 async function readLatest(client, limit) {
-  var postsCollection = client.db("andful").collection("posts");
+  var postsCollection = client.db(process.env.MONGODB_DB).collection("posts");
   var cursor = postsCollection.find().sort({ lastUpdateDate: -1 }).limit(limit);
   var completed = 0;
   var count = 0;
