@@ -4,13 +4,10 @@ import { getDefault } from '../../../utils/ops.util';
 import { MdFragment } from '../../../components/md-fragment';
 import { Tag } from '../../../components/tag/tag.component';
 import { Time } from '../../../components/time/time.component';
-import { Comment } from '../../../components/comment/comment.component';
 import { ErrorView } from '../../../components/error-view/error-view.component';
 import { MultiView } from '../../../components/multi-view/multi-view.component';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
-import { CommentForm } from './comment-form/comment-form.component';
-import { CommentPreview } from './comment-preview/comment-preview.component';
 
 export class Post extends Component {
 
@@ -24,11 +21,8 @@ export class Post extends Component {
         lastUpdateDate: '?',
         pubDate: '?',
         tags: [],
-        error: undefined,
-        commentPayload: ''
+        error: undefined
     }
-
-    count = 2;
 
     constructor(props) {
         super(props);
@@ -48,8 +42,7 @@ export class Post extends Component {
             pubDate: getDefault(this.getFormattedDate(postData.publishDate), Post.defaultState.pubDate),
             tags: getDefault(postData.tags, Post.defaultState.tags),
             guid: props.match.params.postId,
-            error: error,
-            commentPayload: Post.defaultState.commentPayload
+            error: error
         };
     }
 
@@ -58,26 +51,6 @@ export class Post extends Component {
             return format(parse(dateStr), 'MMM D, YYYY');
         }
         return dateStr;
-    }
-
-    getComment(id) {
-        return Promise.resolve({
-            id: id,
-            user: `User ${id}`,
-            body: 'body',
-            pubDate: undefined,
-            children: [
-                this.count++,
-                this.count++
-            ]
-        });
-    }
-
-    getCommentViews() {
-        return [
-            <CommentForm previewIndex={1} updatePayload={(payload) => this.setState({ commentPayload: payload })}></CommentForm>,
-            <CommentPreview editIndex={0} body={this.state.commentPayload}></CommentPreview>
-        ];
     }
 
     handleSubmit(event) {
@@ -103,16 +76,6 @@ export class Post extends Component {
         return <span></span>;
     }
 
-    renderComments(comments) {
-        return (
-            <ul className="comments">{
-                comments.map((comment) => {
-                    return <Comment guid={comment} getDataFunc={this.getComment.bind(this)} renderDepth={3}></Comment>
-                })
-            }</ul>
-        );
-    }
-
     render() {
         if (this.state.error) {
             return <ErrorView error={this.state.error}></ErrorView>
@@ -129,12 +92,6 @@ export class Post extends Component {
                 </section>
                 <footer className="blog__footer">
                     {this.renderTags(this.state.tags)}
-                    <section id="comments">
-                        <h3>Comments</h3>
-                        <form onSubmit={this.handleSubmit.bind(this)}>
-                            <MultiView views={this.getCommentViews.apply(this)}></MultiView>
-                        </form>
-                    </section>
                 </footer>
             </article>
         );

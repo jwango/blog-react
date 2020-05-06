@@ -79,7 +79,7 @@ Take the generated output file (as specified in the config) and update the rss.x
 - [x] Add /posts/meta endpoint for Archive  
 - [x] Generalize data fetching for feed component  
 - [x] Build footer  
-- [ ] Remove old comment component and logic  
+- [x] Remove old comment component and logic  
 - [ ] Integrate Disqus for comments  
 - [x] Add RSS generator  
 - [x] Escape REGEX string for link definitions  
