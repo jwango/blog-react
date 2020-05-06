@@ -19,9 +19,9 @@ import React from 'react';
 import fetch from 'isomorphic-fetch';
 import serialize from 'serialize-javascript';
 
-process.env.HOST = process.env.HOST || "http://localhost:3001";
 process.env.MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
 process.env.PUBLIC_URL = process.env.PUBLIC_URL || "http://localhost:3001";
+process.env.DISQUS_URL = process.env.DISQUS_URL || "https://jwango.disqus.com/embed.js";
 
 var app = express();
 
@@ -99,7 +99,8 @@ function renderPageHandler(contextPromise, req, res, next) {
             <script src="${assetsMap["main.js"]}" defer></script>
             <script defer>
               window.__INITIAL_DATA__ = ${serialize(context)}
-              window.__GATEWAY_URL__ = ${serialize(process.env.HOST)}
+              window.__GATEWAY_URL__ = ${serialize(process.env.PUBLIC_URL)}
+              window.__DISQUS_URL__ = ${serialize(process.env.DISQUS_URL)}
             </script>
           </head>
           <body id="root">

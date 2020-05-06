@@ -46,6 +46,21 @@ export class Post extends Component {
         };
     }
 
+    componentDidMount() {
+        const title = this.state.title;
+        const id = this.state.guid;
+        window.disqus_config = function () {
+            this.page.title = `${title}-${id}`;
+            this.page.identifier = id;
+            this.page.url = `${window.__GATEWAY_URL__}/blog/posts/${id}`;
+        };
+
+        const s = document.createElement('script');
+        s.src = window.__DISQUS_URL__;
+        s.setAttribute('data-timestamp', +new Date());
+        (document.head || document.body).appendChild(s);
+    }
+
     getFormattedDate(dateStr) {
         if (dateStr) {
             return format(parse(dateStr), 'MMM D, YYYY');
@@ -92,6 +107,8 @@ export class Post extends Component {
                 </section>
                 <footer className="blog__footer">
                     {this.renderTags(this.state.tags)}
+                    <div id="disqus_thread"></div>
+                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
                 </footer>
             </article>
         );
