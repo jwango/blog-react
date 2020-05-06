@@ -2,8 +2,7 @@
   "outputFile":"./src/public/rss.xml",
   "channel": {
     "title": "blog-react",
-    "description": "Test",
-    "pubDate": "Sometime"
+    "description": "Test"
   },
   "items": {
     "baseURL": "/blog/posts/"
