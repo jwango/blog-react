@@ -80,7 +80,7 @@ Take the generated output file (as specified in the config) and update the rss.x
 - [x] Generalize data fetching for feed component  
 - [x] Build footer  
 - [x] Remove old comment component and logic  
-- [ ] Integrate Disqus for comments  
+- [x] Integrate Disqus for comments  
 - [x] Add RSS generator  
 - [x] Escape REGEX string for link definitions  
 - [x] Revisit link definitions and labels  

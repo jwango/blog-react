@@ -21,7 +21,7 @@ import serialize from 'serialize-javascript';
 
 process.env.MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
 process.env.PUBLIC_URL = process.env.PUBLIC_URL || "http://localhost:3001";
-process.env.DISQUS_URL = process.env.DISQUS_URL || "https://jwango.disqus.com/embed.js";
+process.env.DISQUS_URL = process.env.DISQUS_URL;
 
 var app = express();
 

@@ -47,18 +47,20 @@ export class Post extends Component {
     }
 
     componentDidMount() {
-        const title = this.state.title;
-        const id = this.state.guid;
-        window.disqus_config = function () {
-            this.page.title = `${title}-${id}`;
-            this.page.identifier = id;
-            this.page.url = `${window.__GATEWAY_URL__}/blog/posts/${id}`;
-        };
+        if (window.__DISQUS_URL__) {
+            const title = this.state.title;
+            const id = this.state.guid;
+            window.disqus_config = function () {
+                this.page.title = `${title}-${id}`;
+                this.page.identifier = id;
+                this.page.url = `${window.__GATEWAY_URL__}/blog/posts/${id}`;
+            };
 
-        const s = document.createElement('script');
-        s.src = window.__DISQUS_URL__;
-        s.setAttribute('data-timestamp', +new Date());
-        (document.head || document.body).appendChild(s);
+            const s = document.createElement('script');
+            s.src = window.__DISQUS_URL__;
+            s.setAttribute('data-timestamp', +new Date());
+            (document.head || document.body).appendChild(s);
+        }
     }
 
     getFormattedDate(dateStr) {
