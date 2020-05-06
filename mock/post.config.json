@@ -2,14 +2,6 @@
   "outputFile":"./mock/data.js",
   "posts": [
     {
-      "guid": "b9b30382a4fd",
-      "title": "Calligraphy Drying Rack (Part 1)",
-      "description": "First commission",
-      "author": { "_id": "1", "name": "Josh Wang" },
-      "tags": ["woodworking"],
-      "filePath": "./mock/posts/woodworking/udry-1.md"
-    },
-    {
       "guid": "1",
       "title": "Test Inline",
       "description": "This is a simple test for inline markdown rendering.",
