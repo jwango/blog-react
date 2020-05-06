@@ -42,7 +42,11 @@ export class App extends Component {
                     </main>
                     <hr className="main__footer-separator"/>
                     <footer className="main__footer">
-                        <p>Got any thoughts or questions? Contact the <Link to={'/about'}>author</Link>! | <a href="https://github.com/jwango/blog-react"><img src="/GitHub-Mark-120px-plus.png" className="main__footer-icon"></img> source code</a></p>
+                        <p>
+                            Got any thoughts or questions? Contact the <Link to={'/about'}>author</Link>! |&nbsp;
+                            <a href="https://github.com/jwango/blog-react"><img src="/GitHub-Mark-120px-plus.png" alt="github icon" className="main__footer-icon"></img> source code</a> |&nbsp;
+                            <a href="/rss.xml"><img src="/rss-icon.png" alt="rss icon" className="main__footer-icon"></img> feed</a>
+                        </p>
                     </footer>
                 </div>
             </span>
