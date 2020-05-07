@@ -1,4 +1,5 @@
 import App from 'next/app';
+import Head from 'next/head'
 import Link from 'next/link';
 import ActiveLink from '../components/active-link';
 
@@ -8,6 +9,9 @@ const THEME_TYPES = {
     DEFAULT: 'app--default'
 }
 
+process.env.PUBLIC_URL = process.env.PUBLIC_URL || "http://localhost:3000";
+process.env.DISQUS_URL = process.env.DISQUS_URL;
+
 export default class MyApp extends App {
 
     constructor(props) {
@@ -15,6 +19,11 @@ export default class MyApp extends App {
         this.state = {
             theme: THEME_TYPES.DEFAULT
         };
+    }
+
+    componentDidMount() {
+        window.__GATEWAY_URL__ = process.env.PUBLIC_URL;
+        window.__DISQUS_URL__ = process.env.DISQUS_URL;
     }
 
     render() {
