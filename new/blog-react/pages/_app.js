@@ -1,8 +1,8 @@
 import App from 'next/app';
-import Head from 'next/head'
 import Link from 'next/link';
-import ActiveLink from '../components/active-link';
+import ActiveLink from '../components/active-link/active-link.component';
 
+import '../styles/sass/main.scss';
 import './_app.scss';
 
 const THEME_TYPES = {

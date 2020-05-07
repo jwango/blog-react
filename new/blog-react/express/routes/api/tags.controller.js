@@ -1,4 +1,4 @@
-const BaseConsumer = require('../../consumer');
+const BaseConsumer = require('../../../lib/consumer');
 const express = require('express');
 const createError = require('http-errors');
 const TagsController = Object.create(BaseConsumer);

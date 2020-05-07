@@ -1,4 +1,4 @@
-const MOCK_BLOG_POSTS = require('../mock/data');
+const MOCK_BLOG_POSTS = require('../../posts/data');
 const BaseConsumer = require('../consumer');
 const PostsService = Object.create(BaseConsumer);
 PostsService.name = "PostsServiceMock";

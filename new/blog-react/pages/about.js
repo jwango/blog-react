@@ -16,24 +16,20 @@ export default class About extends Component {
                 
                 <section className={styles['about__item']}>
                     <h3>Column 1</h3>
-                    <p>
-                        <ul>
-                            <li>Item 1</li>
-                            <li>Item 2</li>
-                            <li>Item 3</li>
-                            <li>Item 4</li>
-                            <li>Item 5</li>
-                            <li>Item 6</li>
-                            <li>Item 7</li>
-                        </ul>
-                    </p>
+                    <ul>
+                        <li>Item 1</li>
+                        <li>Item 2</li>
+                        <li>Item 3</li>
+                        <li>Item 4</li>
+                        <li>Item 5</li>
+                        <li>Item 6</li>
+                        <li>Item 7</li>
+                    </ul>
                 </section>
 
                 <section className={styles['about__item']}>
                     <h3>Column 2</h3>
-                    <p>
-                        <details><summary>Click me?</summary>Boo!</details>
-                    </p>
+                    <details><summary>Click me?</summary>Boo!</details>
                 </section>
 
                 <section className={styles['about__item']}>

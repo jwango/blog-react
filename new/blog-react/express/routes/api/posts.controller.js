@@ -1,4 +1,4 @@
-const BaseConsumer = require('../../consumer');
+const BaseConsumer = require('../../../lib/consumer');
 var express = require('express');
 var createError = require('http-errors');
 var PostsController = Object.create(BaseConsumer);

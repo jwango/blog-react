@@ -3,11 +3,11 @@ const createError = require('http-errors');
 const cors = require('cors');
 const logger = require('morgan');
 
-const Container = require('./container');
-const MongoService = require('./services/mongo.service');
-const PostsServiceMock = require('./services/posts.service.mock');
-const PostsService = require('./services/posts.service');
-const TagsService = require('./services/tags.service');
+const Container = require('../lib/container');
+const MongoService = require('../lib/services/mongo.service');
+const PostsServiceMock = require('../lib/services/posts.service.mock');
+const PostsService = require('../lib/services/posts.service');
+const TagsService = require('../lib/services/tags.service');
 const apiRouter = require('./routes/api');
 
 process.env.MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
@@ -31,18 +31,18 @@ const expressApp = function(middleRouter) {
     };
   });
   container.register('mongoService', true, async function(container) {
-    var instance = Object.create(MongoService);
+    const instance = Object.create(MongoService);
     await instance.init(container);
     await instance.getConnectedClient();
     return instance;
   });
   container.register('postsService', true, async function(container) {
-    var instance = Object.create(PostsService);
+    const instance = Object.create(PostsService);
     await instance.init(container);
     return instance;
   });
   container.register('tagsService', true, async function(container) {
-    var instance = Object.create(TagsService);
+    const instance = Object.create(TagsService);
     await instance.init(container);
     return instance;
   });
