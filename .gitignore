@@ -2,12 +2,19 @@
 
 # dependencies
 /node_modules
+/new/blog-react/node_modules
 
 # testing
 /coverage
+/new/blog-react/coverage
+
+# next.js
+/new/blog-react/.next/
+/new/blog-react/out/
 
 # production
 /build
+/new/blog-react/build
 
 /mock/posts
 
@@ -21,3 +28,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/new/blog-react/.DS_Store
+/new/blog-react/.env.local
+/new/blog-react/.env.development.local
+/new/blog-react/.env.test.local
+/new/blog-react/.env.production.local
+
+/new/blog-react/npm-debug.log*
+/new/blog-react/yarn-debug.log*
+/new/blog-react/yarn-error.log*
