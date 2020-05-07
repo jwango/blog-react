@@ -1,0 +1,43 @@
+<rss version="2.0">
+  <channel>
+    <title>blog-react</title>
+    <link>http://localhost:3001</link>
+    <description>
+      Test
+    </description>
+    <pubDate>Tue, 05 May 2020 09:54:15 -0400</pubDate>
+    <item>
+      <guid>1</guid>
+      <title>Test Inline</title>
+      <link>http://localhost:3001/blog/posts/1</link>
+      <description>
+        This is a simple test for inline markdown rendering.
+      </description>
+      <category>test</category>
+      <category>inline</category>
+      <pubDate>Tue, 05 May 2020 09:33:00 -0400</pubDate>
+    </item>
+    <item>
+      <guid>3</guid>
+      <title>Test Sandbox</title>
+      <link>http://localhost:3001/blog/posts/3</link>
+      <description>
+        This is a simple test for nested chunks and blocks.
+      </description>
+      <category>test</category>
+      <category>sandbox</category>
+      <pubDate>Mon, 04 May 2020 15:24:02 -0400</pubDate>
+    </item>
+    <item>
+      <guid>2</guid>
+      <title>Test All</title>
+      <link>http://localhost:3001/blog/posts/2</link>
+      <description>
+        This is a comprehensive test of more complicated markdown.
+      </description>
+      <category>test</category>
+      <category>thisdoesntcount</category>
+      <pubDate>Mon, 04 May 2020 15:24:00 -0400</pubDate>
+    </item>
+  </channel>
+</rss>
