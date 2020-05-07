@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'next/router';
+import Link from 'next/link';
 import fetch from 'isomorphic-fetch';
 
 import Feed from '../components/feed/feed.component';
@@ -51,7 +52,7 @@ class Blog extends Component {
             });
     }
 
-    removeTag(tag, tags) {
+    getPathWithoutTag(tag, tags) {
         let tagsQuery = tags.reduce((acc, val, i) => {
             if (val !== tag) {
                 if (!!acc) {
@@ -64,16 +65,21 @@ class Blog extends Component {
         if (tagsQuery) {
             tagsQuery = `?tags=${tagsQuery}`;
         }
-        this.props.history.push(`/blog${tagsQuery}`);
+        return '/' + tagsQuery;
     }
 
     renderTags() {
         const tagsParam = this.getTagsParam();
-        const tags = tagsParam ? tagsParam.split(/\+/g) : [];
+        const tags = tagsParam ? tagsParam.split(/ /g) : [];
         return tags.map((tag, index, arr) => {
             return (
                 <Tag key={tag}>
-                    <button onClick={this.removeTag.bind(this, tag, arr)}><span className="fa fa-times"></span></button>&nbsp;{tag}
+                    <Link href={this.getPathWithoutTag(tag, arr)}>
+                        <a>
+                        <span className='fa fa-times'></span>
+                        </a>
+                    </Link>
+                    &nbsp;{tag}
                 </Tag>
             );
         });

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 
 export default class Tag extends Component {
 
@@ -17,7 +18,7 @@ export default class Tag extends Component {
 
     renderInner() {
         if (this.showLink()) {
-            return <a href={this.props.link}>{this.props.children}</a>;
+            return <Link href={this.props.link}><a>{this.props.children}</a></Link>;
         }
         return <Fragment>{this.props.children}</Fragment>;
     }
