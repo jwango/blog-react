@@ -1,10 +1,12 @@
-const BaseConsumer = require('../../../lib/consumer');
 const express = require('express');
 const createError = require('http-errors');
-const TagsController = Object.create(BaseConsumer);
 
-TagsController.name = "TagsController";
-TagsController.dependencyKeys = TagsController.dependencyKeys.concat(['tagsService']);
+const ContainerKeys = require('../../../lib/services/container-keys');
+const BaseConsumer = require('../../../lib/consumer');
+
+const TagsController = Object.create(BaseConsumer);
+TagsController.name = 'TagsController';
+TagsController.dependencyKeys = TagsController.dependencyKeys.concat([ContainerKeys.TAGS_SERVICE]);
 TagsController.getRouter = function() {
   const router = express.Router();
   /* GET post. */

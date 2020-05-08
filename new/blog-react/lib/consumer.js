@@ -7,9 +7,10 @@ const BaseConsumer = {
     await this.rebind();
   },
   rebind: async function() {
-    this.dependencyKeys.forEach(async (dependencyKey) => {
+    for (let i = 0; i < this.dependencyKeys.length; i++) {
+      const dependencyKey = this.dependencyKeys[i];
       this[dependencyKey] = await this.container.lookup(dependencyKey);
-    });
+    }
     console.log('completed binding for ' + this.name);
   }
 };

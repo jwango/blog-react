@@ -1,10 +1,12 @@
-const BaseConsumer = require('../../../lib/consumer');
-var express = require('express');
-var createError = require('http-errors');
-var PostsController = Object.create(BaseConsumer);
+const express = require('express');
+const createError = require('http-errors');
 
-PostsController.name = "PostsController";
-PostsController.dependencyKeys = PostsController.dependencyKeys.concat(['postsService']);
+const ContainerKeys = require('../../../lib/services/container-keys');
+const BaseConsumer = require('../../../lib/consumer');
+
+const PostsController = Object.create(BaseConsumer);
+PostsController.name = 'PostsController';
+PostsController.dependencyKeys = PostsController.dependencyKeys.concat([ContainerKeys.POSTS_SERVICE]);
 PostsController.getRouter = function() {
   const router = express.Router();
   /* GET post. */
@@ -55,7 +57,7 @@ PostsController.getRouter = function() {
   };
 
   router.get('/meta', postMetaHandler.bind(this));
-  router.get('/:postId', postIdHandler.bind(this));
+  //router.get('/:postId', postIdHandler.bind(this));
   return router;
 }
 module.exports = PostsController;

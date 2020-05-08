@@ -1,7 +1,7 @@
 const MOCK_BLOG_POSTS = require('../../posts/data');
 const BaseConsumer = require('../consumer');
 const PostsService = Object.create(BaseConsumer);
-PostsService.name = "PostsServiceMock";
+PostsService.name = 'PostsServiceMock';
 PostsService.getPost = async function(postId) {
   if (postId) {
       if (MOCK_BLOG_POSTS[postId]) {

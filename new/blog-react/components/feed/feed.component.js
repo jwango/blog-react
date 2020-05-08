@@ -84,7 +84,7 @@ export default class Feed extends Component {
     }
 
     renderItemComponents() {
-        return this.state.items.map((story, index) => {
+        return this.state.items.map((story) => {
             return (
                 <FeedItem
                     loading={!!story.loading}
@@ -93,7 +93,7 @@ export default class Feed extends Component {
                     description={story.description}
                     pubDate={story.pubDate}
                     guid={story.id}
-                    key={story.id || index}
+                    key={story.id}
                 />
             );
         });

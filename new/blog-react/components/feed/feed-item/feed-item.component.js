@@ -1,5 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
+
 import { getDefault, getGlocalClassname } from '../../../lib/utils/ops.util';
 import Time from '../../time/time.component';
 import styles from './feed-item.module.scss';
@@ -37,8 +39,8 @@ export default class FeedItem extends PureComponent {
     renderItem(item) {
         return (
             <Fragment>
-                <h3><a href={item.link ? item.link : '#'}>{item.title}</a></h3>
-                <p><a href={item.link ? item.link : '#'}>{this.stripHTML(item.description)}</a></p>
+                <h3><Link href={item.link ? item.link : '#'}><a>{item.title}</a></Link></h3>
+                <p><Link href={item.link ? item.link : '#'}><a>{this.stripHTML(item.description)}</a></Link></p>
                 <Time dateTime={item.pubDate}></Time>
                 <br/>
             </Fragment>

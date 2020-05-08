@@ -1,15 +1,16 @@
+const ContainerKeys = require('./container-keys');
 const BaseConsumer = require('../consumer');
 const PostsService = Object.create(BaseConsumer);
 
 process.env.MONGODB_DB = process.env.MONGODB_DB || 'blog-react';
 
 function getCollection(client) {
-  return client.db(process.env.MONGO_DB).collection("posts");
+  return client.db(process.env.MONGODB_DB).collection('posts');
 }
 
 async function read(client, postId) {
   const postsCollection = getCollection(client);
-  return await postsCollection.findOne({ "_id": postId });
+  return await postsCollection.findOne({ '_id': postId });
 }
 
 function readPostsMeta(client, page, pageSize, tags) {
@@ -53,8 +54,8 @@ async function useMongo(service, asyncFunc, ...args) {
     return { status: 500, error: new Error('Could not bind to service and fetch the post.') };
 }
 
-PostsService.name = "PostsService";
-PostsService.dependencyKeys = PostsService.dependencyKeys.concat(['mongoService']);
+PostsService.name = 'PostsService';
+PostsService.dependencyKeys = PostsService.dependencyKeys.concat([ContainerKeys.MONGO_SERVICE]);
 PostsService.getPost = async function(postId) {
   if (postId) {
     return useMongo(this.mongoService, read, postId);

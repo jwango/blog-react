@@ -2,8 +2,9 @@ import React, { Component, Fragment } from 'react';
 import PropTypes  from 'prop-types';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
-import fetch from 'isomorphic-fetch';
 
+import ContainerContext from '../../lib/services/container-context';
+import ContainerKeys from '../../lib/services/container-keys';
 import { getDefault } from '../../lib/utils/ops.util';
 import MdFragment from '../../components/md-fragment/md-fragment.component';
 import Tag from '../../components/tag/tag.component';
@@ -112,11 +113,20 @@ export default class Post extends Component {
 export async function getServerSideProps(context) {
   const postId = context.params['id'];
   let postData = {};
-  let error = null;
+  let error = { message: 'I\'m sorry Dave, I\'m afraid I can\'t do that.' };
+  const postsService = await ContainerContext.lookup(ContainerKeys.POSTS_SERVICE);
   try {
-    postData = await fetch(`${process.env.PUBLIC_URL}/api/v1/posts/${postId}`).then(res => res.json());
+    postData = await postsService.getPost(postId);
+    if (!postData || postData.error) {
+      postData = {};
+      if (postData.error) {
+        console.log(postData.error)
+      }
+    } else {
+      error = null;
+    }
   } catch (ex) {
-    error = { message: 'I\'m sorry Dave, I\'m afraid I can\'t do that.' };
+    console.log(ex);
   }
   
   return { props: { postData, error } };

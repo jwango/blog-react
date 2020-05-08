@@ -3,11 +3,7 @@ const createError = require('http-errors');
 const cors = require('cors');
 const logger = require('morgan');
 
-const Container = require('../lib/container');
-const MongoService = require('../lib/services/mongo.service');
-const PostsServiceMock = require('../lib/services/posts.service.mock');
-const PostsService = require('../lib/services/posts.service');
-const TagsService = require('../lib/services/tags.service');
+const ContainerContext = require('../lib/services/container-context');
 const apiRouter = require('./routes/api');
 
 process.env.MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
@@ -24,29 +20,7 @@ const expressApp = function(middleRouter) {
   app.use(cors());
 
   // Initialize Container
-  const container = Object.create(Container);
-  container.register('serviceConfig', true, async function(container) {
-    return {
-      url: process.env.MONGODB_URI
-    };
-  });
-  container.register('mongoService', true, async function(container) {
-    const instance = Object.create(MongoService);
-    await instance.init(container);
-    await instance.getConnectedClient();
-    return instance;
-  });
-  container.register('postsService', true, async function(container) {
-    const instance = Object.create(PostsService);
-    await instance.init(container);
-    return instance;
-  });
-  container.register('tagsService', true, async function(container) {
-    const instance = Object.create(TagsService);
-    await instance.init(container);
-    return instance;
-  });
-
+  const container = ContainerContext;
   app.use('/api/v1', apiRouter(container));
 
   app.use(middleRouter);
