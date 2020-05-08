@@ -1,0 +1,10 @@
+{
+  "outputFile":"./public/rss.xml",
+  "channel": {
+    "title": "blog-react",
+    "description": "Test"
+  },
+  "items": {
+    "baseURL": "/posts/"
+  }
+}
