@@ -32,7 +32,7 @@ class Blog extends Component {
     getMorePosts(page, limit) {
         const tagsParam = this.getTagsParam();
         const newTagsParam = tagsParam ? `&tags=${tagsParam}` : '';
-        const reqUrl = `${this.props.gatewayUrl}/api/v1/posts/meta?page=${page}&limit=${limit}${newTagsParam}`;
+        const reqUrl = `/api/v1/posts/meta?page=${page}&limit=${limit}${newTagsParam}`;
         return fetch(reqUrl)
             .then((res) => {
                 if (res.status >= 200 && res.status < 300) {
@@ -89,10 +89,10 @@ class Blog extends Component {
         return (
             <Fragment>
                 <HeadCustom
-                    title={'blog-react'}
-                    description={'built by github/jwango'}
-                    keywords={'blog, react, framework, jwango'}
-                    url={this.props.gatewayUrl}>
+                    title='blog-react'
+                    description='built by github/jwango'
+                    keywords='blog, react, framework, jwango'
+                    url={this.props.publicUrl}>
                 </HeadCustom>
                 <header>{this.renderTags()}</header>
                 <Feed batchSize={2} getMoreFunc={this.getMorePosts.bind(this)}/>
@@ -102,7 +102,7 @@ class Blog extends Component {
 }
 
 export async function getStaticProps() {
-    return { props: { gatewayUrl: process.env.PUBLIC_URL } }
+    return { props: { publicUrl: process.env.PUBLIC_URL } }
 }
 
 export default withRouter(Blog);

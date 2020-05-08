@@ -63,7 +63,7 @@ Now that you are able to get up and running, let's make this thing your own!
   - update `styles/themes/_theme.scss` to reference the new theme file
 
 ### Metadata
-* update `public/manifest.json` with your new primray theme color
+* update `public/manifest.json` with your new primary theme color
 * update `components/head-custom/head-custom.component.js`
   - change `defaultAuthor`, `themeColor`, `siteName`, etc...
   - change file paths for icons and banners as needed

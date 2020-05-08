@@ -35,8 +35,8 @@ export default class MyApp extends App {
                         <h1>blog-react</h1>
                     </header>
                     <nav>
-                        <ActiveLink href={'/'} aliases={['/posts']} activeClassName={'nav-link--active'}>Blog</ActiveLink>
-                        <ActiveLink href={'/about'} activeClassName={'nav-link--active'}>About</ActiveLink>
+                        <ActiveLink href='/' aliases={['/posts']} activeClassName='nav-link--active'>Blog</ActiveLink>
+                        <ActiveLink href='/about' activeClassName='nav-link--active'>About</ActiveLink>
                     </nav>
 
                     <main><Component {...pageProps} /></main>
@@ -44,7 +44,7 @@ export default class MyApp extends App {
                     <hr className='main__footer-separator'/>
                     <footer className='main__footer'>
                         <p>
-                            Got any thoughts or questions? Contact the <Link href={'/about'}><a>author</a></Link>! |&nbsp;
+                            Got any thoughts or questions? Contact the <Link href='/about'><a>author</a></Link>! |&nbsp;
                             <a href='https://github.com/jwango/blog-react' target="_blank"><img src='/GitHub-Mark-120px-plus.png' alt='github icon' className='main__footer-icon'></img> source code</a> |&nbsp;
                             <a href='/rss.xml' target="_blank"><img src='/rss-icon.png' alt='rss icon' className='main__footer-icon'></img> feed</a>
                         </p>

@@ -6,10 +6,10 @@ export default class About extends Component {
     render() {
         return (<>
             <HeadCustom
-                title={'about'}
-                description={'built by github/jwango'}
-                keywords={'blog, react, framework, about, jwango'}
-                url={`${this.props.gatewayUrl}/about`}>
+                title='about'
+                description='built by github/jwango'
+                keywords='blog, react, framework, about, jwango'
+                url={`${this.props.publicUrl}/about`}>
             </HeadCustom>
             <article className={styles['about']}>
                 <header className={styles['about--wide']}>
@@ -45,5 +45,5 @@ export default class About extends Component {
 }
 
 export async function getStaticProps() {
-    return { props: { gatewayUrl: process.env.PUBLIC_URL } }
+    return { props: { publicUrl: process.env.PUBLIC_URL } }
 }

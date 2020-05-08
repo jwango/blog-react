@@ -67,7 +67,7 @@ export default class Post extends Component {
     }
 
     getCanonicalUrl() {
-        return `${this.props.gatewayUrl}/posts/${this.state.guid}`;
+        return `${this.props.publicUrl}/posts/${this.state.guid}`;
     }
 
     getFormattedDate(dateStr) {
@@ -151,5 +151,5 @@ export async function getServerSideProps(context) {
     console.log(ex);
   }
   
-  return { props: { postData, error, disqusUrl: process.env.DISQUS_URL, gatewayUrl: process.env.PUBLIC_URL } };
+  return { props: { postData, error, disqusUrl: process.env.DISQUS_URL, publicUrl: process.env.PUBLIC_URL } };
 }

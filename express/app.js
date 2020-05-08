@@ -1,6 +1,5 @@
 const express = require('express');
 const createError = require('http-errors');
-const cors = require('cors');
 const logger = require('morgan');
 
 const ContainerContext = require('../lib/services/container-context');
@@ -15,9 +14,6 @@ const expressApp = function(middleRouter) {
   app.use(logger('dev'));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
-
-  // enable CORS for my app
-  app.use(cors());
 
   // Initialize Container
   const container = ContainerContext;
