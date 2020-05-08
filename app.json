@@ -6,19 +6,19 @@
 
   ],
   "env": {
+    "MONGODB_DB": {
+      "required": true
+    },
     "MONGODB_URI": {
       "required": true
     },
     "NODE_ENV": {
       "required": true
     },
-    "POSTS_SERVICE_MOCKED": {
-      "required": true
-    },
-    "HOST": {
-      "required": true
-    },
     "PUBLIC_URL": {
+      "required": true
+    },
+    "DISQUS_URL": {
       "required": true
     }
   },
