@@ -11,7 +11,7 @@ const THEME_TYPES = {
     DEFAULT: 'app--default'
 }
 
-process.env.PUBLIC_URL = process.env.PUBLIC_URL || 'http://localhost:3000';
+const gatewayUrl = process.env.PUBLIC_URL || 'http://localhost:3000';
 
 export default class MyApp extends App {
 
@@ -23,7 +23,7 @@ export default class MyApp extends App {
     }
 
     componentDidMount() {
-        window.__GATEWAY_URL__ = process.env.PUBLIC_URL;
+        window.__GATEWAY_URL__ = gatewayUrl;
     }
 
     render() {
