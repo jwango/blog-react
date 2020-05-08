@@ -5,6 +5,8 @@ import fetch from 'isomorphic-fetch';
 import Feed from '../components/feed/feed.component';
 import Tag from '../components/tag/tag.component';
 
+process.env.PUBLIC_URL = process.env.PUBLIC_URL || 'http://localhost:3000';
+
 class Blog extends Component {
 
     errorMessage = '';
@@ -29,7 +31,7 @@ class Blog extends Component {
     getMorePosts(page, limit) {
         const tagsParam = this.getTagsParam();
         const newTagsParam = tagsParam ? `&tags=${tagsParam}` : '';
-        const reqUrl = `${window.__GATEWAY_URL__}/api/v1/posts/meta?page=${page}&limit=${limit}${newTagsParam}`;
+        const reqUrl = `${this.props.gatewayUrl}/api/v1/posts/meta?page=${page}&limit=${limit}${newTagsParam}`;
         return fetch(reqUrl)
             .then((res) => {
                 if (res.status >= 200 && res.status < 300) {
@@ -90,6 +92,10 @@ class Blog extends Component {
             </Fragment>
         );
     }
+}
+
+export async function getStaticProps() {
+    return { props: { gatewayUrl: process.env.PUBLIC_URL } }
 }
 
 export default withRouter(Blog);

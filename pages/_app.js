@@ -11,8 +11,6 @@ const THEME_TYPES = {
     DEFAULT: 'app--default'
 }
 
-const gatewayUrl = process.env.PUBLIC_URL || 'http://localhost:3000';
-
 export default class MyApp extends App {
 
     constructor(props) {
@@ -20,10 +18,6 @@ export default class MyApp extends App {
         this.state = {
             theme: THEME_TYPES.DEFAULT
         };
-    }
-
-    componentDidMount() {
-        window.__GATEWAY_URL__ = gatewayUrl;
     }
 
     render() {

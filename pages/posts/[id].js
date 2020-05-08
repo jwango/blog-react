@@ -50,7 +50,7 @@ export default class Post extends Component {
             window.disqus_config = function () {
                 this.page.title = `${title}-${id}`;
                 this.page.identifier = id;
-                this.page.url = `${window.__GATEWAY_URL__}/posts/${id}`;
+                this.page.url = `${this.props.gatewayUrl}/posts/${id}`;
             };
 
             const s = document.createElement('script');
@@ -129,5 +129,5 @@ export async function getServerSideProps(context) {
     console.log(ex);
   }
   
-  return { props: { postData, error, disqusUrl: process.env.DISQUS_URL } };
+  return { props: { postData, error, disqusUrl: process.env.DISQUS_URL, gatewayUrl: process.env.PUBLIC_URL } };
 }
