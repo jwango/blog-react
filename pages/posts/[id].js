@@ -37,7 +37,7 @@ export default class Post extends Component {
             lastUpdateDate: getDefault(this.getFormattedDate(postData.lastUpdateDate), Post.defaultState.lastUpdateDate),
             pubDate: getDefault(this.getFormattedDate(postData.publishDate), Post.defaultState.pubDate),
             tags: getDefault(postData.tags, Post.defaultState.tags),
-            guid: postData.id,
+            guid: postData.guid,
             error: error
         };
     }
