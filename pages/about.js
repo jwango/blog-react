@@ -6,7 +6,7 @@ export default class About extends Component {
     render() {
         return (<>
             <Head>
-                <title>About</title>
+                <title>about</title>
             </Head>
             <article className={styles['about']}>
                 <header className={styles['about--wide']}>

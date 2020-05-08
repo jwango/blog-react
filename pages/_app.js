@@ -25,6 +25,7 @@ export default class MyApp extends App {
         const pageProps = this.props.pageProps;
         return (<>
             <Head>
+                <title>blog-react</title>
                 <script defer src='https://use.fontawesome.com/releases/v5.7.0/js/solid.js' integrity='sha384-6FXzJ8R8IC4v/SKPI8oOcRrUkJU8uvFK6YJ4eDY11bJQz4lRw5/wGthflEOX8hjL' crossOrigin='anonymous'></script>
                 <script defer src='https://use.fontawesome.com/releases/v5.7.0/js/fontawesome.js' integrity='sha384-av0fZBtv517ppGAYKqqaiTvWEK6WXW7W0N1ocPSPI/wi+h8qlgWck2Hikm5cxH0E' crossOrigin='anonymous'></script>
             </Head>
