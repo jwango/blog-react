@@ -1,17 +1,87 @@
 # Getting Started
 
+## Overview
+
+### Tech stack
+
+layer      | technology
+---------- | ----------
+data store | mongo
+api        | express
+frontend   | react, next.js
+toolchain  | node, next.js
+
 ## Database
 The app runs on mongo, which means that you will need to setup a mongo instance. I prefer to create both a local mongo instance with the cli, as well as host a *secure* public instance in something like mLab. To keep your database secure, the server-side code pulls the connection string from the environment variables, never hardcoding the value.
 
 Once you have created a basic db within your instance, go ahead and set the environment variable `MONGODB_DB=<db-name>`.
 Then run `posts:manage` with the `create` command to create the posts collection. From there you can write posts and manage them, as described in the `Maintenance` section below.
 
-## Running Locally
-Since the app is server-side rendered, the app build follows these steps:
-1. Build the client scripts with `npm run build:client`
-2. Start the server with `npm run local:start`
+## Environment
 
-# Maintenance
+variable     | value(s) or `<type>`        | description
+------------ | --------------------------- | -----------
+`NODE_ENV`   | "development", "production" | affects pruning and how the server is run (watch vs built artifacts)
+`MONGODB_DB` | `<string>`                  | the name of your db in mongo
+`MONGODB_URI`| `<string>`                  | the connection string formatted as `mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]`
+`PUBLIC_URL` | `<url>`                     | the root url of the app (the api and the page routes must live on this same root url)
+`DISQUS_URL` | `<url>`                     | the disqus url for embedding the comments section
+
+## Running Locally
+
+Set the proper environment variables (see `Environment` above).
+
+### Development
+1. Set `NODE_ENV="development"`
+2. Run `npm run dev`
+
+### Production
+1. Set `NODE_ENV="production"`
+2. Run `npm run build`
+3. Run `npm run start` 
+
+### Emulate Heroku
+1. Set `NODE_ENV="production"`
+2. Remove `node_modules`
+4. Run `npm install`
+5. Run `npm run heroku-postbuild`
+6. Run `npm prune`
+7. Run `npm run start` 
+
+## Customization
+
+Now that you are able to get up and running, let's make this thing your own!
+
+### Brand
+* replace `public/favicon.ico` with your own icon that supports 4 sizes: `64x64`, `32x32`, `24x24`, `16x16`
+* replace `mask-icon.svg` with your own icon that is black to support Safari tabs
+* replace `app-icon.png` with a `180x180` image for use as a progressive web app
+* replace `banner.png` with a custom banner, used as a default image in og:image metadata; maintain `1.91:1` ratio with recommended minimum size `1200x630`
+* determine a color theme for primary and secondary colors - keep the hex values on hand
+  - duplicate `styles/themes/_theme-default.scss`
+  - update your colors at the top of your new theme scss file
+  - update `styles/themes/_theme.scss` to reference the new theme file
+
+### Metadata
+* update `public/manifest.json` with your new primray theme color
+* update `components/head-custom/head-custom.component.js`
+  - change `defaultAuthor`, `themeColor`, `siteName`, etc...
+  - change file paths for icons and banners as needed
+* update `app.json` for heroku with new name
+* update `cms/syndicate.config.json` with new title and description for rss feeds
+
+### Existing pages
+* update default page header and title in `pages/_app.js`
+  - change `<title></title>` to reflect your default page title
+  - change `<h1>blog-react</h1>` to reflect your new site header and name
+* update page `<HeadCustom>` overrides in all pages
+  - `pages/index.js` (home, statically rendered)
+  - `pages/about.js` (about, statically rendered)
+  - `pages/posts/[id].js` (each post, dynamically rendered)
+* update `pages/about.js` to describe yourself
+  - use the existing layout or make a custom layout as you like - it's all html and scss
+
+# Content Management
 
 ## Compiling Posts
 To compile posts, edit the whitelist in post.config.json. It has the following structure:
@@ -25,8 +95,7 @@ To compile posts, edit the whitelist in post.config.json. It has the following s
       "author": { "_id": "string", "name": "string" },
       "tags": ["tag 1", "tag 2"],
       "filePath": "./mock/posts/mypost.md"
-    },
-    ...
+    }
   ]
 }
 ```
@@ -97,3 +166,5 @@ Take the generated output file (as specified in the config) and update the rss.x
 - [x] Address multi-instantiation of mongo singleton  
 - [ ] Clean-up mocks and client side files
 - [ ] Clean-up console errors
+- [ ] Support PWA experience
+- [ ] Expand custom theming and tooling

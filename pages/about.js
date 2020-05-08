@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import Head from 'next/head'
+import HeadCustom from '../components/head-custom/head-custom.component';
 import styles from './about.module.scss';
 
 export default class About extends Component {
     render() {
         return (<>
-            <Head>
-                <title>about</title>
-            </Head>
+            <HeadCustom
+                title={'about'}
+                description={'built by github/jwango'}
+                keywords={'blog, react, framework, about, jwango'}
+                url={`${this.props.gatewayUrl}/about`}>
+            </HeadCustom>
             <article className={styles['about']}>
                 <header className={styles['about--wide']}>
                     <h2>Hey!</h2>
@@ -39,4 +42,8 @@ export default class About extends Component {
             </article>
         </>);
     }
+}
+
+export async function getStaticProps() {
+    return { props: { gatewayUrl: process.env.PUBLIC_URL } }
 }

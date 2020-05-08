@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes  from 'prop-types';
+
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 
 import ContainerContext from '../../lib/services/container-context';
 import ContainerKeys from '../../lib/services/container-keys';
 import { getDefault } from '../../lib/utils/ops.util';
+import HeadCustom from '../../components/head-custom/head-custom.component';
 import MdFragment from '../../components/md-fragment/md-fragment.component';
 import Tag from '../../components/tag/tag.component';
 import Time from '../../components/time/time.component';
@@ -19,6 +21,7 @@ export default class Post extends Component {
 
     static defaultState = {
         title: 'Untitled',
+        description: '',
         chunks: [],
         lastUpdateDate: '?',
         pubDate: '?',
@@ -33,6 +36,7 @@ export default class Post extends Component {
         let error = props.error;
         this.state = {
             title: getDefault(postData.title, Post.defaultState.title),
+            description: getDefault(postData.description, Post.defaultState.description),
             chunks: getDefault(postData.body, Post.defaultState.chunks),
             lastUpdateDate: getDefault(this.getFormattedDate(postData.lastUpdateDate), Post.defaultState.lastUpdateDate),
             pubDate: getDefault(this.getFormattedDate(postData.publishDate), Post.defaultState.pubDate),
@@ -47,11 +51,11 @@ export default class Post extends Component {
         if (this.props.disqusUrl) {
             const title = this.state.title;
             const id = this.state.guid;
-            const gwUrl = this.props.gatewayUrl;
+            const url = this.getCanonicalUrl();
             window.disqus_config = function () {
                 this.page.title = `${title}-${id}`;
                 this.page.identifier = id;
-                this.page.url = `${gwUrl}/posts/${id}`;
+                this.page.url = url;
             };
 
             const s = document.createElement('script');
@@ -60,6 +64,10 @@ export default class Post extends Component {
             (document.head || document.body).appendChild(s);
         }
       }, 0);
+    }
+
+    getCanonicalUrl() {
+        return `${this.props.gatewayUrl}/posts/${this.state.guid}`;
     }
 
     getFormattedDate(dateStr) {
@@ -91,8 +99,21 @@ export default class Post extends Component {
         if (this.state.error) {
             return <ErrorView error={this.state.error}></ErrorView>
         }
+        const keywords = [
+            'blog',
+            'react',
+            'framework',
+            'jwango',
+            ...this.state.tags
+        ];
         return (
             <article className='post'>
+                <HeadCustom
+                    title={this.state.title}
+                    description={this.state.description}
+                    keywords={keywords.join(', ')}
+                    url={this.getCanonicalUrl()}>
+                </HeadCustom>
                 <header>
                     <h1>{this.state.title}</h1>
                     <Time dateTime={this.state.pubDate}></Time>

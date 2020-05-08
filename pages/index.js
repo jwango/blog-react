@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { withRouter } from 'next/router';
 import fetch from 'isomorphic-fetch';
 
+import HeadCustom from '../components/head-custom/head-custom.component';
 import Feed from '../components/feed/feed.component';
 import Tag from '../components/tag/tag.component';
 
@@ -87,6 +88,12 @@ class Blog extends Component {
     render() {
         return (
             <Fragment>
+                <HeadCustom
+                    title={'blog-react'}
+                    description={'built by github/jwango'}
+                    keywords={'blog, react, framework, jwango'}
+                    url={this.props.gatewayUrl}>
+                </HeadCustom>
                 <header>{this.renderTags()}</header>
                 <Feed batchSize={2} getMoreFunc={this.getMorePosts.bind(this)}/>
             </Fragment>
