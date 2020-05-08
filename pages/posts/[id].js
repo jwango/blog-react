@@ -47,10 +47,11 @@ export default class Post extends Component {
         if (this.props.disqusUrl) {
             const title = this.state.title;
             const id = this.state.guid;
+            const gwUrl = this.props.gatewayUrl;
             window.disqus_config = function () {
                 this.page.title = `${title}-${id}`;
                 this.page.identifier = id;
-                this.page.url = `${this.props.gatewayUrl}/posts/${id}`;
+                this.page.url = `${gwUrl}/posts/${id}`;
             };
 
             const s = document.createElement('script');

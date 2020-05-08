@@ -12,7 +12,8 @@ export default class FeedItem extends PureComponent {
         description: PropTypes.string,
         pubDate: PropTypes.string,
         link: PropTypes.string,
-        loading: PropTypes.bool
+        loading: PropTypes.bool,
+        guid: PropTypes.string
     }
 
     stripHTML(html){
@@ -37,10 +38,12 @@ export default class FeedItem extends PureComponent {
     }
 
     renderItem(item) {
+        const linkStr = `${item.link}[id]`;
+        const linkAs = `${item.link}${this.props.guid}`;
         return (
             <Fragment>
-                <h3><Link href={item.link ? item.link : '#'}><a>{item.title}</a></Link></h3>
-                <p><Link href={item.link ? item.link : '#'}><a>{this.stripHTML(item.description)}</a></Link></p>
+                <h3><Link href={linkStr} as={linkAs}><a>{item.title}</a></Link></h3>
+                <p><Link href={linkStr} as={linkAs}><a>{this.stripHTML(item.description)}</a></Link></p>
                 <Time dateTime={item.pubDate}></Time>
                 <br/>
             </Fragment>

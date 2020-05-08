@@ -38,7 +38,7 @@ class Blog extends Component {
                     return res.json().then(
                         (res) => {
                             return res.map((item) => {
-                                return Object.assign(item, { link: `/posts/${item.id}` });
+                                return Object.assign(item, { link: '/posts/' });
                             });
                         });
                 } else {
