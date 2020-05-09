@@ -24,9 +24,9 @@ export default class Tag extends Component {
     }
 
     render() {
-        let classes = "tag";
+        let classes = 'tag';
         if (this.showLink()) {
-            classes += " tag--linkable";
+            classes += ' tag--linkable';
         }
         return <span className={classes}>{this.renderInner()}</span>
     }

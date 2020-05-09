@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { withRouter } from 'next/router';
 import fetch from 'isomorphic-fetch';
 
+import Icon, { IconNames } from '../components/icon/icon.component';
 import HeadCustom from '../components/head-custom/head-custom.component';
 import Feed from '../components/feed/feed.component';
 import Tag from '../components/tag/tag.component';
@@ -77,7 +78,7 @@ class Blog extends Component {
             return (
                 <Tag key={tag}>
                     <a href={this.getPathWithoutTag(tag, arr)}>
-                        <span className='fa fa-times'></span>
+                        <Icon name={this.props.iconNames.TIMES} baseline={true}></Icon>
                     </a>
                     &nbsp;{tag}
                 </Tag>
@@ -102,7 +103,7 @@ class Blog extends Component {
 }
 
 export async function getStaticProps() {
-    return { props: { publicUrl: process.env.PUBLIC_URL } }
+    return { props: { publicUrl: process.env.PUBLIC_URL, iconNames: IconNames } }
 }
 
 export default withRouter(Blog);

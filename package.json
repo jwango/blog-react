@@ -24,6 +24,7 @@
     "sass": "^1.26.5"
   },
   "devDependencies": {
+    "babel-plugin-inline-react-svg": "^1.1.1",
     "prompt": "^1.0.0"
   }
 }

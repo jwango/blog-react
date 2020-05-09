@@ -103,14 +103,14 @@ export default class Feed extends Component {
         if (!this.state.init || this.state.loading || !this.state.hasMore) {
             return <Fragment></Fragment>;
         }
-        return <button className="btn--secondary btn--flat" onClick={() => this.getMoreItems(this.state.page, this.state.batchSize)}>More Content</button>
+        return <button className='btn--secondary btn--flat' onClick={() => this.getMoreItems(this.state.page, this.state.batchSize)}>More Content</button>
     }
     
     render() {
         return (
             <Fragment>
                 <section>
-                    <ul className="feed">
+                    <ul className='feed'>
                         {this.renderItemComponents()}
                     </ul>
                 </section>

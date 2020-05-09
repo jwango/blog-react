@@ -5,7 +5,7 @@ const logger = require('morgan');
 const ContainerContext = require('../lib/services/container-context');
 const apiRouter = require('./routes/api');
 
-process.env.MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017";
+process.env.MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
 
 const expressApp = function(middleRouter) {
   const app = express();

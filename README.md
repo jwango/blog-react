@@ -15,7 +15,7 @@ toolchain  | node, next.js
 The app runs on mongo, which means that you will need to setup a mongo instance. I prefer to create both a local mongo instance with the cli, as well as host a *secure* public instance in something like mLab. To keep your database secure, the server-side code pulls the connection string from the environment variables, never hardcoding the value.
 
 Once you have created a basic db within your instance, go ahead and set the environment variable `MONGODB_DB=<db-name>`.
-Then run `posts:manage` with the `create` command to create the posts collection. From there you can write posts and manage them, as described in the `Maintenance` section below.
+Then run `posts:manage` with the `create` command to create the posts collection. From there you can write posts and manage them, as described in the `Content Management` section below.
 
 ## Environment
 
