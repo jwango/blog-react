@@ -9,7 +9,8 @@ export default class About extends Component {
                 title='about'
                 description='built by github/jwango'
                 keywords='blog, react, framework, about, jwango'
-                url={`${this.props.publicUrl}/about`}>
+                baseUrl={this.props.publicUrl}
+                relUrl='/about'>
             </HeadCustom>
             <article className={styles['about']}>
                 <header className={styles['about--wide']}>

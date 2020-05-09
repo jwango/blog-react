@@ -93,7 +93,8 @@ class Blog extends Component {
                     title='blog-react'
                     description='built by github/jwango'
                     keywords='blog, react, framework, jwango'
-                    url={this.props.publicUrl}>
+                    baseUrl={this.props.publicUrl}
+                    relUrl='/'>
                 </HeadCustom>
                 <header>{this.renderTags()}</header>
                 <Feed batchSize={2} getMoreFunc={this.getMorePosts.bind(this)}/>

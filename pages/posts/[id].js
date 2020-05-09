@@ -51,11 +51,11 @@ export default class Post extends Component {
         if (this.props.disqusUrl) {
             const title = this.state.title;
             const id = this.state.guid;
-            const url = this.getCanonicalUrl();
+            const canonUrl = this.getCanonicalUrl();
             window.disqus_config = function () {
                 this.page.title = `${title}-${id}`;
                 this.page.identifier = id;
-                this.page.url = url;
+                this.page.url = `${canonUrl.baseUrl}${canonUrl.relUrl}`;
             };
 
             const s = document.createElement('script');
@@ -67,7 +67,10 @@ export default class Post extends Component {
     }
 
     getCanonicalUrl() {
-        return `${this.props.publicUrl}/posts/${this.state.guid}`;
+        return {
+            baseUrl: this.props.publicUrl,
+            relUrl: `/posts/${this.state.guid}`
+        };
     }
 
     getFormattedDate(dateStr) {
@@ -106,13 +109,15 @@ export default class Post extends Component {
             'jwango',
             ...this.state.tags
         ];
+        const canonUrl = this.getCanonicalUrl();
         return (
             <article className='post'>
                 <HeadCustom
                     title={this.state.title}
                     description={this.state.description}
                     keywords={keywords.join(', ')}
-                    url={this.getCanonicalUrl()}>
+                    baseUrl={canonUrl.baseUrl}
+                    relUrl={canonUrl.relUrl}>
                 </HeadCustom>
                 <header>
                     <h1>{this.state.title}</h1>

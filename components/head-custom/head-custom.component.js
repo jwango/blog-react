@@ -1,8 +1,8 @@
 import Head from 'next/head';
 
-export default function HeadCustom({ title, description, keywords, url, author }) {
+export default function HeadCustom({ title, description, keywords, baseUrl, relUrl, author }) {
   // entries to customize
-  const defaultUrl = '';
+  const url = `${baseUrl}${relUrl}`;
   const defaultAuthor = 'HAL 9000';
   const themeColor = '#666699';
   const siteName = 'blog-react';
@@ -20,7 +20,7 @@ export default function HeadCustom({ title, description, keywords, url, author }
 
       <meta property='og:site_name' content={siteName} />
       <meta property='og:title' content={title} />
-      <meta property='og:url' content={url || defaultUrl} />
+      <meta property='og:url' content={url} />
       <meta property='og:image' content='/banner.png' />
       <meta property='og:description' content={description} />
       <meta property='og:type' content='website' />
