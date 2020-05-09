@@ -1,51 +1,50 @@
 @import '../abstracts/mixins';
 
-$primary: #666699;
-$on-primary: #ffffff;
-
-$secondary: #0099cc;
-$on-secondary: $on-primary;
-$on-secondary-faded: #DDDDDD;
-
-$background: #ffffff;
-$background-faded: #DDDDDD;
-$on-background: #000000;
-$on-background-faded: #777777;
-
-$warn: #ff0000;
-$on-warn: $on-primary;
-
-$error: #ffbf3d;
-
-$nav-height: 2.5rem;
-$content-width-l: 65%;
-$content-padding-l: (100% - $content-width-l) / 2;
-$content-width: 90%;
-$content-padding: (100% - $content-width) / 2;
-$code-padding: 0.125rem;
-$li-padding: 0.125rem;
-
-%primary {
-    @include theme-color($primary, $on-primary);
-}
-
-%secondary {
-    @include theme-color($secondary, $on-secondary);
-}
-
-%background {
-    @include theme-color($background, $on-background);
-}
-
-%warn {
-    @include theme-color($warn, $on-warn);
-}
-
-.color-background-faded {
-    color: $on-background-faded;
-}
-
 .app--default {
+    $primary: #666699;
+    $on-primary: #ffffff;
+
+    $secondary: #0099cc;
+    $on-secondary: $on-primary;
+    $on-secondary-faded: #DDDDDD;
+
+    $background: #ffffff;
+    $background-faded: #DDDDDD;
+    $on-background: #000000;
+    $on-background-faded: #777777;
+
+    $warn: #ff0000;
+    $on-warn: $on-primary;
+
+    $error: #ffbf3d;
+
+    $nav-height: 2.5rem;
+    $content-width-l: 65%;
+    $content-padding-l: (100% - $content-width-l) / 2;
+    $content-width: 90%;
+    $content-padding: (100% - $content-width) / 2;
+    $code-padding: 0.125rem;
+    $li-padding: 0.125rem;
+
+    %primary {
+        @include theme-color($primary, $on-primary);
+    }
+
+    %secondary {
+        @include theme-color($secondary, $on-secondary);
+    }
+
+    %background {
+        @include theme-color($background, $on-background);
+    }
+
+    %warn {
+        @include theme-color($warn, $on-warn);
+    }
+
+    .color-background-faded {
+        color: $on-background-faded;
+    }
 
     font-family: 'Helvetica';
     line-height: 1.25;
