@@ -60,7 +60,10 @@ Now that you are able to get up and running, let's make this thing your own!
 * determine a color theme for primary and secondary colors - keep the hex values on hand
   - duplicate `styles/themes/_theme-default.scss`
   - update your colors at the top of your new theme scss file
+  - rename `.app--default` to a new name like `.app--my-new-theme`
   - update `styles/themes/_theme.scss` to reference the new theme file
+  - update `_app.js` to use the new theme class `.app--my-new-theme`
+  - see the dark theme to see how this can be re-skinned
 
 ### Metadata
 * update `public/manifest.json` with your new primary theme color
@@ -167,4 +170,4 @@ Take the generated output file (as specified in the config) and update the rss.x
 - [ ] Clean-up mocks and client side files
 - [ ] Clean-up console errors
 - [ ] Support PWA experience
-- [ ] Expand custom theming and tooling
+- [x] Expand custom theming and tooling

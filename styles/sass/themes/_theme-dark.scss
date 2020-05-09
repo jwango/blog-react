@@ -1,16 +1,16 @@
 @import '../abstracts/mixins';
 
-$primary: #666699;
+$primary: #8074bf;
 $on-primary: #ffffff;
 
 $secondary: #0099cc;
 $on-secondary: $on-primary;
 $on-secondary-faded: #DDDDDD;
 
-$background: #ffffff;
-$background-faded: #DDDDDD;
-$on-background: #000000;
-$on-background-faded: #777777;
+$background: #525252;
+$background-faded: #1b1b1b;
+$on-background: #f7f7f7;
+$on-background-faded: #888888;
 
 $warn: #ff0000;
 $on-warn: $on-primary;
@@ -45,7 +45,7 @@ $li-padding: 0.125rem;
     color: $on-background-faded;
 }
 
-.app--default {
+.app--dark {
 
     font-family: 'Helvetica';
     line-height: 1.25;

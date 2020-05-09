@@ -8,7 +8,8 @@ import '../styles/sass/main.scss';
 import './_app.scss';
 
 const THEME_TYPES = {
-    DEFAULT: 'app--default'
+    DEFAULT: 'app--default',
+    DARK: 'app--dark'
 }
 
 export default class MyApp extends App {
