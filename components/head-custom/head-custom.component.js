@@ -21,7 +21,7 @@ export default function HeadCustom({ title, description, keywords, baseUrl, relU
       <meta property='og:site_name' content={siteName} />
       <meta property='og:title' content={title} />
       <meta property='og:url' content={url} />
-      <meta property='og:image' content='/banner.png' />
+      <meta property='og:image' content={`${baseUrl}/banner.png`} />
       <meta property='og:image:width' content='1200' />
       <meta property='og:image:height' content='630' />
       <meta property='og:description' content={description} />
