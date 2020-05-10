@@ -2,27 +2,39 @@
   "posts": [
     {
       "guid": "1",
+      "author": "Josh Wang",
       "title": "Test Inline",
       "description": "This is a simple test for inline markdown rendering.",
-      "author": { "_id": "1", "name": "Josh Wang" },
-      "updated": "05/09/2020",
-      "tags": ["test", "inline"]
+      "tags": [
+        "test",
+        "inline"
+      ],
+      "lastUpdateDate": "2020-05-10T01:51:11.485-04:00",
+      "publishDate": "2020-05-10T01:47:15.011-04:00"
     },
     {
       "guid": "2",
+      "author": "Josh Wang",
       "title": "Test All",
       "description": "This is a comprehensive test of more complicated markdown.",
-      "author": { "_id": "1", "name": "Josh Wang" },
-      "updated": "05/09/2020",
-      "tags": ["test", "thisdoesntcount"]
+      "tags": [
+        "test",
+        "all"
+      ],
+      "lastUpdateDate": "2020-05-10T01:51:14.716-04:00",
+      "publishDate": "2020-05-10T01:48:43.534-04:00"
     },
     {
       "guid": "3",
+      "author": "Josh Wang",
       "title": "Test Sandbox",
       "description": "This is a simple test for nested chunks and blocks.",
-      "author": { "_id": "1", "name": "Josh Wang" },
-      "updated": "05/09/2020",
-      "tags": ["test", "sandbox"]
+      "tags": [
+        "test",
+        "sandbox"
+      ],
+      "lastUpdateDate": "2020-05-10T01:51:17.094-04:00",
+      "publishDate": "2020-05-10T01:48:48.934-04:00"
     }
   ]
 }

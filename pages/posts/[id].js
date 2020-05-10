@@ -12,7 +12,8 @@ import Time from '../../components/time/time.component';
 import ErrorView from '../../components/error-view/error-view.component';
 
 import parseMarkdown from '../../lib/utils/parse.util';
-import PublishConfig from '../../cms/publish.config.json';
+import Published from '../../cms/out/published.json';
+import Metadata from '../../cms/out/metadata.json';
 import fs from 'fs';
 
 export default class Post extends Component {
@@ -152,18 +153,19 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const fileName = PublishConfig[params.id];
+    const fileName = Published[params.id];
     if (!fileName) {
         return { props: {} };
     }
     const fileContent = await fs.promises.readFile(fileName, 'utf8');
     const doc = parseMarkdown(fileContent.split('\r\n'));
+    const metadata = Metadata.posts.find(post => post.guid === params.id) || doc.metadata;
     const postData = {
         guid: params.id,
         body: doc.chunks,
-        ...doc.metadata,
+        ...metadata,
         tags: doc.metadata.tags.split(',').map(item => item.trim())
     };
-
+    
     return { props: { postData: JSON.stringify(postData), error: null, disqusUrl: process.env.DISQUS_URL, publicUrl: process.env.PUBLIC_URL } };
 }

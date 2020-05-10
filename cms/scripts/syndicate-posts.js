@@ -104,7 +104,7 @@ function addIndent(line, levels) {
   return indent + line;
 }
 
-MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
+/*MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then(async (client) => {
     const items = await readLatest(client, 15);
     if (items) {
@@ -117,4 +117,5 @@ MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
     }
   }, (reason) => {
     console.log(reason);
-  });
+  });*/
+console.log("TODO: re-implement with metadata.json");

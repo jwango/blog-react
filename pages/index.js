@@ -44,7 +44,7 @@ class Blog extends Component {
                         id: item.guid,
                         title: item.title,
                         description: item.description,
-                        pubDate: item.updated,
+                        pubDate: item.lastUpdateDate,
                         link: '/posts/'
                     };
                 })
