@@ -158,7 +158,11 @@ export async function getStaticProps({ params }) {
         return { props: {} };
     }
     const fileContent = await fs.promises.readFile(fileName, 'utf8');
-    const doc = parseMarkdown(fileContent.split('\r\n'));
+    let lines = fileContent.split('\r\n');
+    if (lines.length === 1) {
+        lines = fileContent.split('\n');
+    }
+    const doc = parseMarkdown(lines);
     const metadata = Metadata.posts.find(post => post.guid === params.id) || doc.metadata;
     const postData = {
         guid: params.id,
