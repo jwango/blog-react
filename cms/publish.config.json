@@ -1,7 +1,5 @@
 {
-  "posts": [
-    "./cms/posts/post-inline.md",
-    "./cms/posts/post-test.md",
-    "./cms/posts/post-sandbox.md"
-  ]
+  "1": "./cms/posts/post-inline.md",
+  "2": "./cms/posts/post-test.md",
+  "3": "./cms/posts/post-sandbox.md"
 }

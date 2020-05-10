@@ -1,10 +1,10 @@
 import ErrorView from '../components/error-view/error-view.component';
 
-function Error() {
-  let error = { message: 'Oops something went wrong.' };
+function Error404() {
+  const error = { message: 'Hmm, can\'t find that page.' };
   return (
     <ErrorView error={error}></ErrorView>
   );
 }
 
-export default Error;
+export default Error404;

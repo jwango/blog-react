@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node server.js",
+    "dev": "next dev",
     "build": "next build",
+    "export": "next build && next export",
     "posts:build": "node cms/scripts/build-posts.js cms/post.config.json",
     "posts:manage": "node cms/scripts/manage-posts.js",
     "posts:syndicate": "node cms/scripts/syndicate-posts.js cms/syndicate.config.json",
     "heroku-postbuild": "npm run posts:syndicate && npm run build",
-    "start": "node server.js"
+    "start": "next start"
   },
   "dependencies": {
     "date-fns": "^1.30.1",
