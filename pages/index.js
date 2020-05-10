@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'next/router';
-import fetch from 'isomorphic-fetch';
+import compareDesc from 'date-fns/compare_desc';
 
 import Icon, { IconNames } from '../components/icon/icon.component';
 import HeadCustom from '../components/head-custom/head-custom.component';
 import Feed from '../components/feed/feed.component';
 import Tag from '../components/tag/tag.component';
 
-process.env.PUBLIC_URL = process.env.PUBLIC_URL || 'http://localhost:3000';
+import Metadata from '../cms/out/metadata.json';
 
 class Blog extends Component {
 
@@ -27,32 +27,28 @@ class Blog extends Component {
     }
 
     getTagsParam() {
-        return this.props.router.query['tags'];
+        return this.props.router.query['tags'] || '';
     }
 
     getMorePosts(page, limit) {
         const tagsParam = this.getTagsParam();
-        const newTagsParam = tagsParam ? `&tags=${tagsParam}` : '';
-        const reqUrl = `/api/v1/posts/meta?page=${page}&limit=${limit}${newTagsParam}`;
-        return fetch(reqUrl)
-            .then((res) => {
-                if (res.status >= 200 && res.status < 300) {
-                    return res.json().then(
-                        (res) => {
-                            return res.map((item) => {
-                                return Object.assign(item, { link: '/posts/' });
-                            });
-                        });
-                } else {
-                    this.readStringStream(res.body)
-                        .then((msg) => {
-                            this.errorMessage = msg || res.statusText;
-                        }, (err) => {
-                            this.errorMessage = res.statusText;
-                        });
-                    throw new Error(res.statusText);
-                }
-            });
+        const tags = tagsParam.split(' ');
+        const startIndex = page * limit;
+        return Promise.resolve(
+            this.props.postsMetadata.posts
+                .filter(item => !tagsParam || tags.some(tagToMatch => item.tags.includes(tagToMatch)))
+                .sort((a, b) => compareDesc(a.publishDate, b.publishDate))
+                .filter((_val, index) => index >= startIndex && index < startIndex + limit)
+                .map(item => {
+                    return {
+                        id: item.guid,
+                        title: item.title,
+                        description: item.description,
+                        pubDate: item.publishDate,
+                        link: '/posts/'
+                    };
+                })
+        )
     }
 
     getPathWithoutTag(tag, tags) {
@@ -104,7 +100,7 @@ class Blog extends Component {
 }
 
 export async function getStaticProps() {
-    return { props: { publicUrl: process.env.PUBLIC_URL, iconNames: IconNames } }
+    return { props: { publicUrl: process.env.PUBLIC_URL, postsMetadata: Metadata, iconNames: IconNames } }
 }
 
 export default withRouter(Blog);

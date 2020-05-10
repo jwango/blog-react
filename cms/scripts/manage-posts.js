@@ -1,12 +1,32 @@
-var BLOG_POSTS = require('../data');
-var format = require('date-fns/format');
-var prompt = require('prompt');
-var MongoClient = require('mongodb').MongoClient;
-var DB = process.env.MONGODB_DB || 'blog-react';
-var URL = process.env.MONGODB_URI || 'mongodb://localhost:27017';
-var COLLECTION = 'posts';
-var CMD_PROMPT = 'Next command';
-var POST_PROMPT = 'Which post? (id)';
+const format = require('date-fns/format');
+const prompt = require('prompt');
+const fs = require('fs').promises;
+const sha1 = require('crypto-js/sha1');
+const hexEnc = require('crypto-js/enc-hex');
+const parseMarkdown = require('./parse.util');
+const POSTS_ROOT = './cms/posts/';
+const PUBLISHED_PATH = './cms/out/published.json';
+const METADATA_PATH = './cms/out/metadata.json';
+const CMD_PROMPT = 'Next command';
+const POST_PROMPT = 'Which post? (id)';
+const SAME_FILE_PROMPT = 'Keep the same file? Y/N';
+const FILE_PROMPT = `Which file do you want to use, relative to ${POSTS_ROOT}`;
+
+let publishedMap = {};
+let metadata = { posts: [] };
+
+const matchPost = (postId) => (post => post.guid === postId);
+
+function genPostId(content) {
+    const numPosts = metadata.posts.length;
+    let numChars = 8;
+    if (numPosts <= 4000) {
+        numChars = 6;
+    } else if (numPosts <= 16000) {
+        numChars = 7;
+    }
+    return sha1(content).toString(hexEnc).substring(0, numChars);
+}
 
 function askCommand(ask) {
     return new Promise((resolve, reject) => {
@@ -20,103 +40,120 @@ function askCommand(ask) {
     });
 }
 
-function getBlogCollection(client) {
-    return client.db(DB).collection(COLLECTION);
+function postExists(postId) {
+    return !!publishedMap[postId] && !!metadata.posts.find(matchPost(postId));
 }
 
-async function readPost(client) {
+async function readPost() {
     var postId = (await askCommand(POST_PROMPT))[POST_PROMPT];
-    var postsCollection = getBlogCollection(client);
-    var cursor = postsCollection.find({ _id: postId });
-    var completed = 0;
-    var count = 0;
-    while (!cursor.isClosed()) {
-        try {
-            if (await cursor.hasNext()) {
-                count += 1;
-                cursor.next()
-                    .then((doc) => {
-                        console.log(JSON.stringify(doc));
-                        completed += 1;
-                    })
-                    .catch((err) => console.log(err));
-            } else if (completed === count) {
-                cursor.close();
-            }
-        } catch (error) {
-            console.log(error);
-        }
+    if (!postExists(postId)) {
+        throw Error(`cannot find the post with id ${postId} in either published.json or in metadata.json`);
     }
+    console.log(`registered to filepath ${publishedMap[postId]}:`)
+    console.log(metadata.posts.find(matchPost(postId)));
 }
 
-async function uploadPost(client) {
+async function publishPost() {
     let currentTime = format(new Date(), 'YYYY-MM-DDTHH:mm:ss.SSSZ');
-    var postId = (await askCommand(POST_PROMPT))[POST_PROMPT];
-    if (BLOG_POSTS[postId]) {
-        console.log(`Uploading post ${postId}...`);
-        var postsCollection = getBlogCollection(client);
-        var post = BLOG_POSTS[postId];
-        var docToWrite = {
-            _id: postId,
-            guid: post.guid,
-            title: post.title,
-            description: post.description,
-            body: post.body,
-            tags: post.tags.map((tag) => tag.replace(/ /g, '')),
-            lastUpdateDate: currentTime
-        };
-        postsCollection.updateOne(
-            { _id: postId },
-            { $set: docToWrite, $setOnInsert: { publishDate: currentTime} },
-            { upsert: true }
-        ).then(console.log, console.log);
+    let postId = (await askCommand(POST_PROMPT))[POST_PROMPT];
+    const isExistingPost = postExists(postId);
+    let filepath = isExistingPost ? publishedMap[postId] : '';
+    if (isExistingPost) {
+        console.log(`Current filepath is set to: ${filepath}.`)
+        const useSameFileAnswer = (await askCommand(SAME_FILE_PROMPT))[SAME_FILE_PROMPT];
+        if (useSameFileAnswer !== 'Y') {
+            filepath = (await askCommand(FILE_PROMPT))[FILE_PROMPT];
+        } 
+    } else {
+        console.log('I see you have a new post. Generating a new post id.');
+        filepath = (await askCommand(FILE_PROMPT))[FILE_PROMPT];
     }
+    filepath = `${POSTS_ROOT}${filepath}`;
+
+    // read metadata from file
+    const filecontent = await fs.readFile(filepath, 'utf-8');
+    const filemeta = parseMarkdown(filecontent.split('\r\n')).metadata;
+    if (!isExistingPost) {
+        let i = 0;
+        do {
+            postId = genPostId(filecontent + currentTime + i);
+            i += 1;
+        } while (postExists(postId));
+        console.log(`${i - 1} collisions in generating new post id`);
+    }
+
+    publishedMap[postId] = filepath;
+    const newMetadata = {
+        guid: postId,
+        author: filemeta.author,
+        title: filemeta.title,
+        description: filemeta.description,
+        tags: filemeta.tags.split(',').map(item => item.trim()),
+        lastUpdateDate: currentTime
+    };
+    const index = metadata.posts.findIndex(matchPost(postId));
+    if (index >= 0) {
+        metadata.posts[index] = {
+            ...newMetadata,
+            publishDate: (metadata.posts[index] && metadata.posts[index].publishDate) || currentTime
+        };
+    } else {
+        metadata.posts.push({
+            ...newMetadata,
+            publishDate: currentTime
+        });
+    }
+    console.log(`post with id ${postId} has been staged for publication. run save command to commit all changes`);
 }
 
-async function deletePost(client) {
+async function deletePost() {
     var postId = (await askCommand(POST_PROMPT))[POST_PROMPT];
-    var postsCollection = getBlogCollection(client);
-    postsCollection.deleteOne(
-        { _id: postId }
-    ).then(console.log, console.log);
+    if (!postExists(postId)) {
+        throw Error(`post with id ${postId} does not exist`);
+    }
+    publishedMap[postId] = undefined;
+    const index = metadata.posts.findIndex(matchPost(postId));
+    metadata.posts.splice(index, 1);
+    console.log(`post with id ${postId} has been staged for delete. run save command to commit all changes`)
 }
 
-async function dropCollection(client) {
-    var collection = client.db(DB).collection(COLLECTION);
-    collection.drop().then(console.log, console.log);
+async function listAll() {
+    console.table(metadata.posts.map(item => {
+        return { guid: item.guid, title: item.title };
+    }));
 }
 
-async function createCollection(client) {
-    client.db(DB).createCollection(COLLECTION).then(console.log, console.log);
+async function saveAll() {
+    console.log('committing the filepaths...');
+    await fs.writeFile(PUBLISHED_PATH, JSON.stringify(publishedMap, null, 2));
+    console.log('committing the metadata...');
+    await fs.writeFile(METADATA_PATH, JSON.stringify(metadata, null, 2));
+    console.log('saved!');
 }
 
 prompt.start();
-MongoClient.connect(URL,  { useNewUrlParser: true })
-    .then(async (client) => {
-        console.log("connected successfully to the server");
+Promise.all([fs.readFile(PUBLISHED_PATH, 'utf-8'), fs.readFile(METADATA_PATH, 'utf-8')])
+    .then(async ([publishedMapRaw, metadataRaw]) => {
+        publishedMap = JSON.parse(publishedMapRaw);
+        metadata = JSON.parse(metadataRaw);
+        console.log("existing posts loaded");
         var closing = false;
-        while (client.isConnected && !closing) {
+        while (!closing) {
             try {
                 var cmdRes = await askCommand(CMD_PROMPT);
                 var cmd = cmdRes[CMD_PROMPT].trim().toLowerCase();
-                if (cmd === 'read') {
-                    await readPost(client);
-                } else if (cmd === 'upload') {
-                    await uploadPost(client);
+                if (cmd === 'list') {
+                    await listAll();
+                } else if (cmd === 'read') {
+                    await readPost();
+                } else if (cmd === 'publish') {
+                    await publishPost();
                 } else if (cmd === 'delete') {
-                    await deletePost(client);
-                } else if (cmd === 'drop') {
-                    await dropCollection(client);
-                } else if (cmd === 'create') {
-                    await createCollection(client);
+                    await deletePost();
+                } else if (cmd === 'save') {
+                    await saveAll();
                 } else if (cmd === 'exit') {
-                    console.log("closing...");
-                    closing = true;
-                    client.close()
-                        .catch((err) => {
-                            console.log(err);
-                            closing = false;
-                        });
+                   closing = true;
                 }
             } catch (err) {
                 console.log(err);

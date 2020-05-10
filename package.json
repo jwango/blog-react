@@ -1,23 +1,21 @@
 {
   "name": "blog-react",
   "version": "0.1.0",
+  "engines": {
+    "node": "11.15.x"
+  },
   "private": true,
   "scripts": {
-    "dev": "node server.js",
+    "dev": "next dev",
     "build": "next build",
-    "posts:build": "node cms/scripts/build-posts.js cms/post.config.json",
+    "export": "npm run posts:syndicate && next build && next export",
     "posts:manage": "node cms/scripts/manage-posts.js",
     "posts:syndicate": "node cms/scripts/syndicate-posts.js cms/syndicate.config.json",
     "heroku-postbuild": "npm run posts:syndicate && npm run build",
-    "start": "node server.js"
+    "start": "next start --port $PORT"
   },
   "dependencies": {
     "date-fns": "^1.30.1",
-    "express": "^4.17.1",
-    "http-errors": "^1.7.3",
-    "isomorphic-fetch": "^2.2.1",
-    "mongodb": "^3.5.7",
-    "morgan": "^1.10.0",
     "next": "9.3.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -25,6 +23,7 @@
   },
   "devDependencies": {
     "babel-plugin-inline-react-svg": "^1.1.1",
+    "crypto-js": "^4.0.0",
     "prompt": "^1.0.0"
   }
 }

@@ -5,39 +5,39 @@
     <description>
       Test
     </description>
-    <pubDate>Thu, 07 May 2020 23:01:50 -0400</pubDate>
+    <pubDate>Sun, 10 May 2020 12:21:17 -0400</pubDate>
     <item>
-      <guid>1</guid>
-      <title>Test Inline</title>
-      <link>http://localhost:3000/posts/1</link>
+      <guid>33a42f</guid>
+      <title>Test All</title>
+      <link>http://localhost:3000/posts/33a42f</link>
       <description>
-        This is a simple test for inline markdown rendering.
+        This is a comprehensive test of more complicated markdown.
       </description>
       <category>test</category>
-      <category>inline</category>
-      <pubDate>Tue, 05 May 2020 09:33:00 -0400</pubDate>
+      <category>all</category>
+      <pubDate>Sun, 10 May 2020 10:42:35 -0400</pubDate>
     </item>
     <item>
-      <guid>3</guid>
+      <guid>651694</guid>
       <title>Test Sandbox</title>
-      <link>http://localhost:3000/posts/3</link>
+      <link>http://localhost:3000/posts/651694</link>
       <description>
         This is a simple test for nested chunks and blocks.
       </description>
       <category>test</category>
       <category>sandbox</category>
-      <pubDate>Mon, 04 May 2020 15:24:02 -0400</pubDate>
+      <pubDate>Sun, 10 May 2020 10:42:23 -0400</pubDate>
     </item>
     <item>
-      <guid>2</guid>
-      <title>Test All</title>
-      <link>http://localhost:3000/posts/2</link>
+      <guid>d50b19</guid>
+      <title>Test Inline</title>
+      <link>http://localhost:3000/posts/d50b19</link>
       <description>
-        This is a comprehensive test of more complicated markdown.
+        This is a simple test for inline markdown rendering.
       </description>
       <category>test</category>
-      <category>thisdoesntcount</category>
-      <pubDate>Mon, 04 May 2020 15:24:00 -0400</pubDate>
+      <category>inline</category>
+      <pubDate>Sun, 10 May 2020 10:41:11 -0400</pubDate>
     </item>
   </channel>
 </rss>

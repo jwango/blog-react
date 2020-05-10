@@ -8,13 +8,10 @@
 
 # next.js
 .next
+out
 
 # production
 /build
-
-# content management
-/cms/posts
-/cms/data.js
 
 # misc
 .DS_Store

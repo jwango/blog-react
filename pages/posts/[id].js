@@ -4,14 +4,17 @@ import PropTypes  from 'prop-types';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 
-import ContainerContext from '../../lib/services/container-context';
-import ContainerKeys from '../../lib/services/container-keys';
 import { getDefault } from '../../lib/utils/ops.util';
 import HeadCustom from '../../components/head-custom/head-custom.component';
 import MdFragment from '../../components/md-fragment/md-fragment.component';
 import Tag from '../../components/tag/tag.component';
 import Time from '../../components/time/time.component';
 import ErrorView from '../../components/error-view/error-view.component';
+
+import parseMarkdown from '../../lib/utils/parse.util';
+import Published from '../../cms/out/published.json';
+import Metadata from '../../cms/out/metadata.json';
+import fs from 'fs';
 
 export default class Post extends Component {
 
@@ -32,7 +35,7 @@ export default class Post extends Component {
 
     constructor(props) {
         super(props);
-        let postData = props.postData;
+        let postData = JSON.parse(props.postData);
         let error = props.error;
         this.state = {
             title: getDefault(postData.title, Post.defaultState.title),
@@ -137,24 +140,36 @@ export default class Post extends Component {
     }
 }
 
-export async function getServerSideProps(context) {
-  const postId = context.params['id'];
-  let postData = {};
-  let error = { message: 'I\'m sorry Dave, I\'m afraid I can\'t do that.' };
-  const postsService = await ContainerContext.lookup(ContainerKeys.POSTS_SERVICE);
-  try {
-    postData = await postsService.getPost(postId);
-    if (!postData || postData.error) {
-      postData = {};
-      if (postData.error) {
-        console.log(postData.error)
-      }
-    } else {
-      error = null;
+export async function getStaticPaths() {
+    const paths = Object.keys(Published).map(id => {
+        return {
+            params: { id }
+        };
+    });
+    return {
+        paths: paths,
+        fallback: false
+    };
+}
+
+export async function getStaticProps({ params }) {
+    const fileName = Published[params.id];
+    if (!fileName) {
+        return { props: {} };
     }
-  } catch (ex) {
-    console.log(ex);
-  }
-  
-  return { props: { postData, error, disqusUrl: process.env.DISQUS_URL, publicUrl: process.env.PUBLIC_URL } };
+    const fileContent = await fs.promises.readFile(fileName, 'utf8');
+    let lines = fileContent.split('\r\n');
+    if (lines.length === 1) {
+        lines = fileContent.split('\n');
+    }
+    const doc = parseMarkdown(lines);
+    const metadata = Metadata.posts.find(post => post.guid === params.id) || doc.metadata;
+    const postData = {
+        guid: params.id,
+        body: doc.chunks,
+        ...metadata,
+        tags: doc.metadata.tags.split(',').map(item => item.trim())
+    };
+    
+    return { props: { postData: JSON.stringify(postData), error: null, disqusUrl: process.env.DISQUS_URL || null, publicUrl: process.env.PUBLIC_URL } };
 }
