@@ -13,6 +13,8 @@ import Tag from '../../components/tag/tag.component';
 import Time from '../../components/time/time.component';
 import ErrorView from '../../components/error-view/error-view.component';
 
+import PublishConfig from '../../cms/publish.config.json';
+
 export default class Post extends Component {
 
     static propTypes = {

@@ -631,15 +631,54 @@ function parseLines(lines, defaultSymbol) {
     };
 }
 
+function parseFrontMatter(lines) {
+    let startLine = -1;
+    let endLine = -1;
+    let i = 0;
+    const metadata = {};
+    while (i < lines.length && endLine < 0) {
+        if (lines[i] === '---') {
+            if (startLine < 0) {
+                startLine = i;
+            } else {
+                endLine = i;
+            }
+        }
+        i += 1;
+    }
+
+    let newLines = lines;
+    if (endLine >= 0) {
+        newLines = lines.slice(endLine + 1);
+        for (let j = startLine + 1; j < endLine; j += 1) {
+            const splitVals = lines[j].split(':');
+            if (splitVals.length > 1) {
+                const key = splitVals[0];
+                const val = splitVals.slice(1).join(':').trim();
+                metadata[key] = val;
+            }
+        }
+    }
+
+    return {
+        body: newLines,
+        metadata
+    };
+}
+
 function parseMarkdown(lines) {
+    const doc = parseFrontMatter(lines);
     let chunks = [];
-    let blockData = parseLines(lines, NODE_KIND.PARAGRAPH);
+    let blockData = parseLines(doc.body, NODE_KIND.PARAGRAPH);
     for (let i = 0; i < blockData.blocks.length; i++) {
         if (blockData.blocks[i].kind !== NODE_KIND.BLANK) {
             chunks.push(parseBlock(blockData.blocks[i], blockData.linkDefinitions, blockData.imageDefinitions));
         }
     }
-    return chunks;
+    return {
+        metadata: doc.metadata,
+        chunks: chunks
+    };
 }
 
 module.exports = parseMarkdown;

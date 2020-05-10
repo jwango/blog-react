@@ -15,8 +15,10 @@ for (let i = 0; i < postsIn.length; i++) {
         if (err) {
             return console.log(err);
         }
+        const doc = parseMarkdown(data.split('\r\n'));
         posts[postsIn[i].guid] = Object.assign({
-            body: parseMarkdown(data.split('\r\n'))
+            body: doc.chunks,
+            metadata: doc.metadata
         }, postsIn[i]);
         if (callsRemaining === 0) {
             fs.writeFile(
