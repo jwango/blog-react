@@ -12,7 +12,7 @@
     "posts:manage": "node cms/scripts/manage-posts.js",
     "posts:syndicate": "node cms/scripts/syndicate-posts.js cms/syndicate.config.json",
     "heroku-postbuild": "npm run posts:syndicate && npm run build",
-    "start": "next start"
+    "start": "next start --port $PORT"
   },
   "dependencies": {
     "date-fns": "^1.30.1",
