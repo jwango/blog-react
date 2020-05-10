@@ -1,6 +1,9 @@
 {
   "name": "blog-react",
   "version": "0.1.0",
+  "engines": {
+    "node": "11.15.x"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",
