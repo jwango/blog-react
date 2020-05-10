@@ -141,7 +141,7 @@ export default class Post extends Component {
 }
 
 export async function getStaticPaths() {
-    const paths = Object.keys(PublishConfig).map(id => {
+    const paths = Object.keys(Published).map(id => {
         return {
             params: { id }
         };
@@ -167,5 +167,5 @@ export async function getStaticProps({ params }) {
         tags: doc.metadata.tags.split(',').map(item => item.trim())
     };
     
-    return { props: { postData: JSON.stringify(postData), error: null, disqusUrl: process.env.DISQUS_URL, publicUrl: process.env.PUBLIC_URL } };
+    return { props: { postData: JSON.stringify(postData), error: null, disqusUrl: process.env.DISQUS_URL || null, publicUrl: process.env.PUBLIC_URL } };
 }

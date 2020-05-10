@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'next/router';
+import compareDesc from 'date-fns/compare_desc';
 
 import Icon, { IconNames } from '../components/icon/icon.component';
 import HeadCustom from '../components/head-custom/head-custom.component';
@@ -7,8 +8,6 @@ import Feed from '../components/feed/feed.component';
 import Tag from '../components/tag/tag.component';
 
 import Metadata from '../cms/out/metadata.json';
-
-process.env.PUBLIC_URL = process.env.PUBLIC_URL || 'http://localhost:3000';
 
 class Blog extends Component {
 
@@ -38,13 +37,14 @@ class Blog extends Component {
         return Promise.resolve(
             this.props.postsMetadata.posts
                 .filter(item => !tagsParam || tags.some(tagToMatch => item.tags.includes(tagToMatch)))
+                .sort((a, b) => compareDesc(a.publishDate, b.publishDate))
                 .filter((_val, index) => index >= startIndex && index < startIndex + limit)
                 .map(item => {
                     return {
                         id: item.guid,
                         title: item.title,
                         description: item.description,
-                        pubDate: item.lastUpdateDate,
+                        pubDate: item.publishDate,
                         link: '/posts/'
                     };
                 })

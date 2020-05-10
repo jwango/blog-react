@@ -6,12 +6,6 @@
 
   ],
   "env": {
-    "MONGODB_DB": {
-      "required": true
-    },
-    "MONGODB_URI": {
-      "required": true
-    },
     "NODE_ENV": {
       "required": true
     },

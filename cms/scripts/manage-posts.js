@@ -1,6 +1,8 @@
 const format = require('date-fns/format');
 const prompt = require('prompt');
 const fs = require('fs').promises;
+const sha1 = require('crypto-js/sha1');
+const hexEnc = require('crypto-js/enc-hex');
 const parseMarkdown = require('./parse.util');
 const POSTS_ROOT = './cms/posts/';
 const PUBLISHED_PATH = './cms/out/published.json';
@@ -14,6 +16,17 @@ let publishedMap = {};
 let metadata = { posts: [] };
 
 const matchPost = (postId) => (post => post.guid === postId);
+
+function genPostId(content) {
+    const numPosts = metadata.posts.length;
+    let numChars = 8;
+    if (numPosts <= 4000) {
+        numChars = 6;
+    } else if (numPosts <= 16000) {
+        numChars = 7;
+    }
+    return sha1(content).toString(hexEnc).substring(0, numChars);
+}
 
 function askCommand(ask) {
     return new Promise((resolve, reject) => {
@@ -43,10 +56,6 @@ async function readPost() {
 async function publishPost() {
     let currentTime = format(new Date(), 'YYYY-MM-DDTHH:mm:ss.SSSZ');
     let postId = (await askCommand(POST_PROMPT))[POST_PROMPT];
-    if (!postId) {
-        console.log("TODO: support generating ids if not provided");
-        return;
-    }
     const isExistingPost = postExists(postId);
     let filepath = isExistingPost ? publishedMap[postId] : '';
     if (isExistingPost) {
@@ -54,16 +63,25 @@ async function publishPost() {
         const useSameFileAnswer = (await askCommand(SAME_FILE_PROMPT))[SAME_FILE_PROMPT];
         if (useSameFileAnswer !== 'Y') {
             filepath = (await askCommand(FILE_PROMPT))[FILE_PROMPT];
-            filepath = `${POSTS_ROOT}${filepath}`;
         } 
     } else {
-        console.log('I see you have a new post.');
+        console.log('I see you have a new post. Generating a new post id.');
         filepath = (await askCommand(FILE_PROMPT))[FILE_PROMPT];
     }
+    filepath = `${POSTS_ROOT}${filepath}`;
 
     // read metadata from file
     const filecontent = await fs.readFile(filepath, 'utf-8');
     const filemeta = parseMarkdown(filecontent.split('\r\n')).metadata;
+    if (!isExistingPost) {
+        let i = 0;
+        do {
+            postId = genPostId(filecontent + currentTime + i);
+            i += 1;
+        } while (postExists(postId));
+        console.log(`${i - 1} collisions in generating new post id`);
+    }
+
     publishedMap[postId] = filepath;
     const newMetadata = {
         guid: postId,
@@ -74,10 +92,17 @@ async function publishPost() {
         lastUpdateDate: currentTime
     };
     const index = metadata.posts.findIndex(matchPost(postId));
-    metadata.posts[index] = {
-        ...newMetadata,
-        publishDate: metadata.posts[index].publishDate || currentTime
-    };
+    if (index >= 0) {
+        metadata.posts[index] = {
+            ...newMetadata,
+            publishDate: (metadata.posts[index] && metadata.posts[index].publishDate) || currentTime
+        };
+    } else {
+        metadata.posts.push({
+            ...newMetadata,
+            publishDate: currentTime
+        });
+    }
     console.log(`post with id ${postId} has been marked for publication. run save command to commit all changes`);
 }
 
@@ -87,9 +112,15 @@ async function deletePost() {
         throw Error(`post with id ${postId} does not exist`);
     }
     publishedMap[postId] = undefined;
-    const index = metadata.posts.find(matchPost(postId));
-    metadata.posts[index] = undefined;
+    const index = metadata.posts.findIndex(matchPost(postId));
+    metadata.posts.splice(index, 1);
     console.log(`post with id ${postId} has been marked for delete. run save command to commit all changes`)
+}
+
+async function listAll() {
+    console.table(metadata.posts.map(item => {
+        return { guid: item.guid, title: item.title };
+    }));
 }
 
 async function saveAll() {
@@ -111,7 +142,9 @@ Promise.all([fs.readFile(PUBLISHED_PATH, 'utf-8'), fs.readFile(METADATA_PATH, 'u
             try {
                 var cmdRes = await askCommand(CMD_PROMPT);
                 var cmd = cmdRes[CMD_PROMPT].trim().toLowerCase();
-                if (cmd === 'read') {
+                if (cmd === 'list') {
+                    await listAll();
+                } else if (cmd === 'read') {
                     await readPost();
                 } else if (cmd === 'publish') {
                     await publishPost();
