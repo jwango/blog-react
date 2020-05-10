@@ -6,39 +6,36 @@
 
 layer      | technology
 ---------- | ----------
-data store | mongo
-api        | express
 frontend   | react, next.js
 toolchain  | node, next.js
-
-## Database
-The app runs on mongo, which means that you will need to setup a mongo instance. I prefer to create both a local mongo instance with the cli, as well as host a *secure* public instance in something like mLab. To keep your database secure, the server-side code pulls the connection string from the environment variables, never hardcoding the value.
-
-Once you have created a basic db within your instance, go ahead and set the environment variable `MONGODB_DB=<db-name>`.
-Then run `posts:manage` with the `create` command to create the posts collection. From there you can write posts and manage them, as described in the `Content Management` section below.
 
 ## Environment
 
 variable     | value(s) or `<type>`        | description
 ------------ | --------------------------- | -----------
 `NODE_ENV`   | "development", "production" | affects pruning and how the server is run (watch vs built artifacts)
-`MONGODB_DB` | `<string>`                  | the name of your db in mongo
-`MONGODB_URI`| `<string>`                  | the connection string formatted as `mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]`
-`PUBLIC_URL` | `<url>`                     | the root url of the app (the api and the page routes must live on this same root url)
+`PUBLIC_URL` | `<url>`                     | the root url of the app as used for page metadata and syndication
 `DISQUS_URL` | `<url>`                     | the disqus url for embedding the comments section
 
 ## Running Locally
 
 Set the proper environment variables (see `Environment` above).
+Anytime you change `NODE_ENV` be sure to re-install node modules - ideally by deleting old node modules and re-installing with `npm run install`.
 
 ### Development
 1. Set `NODE_ENV="development"`
 2. Run `npm run dev`
 
-### Production
+### Production as Next.js Server
 1. Set `NODE_ENV="production"`
 2. Run `npm run build`
 3. Run `npm run start` 
+
+### Production as Exported Static Website
+Install `http-server` globally via `npm run install -g http-server` to serve up local files.
+1. Set `NODE_ENV="production"`
+2. Run `npm run export`
+3. Run `http-server ./out`
 
 ### Emulate Heroku
 1. Set `NODE_ENV="production"`
@@ -86,53 +83,29 @@ Now that you are able to get up and running, let's make this thing your own!
 
 # Content Management
 
-## Compiling Posts
-To compile posts, edit the whitelist in post.config.json. It has the following structure:
-```json
-{
-  "outputFile":"./mock/data.js",
-  "posts": [
-    {
-      "guid": "string",
-      "title": "string",
-      "author": { "_id": "string", "name": "string" },
-      "tags": ["tag 1", "tag 2"],
-      "filePath": "./mock/posts/mypost.md"
-    }
-  ]
-}
-```
-The `outputFile` field must align with the imported JSON file in `upload-posts.js`.
-Run `npm run posts:build`.
+## Write Posts
+This blog builds posts from source `markdown` files, stored at `cms/posts`. Add any new post source files you want here. Then move onto `Managing Posts`.
 
 ## Managing Posts
-Once your posts have been compiled, you can manage your posts:
-1. Set the environment variable `MONGODB_DB=mydb`
-2. Set the environment variable `MONGODB_URI=mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]`
-3. Run `npm run posts:manage`
-
-
+Once your posts have been written, you can manage your posts by running `npm run posts:manage`.
 The following commands are supported:
 
-command  | description
--------- | -----------
-`exit`   | exit gracefully
-`read`   | read a specific post by id
-`upload` | upload a specific post by id (cross-referencing the compiled posts)
-`delete` | delete a specific post by id
-`drop`   | drop the posts collection
-`create` | create the posts collection
+command   | description
+---------  | -----------
+`exit`    | exit gracefully
+`list`    | list all posts
+`read`    | read a specific post by id
+`publish` | stages a post for publication; allows for updating existing and creating new posts
+`delete`  | stages a post for deletion
+`save`    | saves all staged posts
 
 ## Syndicating Posts
-Anytime you update your posts, you may want to re-syndicate them for RSS feeds:
-1. Set the environment variable `MONGODB_DB=mydb`
-2. Set the environment variable `MONGODB_URI=mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]`
-3. Set the environment variable `PUBLIC_URL=https://<your-app>.herokuapp.com`
+Anytime you update your posts, you may want to re-syndicate them for RSS feeds. If you use `npm run export` or `npm run heroku:postbuild` then this is done for you.
+1. Set the environment variable `PUBLIC_URL=https://www.your-website.com`
 4. Double check the `syndicate.config.json`
 5. Run `npm run posts:syndicate`
 
-Take the generated output file (as specified in the config) and update the rss.xml on your site.
-
+Take the generated output file (as specified in the config) and update the rss.xml on your site. The default output should be in the public folder so it won't need to be moved manually.
 
 # Development
 
@@ -167,7 +140,6 @@ Take the generated output file (as specified in the config) and update the rss.x
 - [x] Add tags scene  
 - [x] Change icon  
 - [x] Address multi-instantiation of mongo singleton  
-- [ ] Clean-up mocks and client side files
 - [ ] Clean-up console errors
 - [ ] Support PWA experience
 - [x] Expand custom theming and tooling

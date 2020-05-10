@@ -103,7 +103,7 @@ async function publishPost() {
             publishDate: currentTime
         });
     }
-    console.log(`post with id ${postId} has been marked for publication. run save command to commit all changes`);
+    console.log(`post with id ${postId} has been staged for publication. run save command to commit all changes`);
 }
 
 async function deletePost() {
@@ -114,7 +114,7 @@ async function deletePost() {
     publishedMap[postId] = undefined;
     const index = metadata.posts.findIndex(matchPost(postId));
     metadata.posts.splice(index, 1);
-    console.log(`post with id ${postId} has been marked for delete. run save command to commit all changes`)
+    console.log(`post with id ${postId} has been staged for delete. run save command to commit all changes`)
 }
 
 async function listAll() {
