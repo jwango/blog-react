@@ -34,7 +34,7 @@ export default class MyApp extends App {
                         <h1>blog-react</h1>
                     </header>
                     <nav>
-                        <ActiveLink href='/' aliases={['/posts']} activeClassName='nav-link--active'>Blog</ActiveLink>
+                        <ActiveLink href='/' aliases={['/posts']} activeClassName='nav-link--active' wrapAsLink={false}>Blog</ActiveLink>
                         <ActiveLink href='/about' activeClassName='nav-link--active'>About</ActiveLink>
                     </nav>
 

@@ -38,21 +38,14 @@ export default class Feed extends Component {
         if (this.state.loading) {
             return Promise.resolve(null);
         }
-        let newItems = [];
-        for (let i = 0; i < limit; i++) {
-            newItems.push({
-                loading: true
-            });
-        }
+        const newItems = [{
+            loading: true
+        }];
         this.setState({
             items: this.state.items.concat(newItems),
             loading: true
         });
-        const minTimePromise = new Promise((resolve, reject) => {
-            setTimeout((callback) => { callback(); }, 500, resolve);
-        });
-        return Promise.all([this.props.getMoreFunc(page, limit), minTimePromise])
-            .then((res) => res[0])
+        return this.props.getMoreFunc(page, limit)
             .then(
                 (res) => {
                     const hasMore = (res || []).length == limit;
@@ -65,7 +58,7 @@ export default class Feed extends Component {
                         });
                     } else {
                         this.setState({
-                            items: this.state.items.slice(0, -1 * limit),
+                            items: this.state.items.slice(0, -1),
                             loading: false,
                             hasMore: hasMore
                         });
@@ -74,7 +67,7 @@ export default class Feed extends Component {
                 },
                 (err) => {
                     this.setState({
-                        items: this.state.items.slice(0, -1 * limit),
+                        items: this.state.items.slice(0, -1),
                         loading: false,
                         hasMore: true
                     });
