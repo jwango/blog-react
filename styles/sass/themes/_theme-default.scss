@@ -9,6 +9,7 @@
     $on-secondary-faded: #DDDDDD;
 
     $background: #ffffff;
+    $background-skeleton: #F7F7F7;
     $background-faded: #DDDDDD;
     $on-background: #000000;
     $on-background-faded: #777777;
@@ -359,7 +360,7 @@
     }
 
     .feed-item--loading {
-        background-color: $background-faded;
+        background-color: $background-skeleton;
     }
 
     ul.feed {
