@@ -52,7 +52,7 @@ export default class Feed extends Component {
                     if (res && res.length > 0) {
                         this.setState({
                             page: this.state.page + 1,
-                            items: this.state.items.slice(0, -1 * limit).concat(res),
+                            items: this.state.items.slice(0, -1).concat(res),
                             loading: false,
                             hasMore: hasMore
                         });
