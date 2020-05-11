@@ -114,7 +114,6 @@ Take the generated output file (as specified in the config) and update the rss.x
 - [x] Render error component for missing pages or data  
 - [x] Re-theme header sizes  
 - [x] Re-theme blog metadata  
-- [ ] Add blog post loading state  
 - [x] Change archive to blog scene  
 - [x] Re-theme feed item  
 - [x] Re-theme feed loading state  
@@ -140,6 +139,6 @@ Take the generated output file (as specified in the config) and update the rss.x
 - [x] Add tags scene  
 - [x] Change icon  
 - [x] Address multi-instantiation of mongo singleton  
-- [ ] Clean-up console errors
-- [ ] Support PWA experience
+- [x] Clean-up console errors
+- [ ] Support PWA experience with service worker
 - [x] Expand custom theming and tooling

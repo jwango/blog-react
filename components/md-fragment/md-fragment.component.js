@@ -8,12 +8,12 @@ export default class MdFragment extends Component {
 
     static propTypes = {
         chunks: PropTypes.array,
-        showOutline: PropTypes.bool
+        pinDepth: PropTypes.number
     };
 
     static defaultProps = {
         chunks: [],
-        showOutline: false
+        pinDepth: 1
     };
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -32,30 +32,28 @@ export default class MdFragment extends Component {
     }
 
     renderOutlinePin(chunk, content) {
-        if (chunk.children || !this.props.showOutline) {
-            return <h1>{content}</h1>;
+        if (chunk.children) {
+            return <Fragment>{content}</Fragment>;
         }
-        const id = content.toLowerCase().split(' ').join('-');
+        const id = content.toLowerCase().trim().split(' ').join('-');
         return (
             <Fragment>
-            <h1>
                 <span id={id} className='anchor'></span>
                 {content}
                 <a href={`#${id}`}>
                     <img src='/link-1.svg' alt={id} className='pin'/>
                 </a>
-            </h1>
             </Fragment>
         );
     }
 
-    renderChunk(chunk) {
+    renderChunk(chunk, level) {
         let kind = getDefault(chunk.kind, POST_KIND.STRING);
         let content = getDefault(chunk.content, '');
         let props = getDefault(chunk.meta, {});
 
         if (chunk.children) {
-            content = this.renderChunks(chunk.children);
+            content = this.renderChunks(chunk.children, level + 1);
         }
 
         if (kind === POST_KIND.BOLD) {
@@ -65,7 +63,7 @@ export default class MdFragment extends Component {
             return <blockquote>{content}</blockquote>;
         }
         if (kind === POST_KIND.BREAK) {
-            return <br />
+            return <br />;
         }
         if (kind === POST_KIND.CODE_INLINE) {
             return <code>{content}</code>;
@@ -74,25 +72,43 @@ export default class MdFragment extends Component {
             return <pre><code className={`codeBlock ${this.getLanguageClass(props.info)}`}>{content}</code></pre>;
         }
         if (kind === POST_KIND.HEADING_1) {
-            return this.renderOutlinePin(chunk, content);
+            if (level === 0 && this.props.pinDepth >= 1) {
+                return <h1>{this.renderOutlinePin(chunk, content)}</h1>;
+            }
+            return <h1>{content}</h1>;
         }
         if (kind === POST_KIND.HEADING_2) {
+            if (level === 0 && this.props.pinDepth >= 2) {
+                return <h2>{this.renderOutlinePin(chunk, content)}</h2>;
+            }
             return <h2>{content}</h2>;
         }
         if (kind === POST_KIND.HEADING_3) {
+            if (level === 0 && this.props.pinDepth >= 3) {
+                return <h3>{this.renderOutlinePin(chunk, content)}</h3>;
+            }
             return <h3>{content}</h3>;
         }
         if (kind === POST_KIND.HEADING_4) {
+            if (level === 0 && this.props.pinDepth >= 4) {
+                return <h4>{this.renderOutlinePin(chunk, content)}</h4>;
+            }
             return <h4>{content}</h4>;
         }
         if (kind === POST_KIND.HEADING_5) {
+            if (level === 0 && this.props.pinDepth >= 5) {
+                return <h5>{this.renderOutlinePin(chunk, content)}</h5>;
+            }
             return <h5>{content}</h5>;
         }
         if (kind === POST_KIND.HEADING_6) {
+            if (level === 0 && this.props.pinDepth >= 6) {
+                return <h6>{this.renderOutlinePin(chunk, content)}</h6>;
+            }
             return <h6>{content}</h6>;
         }
         if (kind === POST_KIND.IMAGE) {
-            return <img src={props.src} alt={getDefault(props.alt, 'untitled image')}/>
+            return <img src={props.src} alt={getDefault(props.alt, 'untitled image')}/>;
         }
         if (kind === POST_KIND.ITALICS) {
             return <em>{content}</em>;
@@ -110,7 +126,7 @@ export default class MdFragment extends Component {
             return <ul>{content}</ul>;
         }
         if (kind === POST_KIND.PARAGRAPH) {
-            return <p>{content}</p>
+            return <p>{content}</p>;
         }
         if (kind === POST_KIND.STRIKE) {
             return <s>{content}</s>;
@@ -121,8 +137,8 @@ export default class MdFragment extends Component {
         return <Fragment>{content}</Fragment>;
     }
 
-    renderChunks(chunks) {
-        return chunks.map((chunk, index) => <Fragment key={index}>{this.renderChunk(chunk)}</Fragment>);
+    renderChunks(chunks, level = 0) {
+        return chunks.map((chunk, index) => <Fragment key={index}>{this.renderChunk(chunk, level)}</Fragment>);
     }
 
     render() {

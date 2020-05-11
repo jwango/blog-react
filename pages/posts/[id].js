@@ -128,7 +128,7 @@ export default class Post extends Component {
                     {this.renderLastUpdateDate(this.state.pubDate, this.state.lastUpdateDate)}
                 </header>
                 <section className='post__content'>
-                    <MdFragment chunks={this.state.chunks} showOutline={true}/>
+                    <MdFragment chunks={this.state.chunks} pinDepth={3}/>
                 </section>
                 <footer className='blog__footer'>
                     {this.renderTags(this.state.tags)}
