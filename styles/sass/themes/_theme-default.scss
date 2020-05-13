@@ -20,12 +20,13 @@
     $error: #ffbf3d;
 
     $nav-height: 2.5rem;
-    $content-width-l: 65%;
-    $content-padding-l: (100% - $content-width-l) / 2;
-    $content-width: 90%;
-    $content-padding: (100% - $content-width) / 2;
+    $content-padding: 16px;
     $code-padding: 0.125rem;
     $li-padding: 0.125rem;
+
+    $content-width: 100%;
+    $break-md: 768px;
+    $break-lg: 1012px;
 
     %primary {
         @include theme-color($primary, $on-primary);
@@ -56,6 +57,18 @@
         box-sizing: border-box;
     }
 
+    #disqus_thread {
+        margin-top: 16px;
+    }
+
+    .content-wrapper {
+        width: $content-width;
+        padding-left: $content-padding;
+        padding-right: $content-padding;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     .container {
         min-height: 100%;
         min-height: 100vh;
@@ -83,7 +96,7 @@
         width: 100%;
         height: 7rem;
         text-align: left;
-        padding: 1rem $content-padding;
+        padding: 1rem 0;
 
         h1 {
             font-size: 3rem;
@@ -96,7 +109,6 @@
         position: sticky;
         top: 0;
         width: 100%;
-        padding: 0 $content-padding;
         height: $nav-height;
         margin-top: -1 * $nav-height;
         flex-grow: 0;
@@ -129,8 +141,6 @@
 
     main {
         width: 100%;
-        margin: 0;
-        padding: 0 $content-padding;
         height: 100%;
         flex-grow: 1;
         flex-shrink: 0;
@@ -141,11 +151,6 @@
         word-wrap: break-word;
     }
 
-    hr.main__footer-separator {
-        margin: 0rem $content-padding;
-        width: $content-width;
-    }
-
     .main__footer-icon {
         height: 24px;
         margin-bottom: -5px;
@@ -154,8 +159,8 @@
     footer {
         &.main__footer {
             @extend %background;
-            padding: 3rem $content-padding;
-            width: 100%;
+            padding-top: 3rem;
+            padding-bottom: 3erm;
             flex-shrink: 0;
         }
 
@@ -386,31 +391,26 @@
         }
     }
 
-     @media only screen and (min-width: 768px) {
-        %side-padding {
-            padding-left: $content-padding-l;
-            padding-right: $content-padding-l;
+    @media only screen and (min-width: $break-md) {
+        .content-wrapper {
+            width: $break-md;
+            padding-left: 32px;
+            padding-right: 32px;
         }
 
-        main {
-            @extend %side-padding;
+        article.post {
+            .post__content {
+                font-size: 1.25rem;
+                line-height: 1.75;
+            }
         }
+    }
 
-        header.main__header {
-            @extend %side-padding;
-        }
-
-        nav {
-            @extend %side-padding;
-        }
-
-        footer.main__footer {
-            @extend %side-padding;
-        }
-
-        hr.main__footer-separator {
-            width: $content-width-l;
-            margin: 0 $content-padding-l;
+    @media only screen and (min-width: $break-lg) {
+        .content-wrapper {
+            width: $break-lg;
+            padding-left: 64px;
+            padding-right: 64px;
         }
 
         article.post {

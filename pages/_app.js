@@ -31,17 +31,21 @@ export default class MyApp extends App {
                 </Head>
                 <div className='container column'>
                     <header className='main__header'>
-                        <h1>blog-react</h1>
+                        <div className='content-wrapper'>
+                            <h1>blog-react</h1>
+                        </div>
                     </header>
                     <nav>
-                        <ActiveLink href='/' aliases={['/posts']} activeClassName='nav-link--active' wrapAsLink={false}>Blog</ActiveLink>
-                        <ActiveLink href='/about' activeClassName='nav-link--active'>About</ActiveLink>
+                        <div className='content-wrapper'>
+                            <ActiveLink href='/' aliases={['/posts']} activeClassName='nav-link--active' wrapAsLink={false}>Blog</ActiveLink>
+                            <ActiveLink href='/about' activeClassName='nav-link--active'>About</ActiveLink>
+                        </div>
                     </nav>
 
-                    <main><Component {...pageProps} /></main>
+                    <main className='content-wrapper'><Component {...pageProps} /></main>
 
-                    <hr className='main__footer-separator'/>
-                    <footer className='main__footer'>
+                    <hr className='content-wrapper'/>
+                    <footer className='main__footer content-wrapper'>
                         <p>
                             Got any thoughts or questions? Contact the <Link href='/about'><a>author</a></Link>! |&nbsp;
                             <a href='https://github.com/jwango/blog-react' target='_blank'><img src='/GitHub-Mark-120px-plus.png' alt='github icon' className='main__footer-icon'></img> source code</a> |&nbsp;
