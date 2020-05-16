@@ -8,7 +8,7 @@ export default class Feed extends Component {
     static propTypes = {
         batchSize: PropTypes.number,
         getMoreFunc: PropTypes.func,
-        initialItems: PropTypes.items
+        initialItems: PropTypes.array
     };
 
     constructor(props) {
