@@ -16,11 +16,6 @@ export default class FeedItem extends PureComponent {
         guid: PropTypes.string
     }
 
-    stripHTML(html){
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        return doc.body.textContent || '';
-    }
-
     renderLoading() {
         const loadingClassName = getGlocalClassname(styles, 'feed-item--loading');
         return (
@@ -43,7 +38,7 @@ export default class FeedItem extends PureComponent {
         return (
             <Fragment>
                 <h3><Link href={linkStr} as={linkAs}><a>{item.title}</a></Link></h3>
-                <p><Link href={linkStr} as={linkAs}><a>{this.stripHTML(item.description)}</a></Link></p>
+                <p><Link href={linkStr} as={linkAs}><a>{item.description}</a></Link></p>
                 <Time dateTime={item.pubDate}></Time>
                 <br/>
             </Fragment>

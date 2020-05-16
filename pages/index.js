@@ -9,6 +9,8 @@ import Tag from '../components/tag/tag.component';
 
 import Metadata from '../cms/out/metadata.json';
 
+const batchSize = 2;
+
 class Blog extends Component {
 
     errorMessage = '';
@@ -32,23 +34,7 @@ class Blog extends Component {
 
     getMorePosts(page, limit) {
         const tagsParam = this.getTagsParam();
-        const tags = tagsParam.split(' ');
-        const startIndex = page * limit;
-        return Promise.resolve(
-            this.props.postsMetadata.posts
-                .filter(item => !tagsParam || tags.some(tagToMatch => item.tags.includes(tagToMatch)))
-                .sort((a, b) => compareDesc(a.publishDate, b.publishDate))
-                .filter((_val, index) => index >= startIndex && index < startIndex + limit)
-                .map(item => {
-                    return {
-                        id: item.guid,
-                        title: item.title,
-                        description: item.description,
-                        pubDate: item.publishDate,
-                        link: '/posts/'
-                    };
-                })
-        )
+        return fetchPosts(page, limit, tagsParam, this.props.postsMetadata);
     }
 
     getPathWithoutTag(tag, tags) {
@@ -93,14 +79,35 @@ class Blog extends Component {
                     relUrl='/'>
                 </HeadCustom>
                 <header>{this.renderTags()}</header>
-                <Feed batchSize={2} getMoreFunc={this.getMorePosts.bind(this)}/>
+                <Feed batchSize={batchSize} getMoreFunc={this.getMorePosts.bind(this)} initialItems={this.props.initialItems}/>
             </Fragment>
         );
     }
 }
 
+function fetchPosts(page, limit, tagsParam, postsMetadata) {
+    const tags = tagsParam.split(' ');
+    const startIndex = page * limit;
+    return Promise.resolve(
+        postsMetadata.posts
+            .filter(item => !tagsParam || tags.some(tagToMatch => item.tags.includes(tagToMatch)))
+            .sort((a, b) => compareDesc(a.publishDate, b.publishDate))
+            .filter((_val, index) => index >= startIndex && index < startIndex + limit)
+            .map(item => {
+                return {
+                    id: item.guid,
+                    title: item.title,
+                    description: item.description,
+                    pubDate: item.publishDate,
+                    link: '/posts/'
+                };
+            })
+    )
+}
+
 export async function getStaticProps() {
-    return { props: { publicUrl: process.env.PUBLIC_URL, postsMetadata: Metadata, iconNames: IconNames } }
+    const initialItems = await fetchPosts(0, batchSize, '', Metadata);
+    return { props: { publicUrl: process.env.PUBLIC_URL, postsMetadata: Metadata, iconNames: IconNames, initialItems } }
 }
 
 export default withRouter(Blog);

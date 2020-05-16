@@ -7,12 +7,8 @@ export default class Feed extends Component {
 
     static propTypes = {
         batchSize: PropTypes.number,
-        getMoreFunc: PropTypes.func
-    };
-
-    static defaultProps = {
-        batchSize: 0,
-        getMoreFunc: undefined
+        getMoreFunc: PropTypes.func,
+        initialItems: PropTypes.items
     };
 
     constructor(props) {
@@ -22,16 +18,14 @@ export default class Feed extends Component {
             batchSize: getDefault(props.batchSize, 0),
             page: 0,
             loading: false,
-            hasMore: true,
-            init: false
+            hasMore: true
         };
-    }
-
-    componentDidMount() {
-        setTimeout(() => {
-            this.getMoreItems(this.state.page, this.state.batchSize);
-            this.setState({ init: true });
-        }, 0);
+        if (props.initialItems) {
+                this.state = {
+                ...this.state,
+                ...this.addItems(props.initialItems, this.state.batchSize)
+            };
+        }
     }
 
     getMoreItems(page, limit) {
@@ -48,21 +42,7 @@ export default class Feed extends Component {
         return this.props.getMoreFunc(page, limit)
             .then(
                 (res) => {
-                    const hasMore = (res || []).length == limit;
-                    if (res && res.length > 0) {
-                        this.setState({
-                            page: this.state.page + 1,
-                            items: this.state.items.slice(0, -1).concat(res),
-                            loading: false,
-                            hasMore: hasMore
-                        });
-                    } else {
-                        this.setState({
-                            items: this.state.items.slice(0, -1),
-                            loading: false,
-                            hasMore: hasMore
-                        });
-                    }
+                    this.setState(this.addItems(res, limit));
                     return res;
                 },
                 (err) => {
@@ -74,6 +54,24 @@ export default class Feed extends Component {
                     throw err;
                 }
             );
+    }
+
+    addItems(items, limit) {
+        const hasMore = (items || []).length == limit;
+        if (items && items.length > 0) {
+            return {
+                page: this.state.page + 1,
+                items: this.state.items.slice(0, -1).concat(items),
+                loading: false,
+                hasMore: hasMore
+            };
+        } else {
+            return {
+                items: this.state.items.slice(0, -1),
+                loading: false,
+                hasMore: hasMore
+            };
+        }
     }
 
     renderItemComponents() {
@@ -93,7 +91,7 @@ export default class Feed extends Component {
     }
 
     renderMoreButton() {
-        if (!this.state.init || this.state.loading || !this.state.hasMore) {
+        if (this.state.loading || !this.state.hasMore) {
             return <Fragment></Fragment>;
         }
         return <button className='btn--secondary btn--flat' onClick={() => this.getMoreItems(this.state.page, this.state.batchSize)}>More Content</button>
