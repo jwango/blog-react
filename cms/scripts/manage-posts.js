@@ -81,7 +81,7 @@ async function publishPost() {
     if (!isExistingPost) {
         let i = 0;
         do {
-            postId = genPostId(filecontent + currentTime + i);
+            postId = genPostId(fileContent + currentTime + i);
             i += 1;
         } while (postExists(postId));
         console.log(`${i - 1} collisions in generating new post id`);
