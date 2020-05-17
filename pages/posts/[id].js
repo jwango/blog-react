@@ -3,6 +3,7 @@ import PropTypes  from 'prop-types';
 
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
+import fs from 'fs';
 
 import { getDefault } from '../../lib/utils/ops.util';
 import HeadCustom from '../../components/head-custom/head-custom.component';
@@ -11,10 +12,10 @@ import Tag from '../../components/tag/tag.component';
 import Time from '../../components/time/time.component';
 import ErrorView from '../../components/error-view/error-view.component';
 
-import parseMarkdown from '../../lib/utils/parse.util';
 import Published from '../../cms/out/published.json';
 import Metadata from '../../cms/out/metadata.json';
-import fs from 'fs';
+
+const parseMarkdown = require('../../lib/utils/parse.util');
 
 export default class Post extends Component {
 

@@ -3,7 +3,7 @@ const prompt = require('prompt');
 const fs = require('fs').promises;
 const sha1 = require('crypto-js/sha1');
 const hexEnc = require('crypto-js/enc-hex');
-const parseMarkdown = require('./parse.util');
+const parseMarkdown = require('../../lib/utils/parse.util');
 const POSTS_ROOT = './cms/posts/';
 const PUBLISHED_PATH = './cms/out/published.json';
 const METADATA_PATH = './cms/out/metadata.json';
@@ -63,16 +63,21 @@ async function publishPost() {
         const useSameFileAnswer = (await askCommand(SAME_FILE_PROMPT))[SAME_FILE_PROMPT];
         if (useSameFileAnswer !== 'Y') {
             filepath = (await askCommand(FILE_PROMPT))[FILE_PROMPT];
+            filepath = `${POSTS_ROOT}${filepath}`;
         } 
     } else {
         console.log('I see you have a new post. Generating a new post id.');
         filepath = (await askCommand(FILE_PROMPT))[FILE_PROMPT];
+        filepath = `${POSTS_ROOT}${filepath}`;
     }
-    filepath = `${POSTS_ROOT}${filepath}`;
 
     // read metadata from file
-    const filecontent = await fs.readFile(filepath, 'utf-8');
-    const filemeta = parseMarkdown(filecontent.split('\r\n')).metadata;
+    const fileContent = await fs.readFile(filepath, 'utf-8');
+    let lines = fileContent.split('\r\n');
+    if (lines.length === 1) {
+        lines = fileContent.split('\n');
+    }
+    const filemeta = parseMarkdown(lines).metadata;
     if (!isExistingPost) {
         let i = 0;
         do {
