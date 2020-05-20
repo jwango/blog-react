@@ -1,33 +1,21 @@
-import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-export default class Tag extends Component {
-
-    static propTypes = {
-        link: PropTypes.string
-    };
-
-    constructor(props) {
-        super(props);
+function Tag({ link, children }) {
+    let classes = 'tag';
+    if (link) {
+        classes += ' tag--linkable';
     }
+    return <span className={classes}>{renderInner(link, children)}</span>
+}
 
-    showLink() {
-        return this.props.link;
+function renderInner(link, children) {
+    if (link) {
+        return <Link href={link}><a>{children}</a></Link>;
     }
+    return children;
+}
 
-    renderInner() {
-        if (this.showLink()) {
-            return <Link href={this.props.link}><a>{this.props.children}</a></Link>;
-        }
-        return <Fragment>{this.props.children}</Fragment>;
-    }
+Tag.propTypes = { link: PropTypes.string }
 
-    render() {
-        let classes = 'tag';
-        if (this.showLink()) {
-            classes += ' tag--linkable';
-        }
-        return <span className={classes}>{this.renderInner()}</span>
-    }
-};
+export default Tag;

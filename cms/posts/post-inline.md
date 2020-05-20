@@ -25,10 +25,10 @@ so lets use [foo] ok?
 
 [foo] oh ![foo] oh [[foo]]
 
-<http://localhost:3001/blog/posts/1> and then another <http://localhost:3001/>
+<http://localhost:3000/posts/d50b19> and then another <http://localhost:3000/>
 
 [fooey]
 
-[foo]:/blog/posts/1 title
+[foo]:/posts/d50b19 title
 
 ![foo]:/static/img/test.png test image

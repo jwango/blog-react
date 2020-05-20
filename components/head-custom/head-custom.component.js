@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-export default function HeadCustom({ title, description, keywords, baseUrl, relUrl, author }) {
+function HeadCustom({ title, description, keywords, baseUrl, relUrl, author }) {
   // entries to customize
   const url = `${baseUrl}${relUrl}`;
   const defaultAuthor = 'HAL 9000';
@@ -38,3 +38,5 @@ export default function HeadCustom({ title, description, keywords, baseUrl, relU
     </Head>
   );
 }
+
+export default HeadCustom;

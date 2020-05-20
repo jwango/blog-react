@@ -1,22 +1,17 @@
-import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import parse from 'date-fns/parse';
 
-export default class Time extends Component {
+function Time({ dateTime }) {
+  if (!dateTime) {
+    return null;
+  }
+  const today = new Date();
+  const date = parse(dateTime);
+  const dateFormat = date.getFullYear() === today.getFullYear() ? 'MMM D' : 'MMM D, YYYY';
+  return <time dateTime={dateTime}>{format(date, dateFormat)}</time>;
+}
 
-    today = new Date();
+Time.propTypes = { dateTime: PropTypes.string };
 
-    static propTypes = {
-        dateTime: PropTypes.string,
-    };
-
-    render() {
-      if (this.props.dateTime) {
-        const date = parse(this.props.dateTime);
-        const dateFormat = date.getFullYear() === this.today.getFullYear() ? 'MMM D' : 'MMM D, YYYY';
-        return <time dateTime={this.props.dateTime}>{format(date, dateFormat)}</time>;
-      }
-      return <Fragment></Fragment>;
-    }
-};
+export default Time;
