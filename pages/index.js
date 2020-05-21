@@ -12,34 +12,34 @@ import Metadata from '../cms/out/metadata.json';
 const batchSize = 2;
 
 function Blog({ router, publicUrl, postsMetadata, iconNames, defaultItems }) {
-    const tagsParam = router.query['tags'] || '';
-    const tags = tagsParam ? tagsParam.split(/ /g) : [];
-    const [initialItems, setInitialItems] = useState({ items: defaultItems, key: null });
-    useEffect(() => {
-      async function fetchData() {
-        const newItems = await fetchPosts(0, batchSize, tags, postsMetadata);
-        setInitialItems({ items: newItems, key: tagsParam });
-      }
-      fetchData();
-    }, [tagsParam]);
+  const tagsParam = router.query['tags'] || '';
+  const tags = tagsParam ? tagsParam.split(/ /g) : [];
+  const [initialItems, setInitialItems] = useState({ items: defaultItems, key: null });
+  useEffect(() => {
+    async function fetchData() {
+      const newItems = await fetchPosts(0, batchSize, tags, postsMetadata);
+      setInitialItems({ items: newItems, key: tagsParam });
+    }
+    fetchData();
+  }, [tagsParam]);
 
-    return (
-        <Fragment>
-            <HeadCustom
-                title='blog-react'
-                description='built by github/jwango'
-                keywords='blog, react, framework, jwango'
-                baseUrl={publicUrl}
-                relUrl='/'>
-            </HeadCustom>
-            <header>{renderTags(tags, iconNames)}</header>
-            <Feed
-              batchSize={batchSize}
-              getMoreFunc={(page, limit) => fetchPosts(page, limit, tags, postsMetadata)}
-              initialItems={initialItems.items}
-              customKey={initialItems.key}/>
-        </Fragment>
-    );
+  return (
+    <Fragment>
+      <HeadCustom
+        title='blog-react'
+        description='built by github/jwango'
+        keywords='blog, react, framework, jwango'
+        baseUrl={publicUrl}
+        relUrl='/'>
+      </HeadCustom>
+      <header>{renderTags(tags, iconNames)}</header>
+      <Feed
+        batchSize={batchSize}
+        getMoreFunc={(page, limit) => fetchPosts(page, limit, tags, postsMetadata)}
+        initialItems={initialItems.items}
+        customKey={initialItems.key}/>
+    </Fragment>
+  );
 }
 
 function getPathWithoutTag(tag, tags) {
@@ -91,8 +91,8 @@ function fetchPosts(page, limit, tags, postsMetadata) {
 }
 
 export async function getStaticProps() {
-    const defaultItems = await fetchPosts(0, batchSize, '', Metadata);
-    return { props: { publicUrl: process.env.PUBLIC_URL, postsMetadata: Metadata, iconNames: IconNames, defaultItems } }
+  const defaultItems = await fetchPosts(0, batchSize, '', Metadata);
+  return { props: { publicUrl: process.env.PUBLIC_URL, postsMetadata: Metadata, iconNames: IconNames, defaultItems } }
 }
 
 export default withRouter(Blog);
