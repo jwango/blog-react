@@ -10,7 +10,7 @@ function Feed({ batchSize, getMoreFunc, initialItems, customKey }) {
     batchSize: batchSize,
     page: 0,
     loading: false,
-    hasMore: true
+    hasMore: initialItems.length === batchSize
   });
 
   const getMoreItems = () => {

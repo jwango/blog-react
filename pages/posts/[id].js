@@ -45,7 +45,7 @@ function Post({ postDataStr, disqusUrl, publicUrl }) {
       s.setAttribute('data-timestamp', +new Date());
       (document.head || document.body).appendChild(s);
     }
-  });
+  }, []);
 
   const keywords = [
       'blog',
