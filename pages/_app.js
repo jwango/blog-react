@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps }) {
         <hr className='content-wrapper'/>
         <footer className='main__footer content-wrapper'>
           <p>
-            Got any thoughts or questions? Contact the <Link href='/about'><a>author</a></Link>! |&nbsp;
+            Got any thoughts or questions? Contact the <Link href='/about'>author</Link>! |&nbsp;
             <a href='https://github.com/jwango/blog-react' target='_blank'><img src='/GitHub-Mark-120px-plus.png' alt='github icon' className='main__footer-icon'></img> source code</a> |&nbsp;
             <a href='/rss.xml' target='_blank'><img src='/rss-icon.png' alt='rss icon' className='main__footer-icon'></img> feed</a>&nbsp;
             Icons powered by <a href='https://fontawesome.com/license' target='_blank'>Font Awesome</a>.

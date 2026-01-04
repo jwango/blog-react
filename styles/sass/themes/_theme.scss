@@ -1,5 +1,6 @@
-@import './theme-default';
-@import './theme-dark';
+@forward './theme-default';
+@forward './theme-dark';
+@forward '../abstracts/mixins';
 
 html, body {
     height: 100%;

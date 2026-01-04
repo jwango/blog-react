@@ -11,9 +11,7 @@ function ActiveLink({ children, href, aliases, activeClassName, wrapAsLink = tru
 
   if (wrapAsLink) {
     return (
-      <Link href={href}>
-        <a className={dynamicClassName}>{children}</a>
-      </Link>
+      <Link href={href} className={dynamicClassName}>{children}</Link>
     );
   } else {
     return (

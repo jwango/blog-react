@@ -1,5 +1,4 @@
-import Times from '../../public/static/icons/times-solid.svg';
-import ExclamationTriangle from '../../public/static/icons/exclamation-triangle-solid.svg';
+import Image from 'next/image';
 import styles from './icon.module.scss';
 
 export const IconNames = {
@@ -8,13 +7,13 @@ export const IconNames = {
 };
 
 const iconMap = {
-  [IconNames.TIMES]: Times,
-  [IconNames.EXCLAMATION_TRIANGLE]: ExclamationTriangle
+  [IconNames.TIMES]: 'static/icons/times-solid.svg',
+  [IconNames.EXCLAMATION_TRIANGLE]: 'static/icons/exclamation-triangle-solid.svg'
 };
 
 function Icon({ name, baseline=false }) {
-  const SelectedComponent = iconMap[name];
-  if (!SelectedComponent) { return null; }
+  const iconPath = iconMap[name];
+  if (!iconPath) { return null; }
 
   let classes = [ styles['svg-icon'] ];
   if (baseline) {
@@ -23,7 +22,7 @@ function Icon({ name, baseline=false }) {
 
   return (
     <span className={classes.join(' ')}>
-      <SelectedComponent></SelectedComponent>
+      <Image src={iconPath} width='16' height='16'></Image>
     </span>
   );
 }

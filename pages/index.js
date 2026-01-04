@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import Link from 'next/link';
 import { withRouter } from 'next/router';
 import compareDesc from 'date-fns/compare_desc';
 
@@ -62,9 +63,9 @@ function renderTags(tags, iconNames) {
   return tags.map((tag, index, arr) => {
     return (
       <Tag key={tag}>
-        <a href={getPathWithoutTag(tag, arr)}>
+        <Link href={getPathWithoutTag(tag, arr)}>
           <Icon name={iconNames.TIMES} baseline={true}></Icon>
-        </a>
+        </Link>
         &nbsp;{tag}
       </Tag>
     );

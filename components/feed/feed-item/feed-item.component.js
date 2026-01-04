@@ -14,7 +14,7 @@ function FeedItem({ title, description, pubDate, link, loading, guid }) {
     link: link || '#'
   };
   return (
-    <li className={getGlocalClassname(styles, 'feed-item')}>
+    <li className={getGlocalClassname(styles, 'feed-item')} key={guid}>
       { loading ? renderLoading() : renderItem(item) }
     </li>
   );
@@ -41,8 +41,8 @@ function renderItem(item) {
   const linkAs = `${item.link}${item.guid}`;
   return (
     <>
-      <h3><Link href={linkStr} as={linkAs}><a>{item.title}</a></Link></h3>
-      <p><Link href={linkStr} as={linkAs}><a>{item.description}</a></Link></p>
+      <h3><Link href={linkStr} as={linkAs}>{item.title}</Link></h3>
+      <p><Link href={linkStr} as={linkAs}>{item.description}</Link></p>
       <Time dateTime={item.pubDate}></Time>
       <br/>
     </>
