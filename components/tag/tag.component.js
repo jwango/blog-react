@@ -11,7 +11,7 @@ function Tag({ link, children }) {
 
 function renderInner(link, children) {
     if (link) {
-        return <Link href={link}><a>{children}</a></Link>;
+        return <Link href={link}>{children}</Link>;
     }
     return children;
 }

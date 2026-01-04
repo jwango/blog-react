@@ -1,4 +1,5 @@
-@import '../abstracts/mixins';
+@use 'sass:color';
+@use '../abstracts/mixins';
 
 .app--default {
     $primary: #666699;
@@ -29,19 +30,19 @@
     $break-lg: 1012px;
 
     %primary {
-        @include theme-color($primary, $on-primary);
+        @include mixins.theme-color($primary, $on-primary);
     }
 
     %secondary {
-        @include theme-color($secondary, $on-secondary);
+        @include mixins.theme-color($secondary, $on-secondary);
     }
 
     %background {
-        @include theme-color($background, $on-background);
+        @include mixins.theme-color($background, $on-background);
     }
 
     %warn {
-        @include theme-color($warn, $on-warn);
+        @include mixins.theme-color($warn, $on-warn);
     }
 
     .color-background-faded {
@@ -135,7 +136,7 @@
         }
 
         a:hover, a:active {
-            color: darken($on-primary, 10%);
+            color: color.adjust($on-primary, $lightness: -10%);
         }
     }
 
@@ -277,7 +278,7 @@
             text-decoration: none;
             color: inherit;
             &:hover, &:active {
-                color: darken($on-secondary, 10%);
+                color: color.adjust($on-secondary, $lightness: -10%);
             }
         }
     }
@@ -287,9 +288,9 @@
         padding-left: 0.5rem;
         border-style: solid;
         border-left-width: 0.5rem;
-        border-color: darken($background, 50%);
+        border-color: color.adjust($background, $lightness: -50%);
         color: $on-background;
-        background-color: darken($background, 10%);
+        background-color: color.adjust($background, $lightness: -10%);
         overflow: hidden;
     }
 
@@ -297,7 +298,7 @@
         line-height: 1.25;
         color: $secondary;
         border-radius: 0.25rem;
-        background-color: darken($background, 10%);
+        background-color: color.adjust($background, $lightness: -10%);
         display: inline;
         padding: $code-padding 0rem;
 

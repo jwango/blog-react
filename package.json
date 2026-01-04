@@ -2,13 +2,13 @@
   "name": "blog-react",
   "version": "0.1.0",
   "engines": {
-    "node": "18.x.x"
+    "node": "24.x.x"
   },
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "export": "npm run posts:syndicate && next build && next export",
+    "export": "npm run posts:syndicate && next build",
     "posts:manage": "node cms/scripts/manage-posts.js",
     "posts:syndicate": "node cms/scripts/syndicate-posts.js cms/syndicate.config.json",
     "heroku-postbuild": "npm run posts:syndicate && npm run build",
@@ -17,10 +17,10 @@
   "dependencies": {
     "date-fns": "^1.30.1",
     "glob-parent": "^5.1.2",
-    "next": "^12.0.0",
+    "next": "^16.0.0",
     "prop-types": "^15.7.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "sass": "^1.37.5"
   },
   "devDependencies": {
