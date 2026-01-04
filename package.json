@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "export": "npm run posts:syndicate && next build && next export",
+    "export": "npm run posts:syndicate && next build",
     "posts:manage": "node cms/scripts/manage-posts.js",
     "posts:syndicate": "node cms/scripts/syndicate-posts.js cms/syndicate.config.json",
     "heroku-postbuild": "npm run posts:syndicate && npm run build",
